@@ -519,6 +519,20 @@ def _atomic_write_json(path: Path, obj: Any) -> None:
     tmp.replace(path)
 
 
+def _append_terminal_log(path: Path, line: str, cap: int = 200_000) -> None:
+    """Append a log line to a capped file so the publisher can show the terminal
+    tail on the website. Best-effort; never raises."""
+    try:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        with path.open("a", encoding="utf-8") as fh:
+            fh.write(line + "\n")
+        if path.stat().st_size > cap:
+            tail = path.read_text(encoding="utf-8", errors="replace")[-cap // 2:]
+            path.write_text(tail, encoding="utf-8")
+    except Exception:
+        pass
+
+
 def _write_active_manifest(state_dir: Path, slots: list[Any],
                            control: Optional[dict[str, Any]] = None) -> None:
     """Publish which problems are on a worker RIGHT NOW plus a heartbeat, so the
@@ -1919,8 +1933,12 @@ def main(argv: Optional[list[str]] = None) -> int:
     profile_dir = args.profile_dir or Path(
         os.environ.get("CHATGPT_PROFILE_DIR") or ec.PROFILE_DIR)
 
+    log_path = args.state_dir / "_terminal.log"
+
     def log(message: str) -> None:
-        print(f"{time.strftime('%H:%M:%S')} {message}", flush=True)
+        line = f"{time.strftime('%H:%M:%S')} {message}"
+        print(line, flush=True)
+        _append_terminal_log(log_path, line)
 
     log(f"[pipeline] {len(problems)} problem(s), {args.workers} worker(s), "
         f"max {args.max_rounds} continuation rounds"

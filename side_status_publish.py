@@ -94,6 +94,15 @@ def _runtime(directory: Path) -> dict[str, Any]:
     }
 
 
+def _terminal_log(directory: Path, max_lines: int = 200) -> str:
+    """Last N lines of the pipeline's terminal log, for the website's terminal view."""
+    try:
+        text = (directory / "_terminal.log").read_text(encoding="utf-8", errors="replace")
+    except OSError:
+        return ""
+    return "\n".join(text.splitlines()[-max_lines:])
+
+
 def _side_pipeline(directory: Path) -> dict[str, Any]:
     """Build the side-pipeline section from the local run-state files."""
     problems: list[dict[str, Any]] = []
@@ -167,6 +176,7 @@ def _side_pipeline(directory: Path) -> dict[str, Any]:
             "failed": status_counts.get("failed", 0),
         },
         "runtime": _runtime(directory),
+        "log": _terminal_log(directory),
     }
 
 
