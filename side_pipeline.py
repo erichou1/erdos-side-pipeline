@@ -88,6 +88,13 @@ RATE_LIMIT_RESET = 180.0        # reset the backoff streak after this quiet peri
 # does NOT stop existing chats, so pause new-chat creation this long instead of
 # freezing the whole pipeline.
 NEW_CHAT_THROTTLE_PAUSE = 60.0
+# ADAPTIVE pacing: every throttle multiplies the new-chat spacing by GROW (up to
+# MAX); after RECOVER_QUIET seconds with no throttle it decays back by DECAY
+# toward the base. This self-tunes the send rate to whatever the account allows.
+CHAT_SPACING_MAX = 90.0
+CHAT_SPACING_GROW = 1.5
+CHAT_SPACING_DECAY = 0.85
+THROTTLE_RECOVER_QUIET = 90.0
 RENAME_TRIES = 4                # attempts to (re)name a chat before giving up
 NEW_CHAT_SPACING = 20.0         # min seconds between opening new chats (any tab); higher = fewer 'creating conversations too fast' throttles
 CONTINUE_GEN_MAX = 12           # max "Continue generating" clicks per response
@@ -651,18 +658,29 @@ def _trip_rate_limit(sched: dict[str, float], log) -> None:
     until = now + backoff
     if until > sched.get("rate_limit_until", 0.0):
         sched["rate_limit_until"] = until
+    # Adapt: a send-throttle also means slow NEW-chat opening going forward.
+    sched["last_throttle_at"] = now
+    base = sched.get("chat_spacing_base", NEW_CHAT_SPACING)
+    sched["chat_spacing"] = min(CHAT_SPACING_MAX,
+                                max(base, sched.get("chat_spacing", base)) * CHAT_SPACING_GROW)
     log(f"[rate-limit] throttled — pausing all workers ~{backoff:.0f}s (streak {int(streak)})")
 
 
 def _delay_new_chats(sched: dict[str, float], secs: float, log) -> None:
     """A 'creating conversations too fast' throttle means: slow NEW-chat opening,
     NOT stop. Push out the shared new-chat gate so fresh chats pause, while every
-    existing chat keeps generating/continuing normally (no global freeze)."""
-    until = time.time() + secs
+    existing chat keeps generating/continuing normally (no global freeze). Also
+    ADAPT: widen the new-chat spacing so we open fewer new chats going forward."""
+    now = time.time()
+    sched["last_throttle_at"] = now
+    base = sched.get("chat_spacing_base", NEW_CHAT_SPACING)
+    sched["chat_spacing"] = min(CHAT_SPACING_MAX,
+                                max(base, sched.get("chat_spacing", base)) * CHAT_SPACING_GROW)
+    until = now + secs
     if until > sched.get("next_new_chat_at", 0.0):
         sched["next_new_chat_at"] = until
-    log(f"[throttle] creating conversations too fast — pausing NEW chats ~{secs:.0f}s "
-        "(existing chats keep working)")
+    log(f"[throttle] too many new chats — spacing now {sched['chat_spacing']:.0f}s, "
+        f"pausing new chats ~{secs:.0f}s (existing chats keep working)")
 
 
 # ── Remote control polling ────────────────────────────────────────────────────
@@ -1254,7 +1272,8 @@ class Slot:
             return False
         if now < self.sched.get("next_new_chat_at", 0.0):
             return False
-        self.sched["next_new_chat_at"] = now + self.new_chat_spacing
+        self.sched["next_new_chat_at"] = now + self.sched.get(
+            "chat_spacing", self.new_chat_spacing)
         return True
 
     # -- chat renaming ----------------------------------------------------------
@@ -1648,7 +1667,8 @@ def _run_loop(drivers: list[Any], problems: list[dict[str, str]], *,
               response_timeout: float, tick: float, new_chat_spacing: float,
               log, poll_control: bool = True) -> None:
     known_cids: set[str] = set()
-    sched = {"next_new_chat_at": 0.0}
+    sched = {"next_new_chat_at": 0.0, "chat_spacing": new_chat_spacing,
+             "chat_spacing_base": new_chat_spacing, "last_throttle_at": 0.0}
     slots = [Slot(i, d, meta_prompt=meta_prompt, state_dir=state_dir,
                   max_rounds=max_rounds, response_timeout=response_timeout,
                   sched=sched, new_chat_spacing=new_chat_spacing, log=log)
@@ -1743,8 +1763,14 @@ def _run_loop(drivers: list[Any], problems: list[dict[str, str]], *,
         now = time.time()
         if now - heartbeat >= 30.0:
             heartbeat = now
+            # Adapt: after a quiet period with no throttle, ease the new-chat
+            # spacing back down toward the base.
+            if now - sched.get("last_throttle_at", 0.0) > THROTTLE_RECOVER_QUIET:
+                base = sched.get("chat_spacing_base", new_chat_spacing)
+                sched["chat_spacing"] = max(base, sched.get("chat_spacing", base) * CHAT_SPACING_DECAY)
             busy = sum(not s.idle for s in slots)
-            log(f"[scheduler] {busy} active, {len(queue)} queued"
+            log(f"[scheduler] {busy} active, {len(queue)} queued, "
+                f"chat-spacing {sched.get('chat_spacing', new_chat_spacing):.0f}s"
                 f"{' [PAUSED]' if paused else ''}")
             _write_active_manifest(state_dir, slots, control)
         time.sleep(tick)

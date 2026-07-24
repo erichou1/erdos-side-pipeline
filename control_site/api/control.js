@@ -63,22 +63,30 @@ export default async function handler(req, res) {
       return res.status(200).json(content);
     }
     if (req.method === "POST") {
-      let action = "";
+      let body = {};
       try {
-        const body = typeof req.body === "string" ? JSON.parse(req.body || "{}") : (req.body || {});
-        action = String(body.action || "").toLowerCase();
+        body = typeof req.body === "string" ? JSON.parse(req.body || "{}") : (req.body || {});
       } catch (_) {}
-      if (!action) {
-        const u = new URL(req.url, "http://localhost");
-        action = String(u.searchParams.get("action") || "").toLowerCase();
-      }
+      const u = new URL(req.url, "http://localhost");
+      const action = String(body.action || u.searchParams.get("action") || "").toLowerCase();
+      let workers = body.workers;
+      if (workers === undefined && u.searchParams.get("workers") != null) workers = u.searchParams.get("workers");
       const { sha, content } = await getFile(token);
-      if (action === "start") content.state = "run";
-      else if (action === "stop") content.state = "pause";
-      else if (action === "restart") content.restart = Date.now();
-      else if (action === "update") content.update = Date.now();
-      else return res.status(400).json({ error: "action must be start | stop | restart | update" });
-      const saved = await putFile(token, sha, content, `control: ${action}`);
+      let changed = false;
+      if (workers !== undefined && workers !== null && workers !== "") {
+        const n = Number(workers);
+        if (!Number.isInteger(n) || n < 1 || n > 40)
+          return res.status(400).json({ error: "workers must be an integer 1..40" });
+        content.workers = n; changed = true;
+      }
+      if (action === "start") { content.state = "run"; changed = true; }
+      else if (action === "stop") { content.state = "pause"; changed = true; }
+      else if (action === "restart") { content.restart = Date.now(); changed = true; }
+      else if (action === "update") { content.update = Date.now(); changed = true; }
+      else if (action) return res.status(400).json({ error: "action must be start | stop | restart | update" });
+      if (!changed) return res.status(400).json({ error: "provide an action or workers" });
+      const saved = await putFile(token, sha, content,
+        action ? `control: ${action}` : `control: workers=${content.workers}`);
       return res.status(200).json(saved);
     }
     res.setHeader("Allow", "GET, POST");

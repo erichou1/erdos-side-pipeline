@@ -54,15 +54,15 @@ def _spawn(args: list[str]) -> subprocess.Popen:
     return subprocess.Popen([PY, "-u", *args], cwd=str(_DIR))
 
 
-def _poll_update_nonce() -> Optional[int]:
-    """Return the control file's 'update' nonce, or None on any error."""
+def _poll_control() -> Optional[dict]:
+    """Return the control document (dict), or None on any error."""
     try:
         sep = "&" if "?" in CONTROL_URL else "?"
         req = urllib.request.Request(f"{CONTROL_URL}{sep}cb={int(time.time())}",
                                      headers={"Cache-Control": "no-cache"})
         with urllib.request.urlopen(req, timeout=4.0) as resp:
             data = json.loads(resp.read().decode("utf-8"))
-        return int(data.get("update") or 0)
+        return data if isinstance(data, dict) else None
     except Exception:
         return None
 
@@ -123,6 +123,7 @@ def main() -> int:
     signal.signal(signal.SIGTERM, _stop)
 
     handled_update = _load_handled_update()
+    current_workers = args.workers
     control_at = 0.0
     try:
         while not stopping:
@@ -130,24 +131,39 @@ def main() -> int:
             now = time.time()
             if now - control_at >= CONTROL_POLL_SECONDS:
                 control_at = now
-                nonce = _poll_update_nonce()
-                if nonce and nonce != handled_update:
-                    handled_update = nonce
-                    _save_handled_update(nonce)
-                    _log("update requested via control — running git pull")
-                    r = subprocess.run(["git", "-C", str(_DIR), "pull", "--ff-only"],
-                                       text=True, stdout=subprocess.PIPE,
-                                       stderr=subprocess.STDOUT)
-                    _log(f"git pull ({r.returncode}): {(r.stdout or '').strip()[-300:]}")
-                    if r.returncode == 0:
-                        _log("restarting children to apply the update")
-                        for nm in list(procs):
+                ctl = _poll_control()
+                if ctl is not None:
+                    # Worker-count change from the website → restart the pipeline child.
+                    w = ctl.get("workers")
+                    if (isinstance(w, int) and 1 <= w <= 40 and w != current_workers
+                            and "pipeline" in specs):
+                        current_workers = w
+                        specs["pipeline"] = ["side_pipeline.py", "--workers", str(w), *extra]
+                        _log(f"worker count → {w} (from web); restarting pipeline")
+                        if procs.get("pipeline"):
                             try:
-                                procs[nm].terminate()
+                                procs["pipeline"].terminate()
                             except Exception:
                                 pass
-                    else:
-                        _log("update skipped — git pull failed; fix the repo on this machine")
+                    # One-shot 'update' → git pull + restart all children.
+                    nonce = int(ctl.get("update") or 0)
+                    if nonce and nonce != handled_update:
+                        handled_update = nonce
+                        _save_handled_update(nonce)
+                        _log("update requested via control — running git pull")
+                        r = subprocess.run(["git", "-C", str(_DIR), "pull", "--ff-only"],
+                                           text=True, stdout=subprocess.PIPE,
+                                           stderr=subprocess.STDOUT)
+                        _log(f"git pull ({r.returncode}): {(r.stdout or '').strip()[-300:]}")
+                        if r.returncode == 0:
+                            _log("restarting children to apply the update")
+                            for nm in list(procs):
+                                try:
+                                    procs[nm].terminate()
+                                except Exception:
+                                    pass
+                        else:
+                            _log("update skipped — git pull failed; fix the repo on this machine")
             for name, a in specs.items():
                 if stopping:
                     break
