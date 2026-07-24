@@ -69,7 +69,8 @@ DEFAULT_PROJECT_URL = os.environ.get(
 
 # ── Tuning constants ──────────────────────────────────────────────────────────
 DEFAULT_WORKERS = 20
-DEFAULT_MAX_ROUNDS = 20         # continuation rounds cap (excluding round 1)
+DEFAULT_MAX_ROUNDS = 10         # real solving attempts per problem (round 1 + continuations);
+                               # the gated "is it solved?" self-assessment turns are NOT counted
 DEFAULT_RESPONSE_TIMEOUT = 3600.0   # per response, seconds
 ADAPT_MAX_TRIES = 3             # re-attempt a failed/garbled adapt before giving up
 MIN_THINK_SECONDS = 600.0       # a research reply faster than this -> nudge deeper/longer thinking

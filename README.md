@@ -159,13 +159,13 @@ To override the Project on this machine only, set `CHATGPT_PROJECT_URL` in `.env
 python side_pipeline.py \
   --problems side_pipeline_problems.json \
   --workers 20 \          # concurrent problems / browser tabs
-  --max-rounds 20         # continuation nudges after the first attempt
+  --max-rounds 10         # real solving attempts per problem (self-assess turns not counted)
 ```
 
 | Flag | Default | Meaning |
 |------|---------|---------|
 | `--workers` | 20 | How many problems run at once (one tab each). |
-| `--max-rounds` | 20 | Continuation rounds before giving up on a problem. |
+| `--max-rounds` | 10 | Real solving attempts per problem (the "is it solved?" turns aren't counted). |
 | `--problems` | `side_pipeline_problems.json` | Problem list to run. |
 | `--project-url` | the `erdos3` project | Project to create chats in. |
 | `--profile-dir` | `./.chatgpt_profile` | Chromium profile (login state). |
