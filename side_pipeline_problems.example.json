@@ -1,0 +1,14 @@
+[
+  {
+    "id": "example-oracle-complexity",
+    "title": "Deterministic value-oracle complexity (example)",
+    "statement": "Resolve completely the polynomial dependence on d of the deterministic exact-value oracle complexity Q_det(d, d^-4) for minimizing 1-Lipschitz convex functions on the Euclidean unit ball B_d, using only an exact function-value oracle. Identify the explicit exponent (or explicit q(d)) and prove matching upper and lower bounds up to polylogarithmic factors.",
+    "references": "Protasov (1996), Algorithms for approximate calculation of the minimum of a convex function from its values. Woodworth & Srebro (2019), Open Problem: The Oracle Complexity of Convex Optimization with Limited Memory. Marsden, Sharan, Sidford & Valiant (2022), Efficient Convex Optimization Requires Superlinear Memory. Blanchard, Zhang & Jaillet (2023), Quadratic Memory is Necessary for Optimal Query Complexity in Convex Optimization."
+  },
+  {
+    "id": "another-problem-slug",
+    "title": "Short human-readable title",
+    "statement": "Full problem statement text goes here. This is inserted verbatim where the adaptation instruction says [INSERT PROBLEM STATEMENT].",
+    "references": "Free-text references/links surrounding the problem, inserted where the adaptation instruction says [papers surrounding the problem]. Include paper titles, authors, arXiv links, or discussion URLs — one per line if you like."
+  }
+]

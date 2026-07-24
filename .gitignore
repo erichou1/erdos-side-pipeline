@@ -1,0 +1,25 @@
+# ── Private / sensitive: never commit ───────────────────────────────────────
+# Chromium profile — contains your ChatGPT auth cookies / session token.
+.chatgpt_profile/
+.chatgpt_profile*/
+
+# Local env / secrets
+.env
+
+# ── Runtime output (generated) ───────────────────────────────────────────────
+# Per-problem run state written while the pipeline runs.
+erdos_problems/side_pipeline_runs/
+side_pipeline_runs/
+_active.json
+
+# Logs
+*.log
+
+# ── Python ───────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# ── OS ───────────────────────────────────────────────────────────────────────
+.DS_Store

@@ -1,0 +1,2102 @@
+[
+  {
+    "id": "AINT-23",
+    "title": "Exact rank of the Elkies–Klagsbrun curve",
+    "statement": "Determine the exact Mordell–Weil rank of the Elkies–Klagsbrun elliptic curve, which is currently known to have rank at least \\(29\\).",
+    "references": "https://aimath.org/pastworkshops/aint26problemlist.pdf"
+  },
+  {
+    "id": "R101-18",
+    "title": "Lovász theta of random dense circulant graphs",
+    "statement": "For a random dense circulant graph \\(G\\), prove \\(\\mathbb E\\,\\vartheta(G)=(1+o(1))\\sqrt n\\).",
+    "references": "https://arxiv.org/abs/2603.29571"
+  },
+  {
+    "id": "TCS-LEARN-01",
+    "title": "Polynomial-time proper learning of decision trees",
+    "statement": "Under the uniform distribution with membership queries, is there a polynomial-time algorithm that properly learns polynomial-size decision trees to constant error?",
+    "references": "https://proceedings.mlr.press/v178/open-problem-blanc22a.html"
+  },
+  {
+    "id": "AINT-60",
+    "title": "Optimize a finite prime-producing search",
+    "statement": "Among integers \\(a<10^{20}\\), find one maximizing the least positive \\(x\\) for which \\(x^{12}+a\\) is prime.",
+    "references": "https://aimath.org/pastworkshops/aint26problemlist.pdf"
+  },
+  {
+    "id": "TCS-ONLINE_RL-01",
+    "title": "Fixed-budget best-arm identification",
+    "statement": "Determine the exact instance-dependent error exponent for fixed-budget best-arm identification and construct an algorithm achieving it uniformly.",
+    "references": "https://learningtheory.org/colt2026/openproblems.html"
+  },
+  {
+    "id": "AINT-45",
+    "title": "Construct an elliptic curve of rank 30",
+    "statement": "Find an elliptic curve over \\(\\mathbb Q\\) with Mordell–Weil rank at least \\(30\\).",
+    "references": "https://aimath.org/pastworkshops/aint26problemlist.pdf"
+  },
+  {
+    "id": "EP-324",
+    "title": "Polynomial image forming a Sidon set",
+    "statement": "Does there exist a polynomial $f(x)\\in\\mathbb{Z}[x]$ such that all the sums $f(a)+f(b)$ with $a<b$ nonnegative integers are distinct?",
+    "references": "https://www.erdosproblems.com/324"
+  },
+  {
+    "id": "EP-686",
+    "title": "Ratios of products of consecutive integers",
+    "statement": "Can every integer $N\\geq 2$ be written as \\[N=\\frac{\\prod_{1\\leq i\\leq k}(m+i)}{\\prod_{1\\leq i\\leq k}(n+i)}\\] for some $k\\geq 2$ and $m\\geq n+k$?",
+    "references": "https://www.erdosproblems.com/686"
+  },
+  {
+    "id": "EP-886",
+    "title": "Divisors just above the square root",
+    "statement": "Let \\(\\epsilon>0\\). Is it true that, for all large \\(n\\), the number of divisors of \\(n\\) in\n\\[\n(n^{1/2},\\,n^{1/2}+n^{1/2-\\epsilon})\n\\]\nis \\(O_\\epsilon(1)\\)?",
+    "references": "https://www.erdosproblems.com/886"
+  },
+  {
+    "id": "TCS-LEARN-02",
+    "title": "Local regularization for multiclass learnability",
+    "statement": "Does a suitable local regularization principle characterize learnability for every multiclass hypothesis class, with optimal sample complexity?",
+    "references": "https://proceedings.mlr.press/"
+  },
+  {
+    "id": "AINT-33",
+    "title": "A completely multiplicative sine-series bound",
+    "statement": "Let \\(a_n\\in\\{\\pm1\\}\\) be completely multiplicative and \\(s(t)=\\frac1\\pi\\sum_{n\\ge1}\\frac{a_n}{n}\\sin(2\\pi nt)\\). Must \\(\\sup_t|s(t)|\\ge\\frac12\\)?",
+    "references": "https://aimath.org/pastworkshops/aint26problemlist.pdf"
+  },
+  {
+    "id": "GREEN-071",
+    "title": "Uniform sums of independent integer-valued variables",
+    "statement": "Suppose that \\(X,Y\\) are two finitely-supported independent random variables taking integer values, and such that \\(X+Y\\) is uniformly distributed on its range. Are \\(X\\) and \\(Y\\) themselves uniformly distributed on their ranges?",
+    "references": "https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf https://www.unsolvedmath.com/problems/GREEN-071"
+  },
+  {
+    "id": "R101-23",
+    "title": "Degree-four sum-of-squares certificate for MUB(6)",
+    "statement": "Is there a degree-\\(4\\) sum-of-squares proof that seven mutually unbiased bases do not exist in \\(\\mathbb C^6\\)?",
+    "references": "https://arxiv.org/abs/2603.29571"
+  },
+  {
+    "id": "TCS-LEARN-03",
+    "title": "Black-box nonconvex optimization from online regret",
+    "statement": "Can every online-learning regret guarantee be transformed black-box into an equally sharp algorithm for finding stationary points of smooth nonconvex objectives?",
+    "references": "https://proceedings.mlr.press/"
+  },
+  {
+    "id": "AINT-25",
+    "title": "Divisor bound for \\(n=xyz+x+y+z\\)",
+    "statement": "Prove that for every \\(\\varepsilon>0\\) there is \\(C_\\varepsilon>0\\) such that the number of integer solutions of \\(n=xyz+x+y+z\\) is at most \\(C_\\varepsilon n^\\varepsilon\\).",
+    "references": "https://aimath.org/pastworkshops/aint26problemlist.pdf"
+  },
+  {
+    "id": "TCS-LEARN-04",
+    "title": "Direct-sum theorems in learning theory",
+    "statement": "Characterize when learning \\(k\\) independent tasks requires \\(k\\) times the samples or information needed for one task, and when sublinear savings are possible.",
+    "references": "https://proceedings.mlr.press/"
+  },
+  {
+    "id": "R101-21",
+    "title": "Gaussian phase-retrieval stability",
+    "statement": "Determine the asymptotic value of the stability parameter \\(\\omega(A)\\) for a matrix \\(A\\) with i.i.d. standard Gaussian entries, including whether it satisfies the proposed power-law bound and the optimal exponent.",
+    "references": "https://arxiv.org/abs/2603.29571"
+  },
+  {
+    "id": "TCS-ONLINE_RL-02",
+    "title": "Order-optimal regret in kernelized reinforcement learning",
+    "statement": "Obtain matching upper and lower regret bounds for reinforcement learning with kernel or general function approximation.",
+    "references": "https://learningtheory.org/colt2026/openproblems.html"
+  },
+  {
+    "id": "EP-155",
+    "title": "One-step growth of finite Sidon sets",
+    "statement": "Let $F(N)$ be the size of the largest Sidon subset of $\\{1,\\ldots,N\\}$. Is it true that for every $k\\geq 1$ we have \\[F(N+k)\\leq F(N)+1\\] for all sufficiently large $N$?",
+    "references": "https://www.erdosproblems.com/155"
+  },
+  {
+    "id": "TCS-STAT-04",
+    "title": "Robust mean estimation with optimal time and error",
+    "statement": "Achieve information-theoretically optimal robust mean estimation in high dimension with nearly linear running time and optimal dependence on contamination.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "TCS-STREAMING-03",
+    "title": "Adversarially robust streaming",
+    "statement": "Characterize the minimum memory overhead needed to make classical streaming algorithms robust to adaptive adversaries.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "AINT-52",
+    "title": "Many rational points on genus-three hyperelliptic curves",
+    "statement": "Find a genus-\\(3\\) hyperelliptic curve over \\(\\mathbb Q\\) of rank \\(0\\) with more than \\(12\\) rational points, and determine the true maximum within the finite search range described in the workshop list.",
+    "references": "https://aimath.org/pastworkshops/aint26problemlist.pdf"
+  },
+  {
+    "id": "TCS-ONLINE_RL-03",
+    "title": "Noise-free kernel bandit regret",
+    "statement": "Determine the minimax regret of continuum-armed bandits in an RKHS when observations are noiseless.",
+    "references": "https://learningtheory.org/colt2026/openproblems.html"
+  },
+  {
+    "id": "R101-17",
+    "title": "Lovász theta of dense Erdős–Rényi graphs",
+    "statement": "For \\(G\\sim G(n,1/2)\\), prove \\(\\mathbb E\\,\\vartheta(G)=(1+o(1))\\sqrt n\\).",
+    "references": "https://arxiv.org/abs/2603.29571"
+  },
+  {
+    "id": "TOPP-16",
+    "title": "Count simple polygonalizations in polynomial time",
+    "statement": "Can the number of simple polygonalizations of a set of \\(n\\) points in the plane be computed in polynomial time?",
+    "references": "https://topp.openproblem.net/p16"
+  },
+  {
+    "id": "TCS-ONLINE_RL-05",
+    "title": "Instance-optimal feedback-graph regret",
+    "statement": "Give a finite-time, instance-dependent characterization of optimal regret for online learning with feedback graphs.",
+    "references": "https://learningtheory.org/colt2026/openproblems.html"
+  },
+  {
+    "id": "AINT-39",
+    "title": "A finite-looking inequality from Waring's problem",
+    "statement": "Prove for every positive integer \\(k\\) that\n\\[\n2^k\\left\\{\\left(\\frac32\\right)^k\\right\\}+\\left\\lfloor\\left(\\frac32\\right)^k\\right\\rfloor\\le 2^k,\n\\]\nwhere \\(\\{x\\}\\) denotes the fractional part of \\(x\\). This has been numerically verified through \\(k=471{,}600{,}000\\).",
+    "references": "https://aimath.org/pastworkshops/aint26problemlist.pdf"
+  },
+  {
+    "id": "TCS-STAT-05",
+    "title": "List-decodable mean estimation at optimal list size",
+    "statement": "Match the optimal error, sample complexity, list size, and polynomial running time for list-decodable mean estimation in all contamination regimes.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "AINT-30",
+    "title": "Supersingular locus in genus four",
+    "statement": "In the moduli space of genus-\\(4\\) curves, what is the dimension of the supersingular locus, and how many irreducible components does it have?",
+    "references": "https://aimath.org/pastworkshops/aint26problemlist.pdf"
+  },
+  {
+    "id": "EP-156",
+    "title": "Small maximal Sidon sets",
+    "statement": "Does there exist a maximal Sidon set\n\\[\nA\\subset \\{1,\\ldots,N\\}\n\\]\nof size \\(O(N^{1/3})\\)?",
+    "references": "https://www.erdosproblems.com/156"
+  },
+  {
+    "id": "TCS-ONLINE_RL-04",
+    "title": "Private online learning without excess regret",
+    "statement": "Characterize the optimal privacy-regret tradeoff for online learning and whether privacy can be obtained at only logarithmic or constant additive cost.",
+    "references": "https://learningtheory.org/colt2026/openproblems.html"
+  },
+  {
+    "id": "TOPP-44",
+    "title": "Three-color great-circle arrangement graphs",
+    "statement": "Is the graph of every arrangement of great circles on the sphere vertex \\(3\\)-colorable?",
+    "references": "https://topp.openproblem.net/p44"
+  },
+  {
+    "id": "TCS-TESTING-09",
+    "title": "Instance-optimal distribution closeness testing",
+    "statement": "Characterize the sample complexity of testing \\(p=q\\) versus \\(d_{\\mathrm{TV}}(p,q)>\u000barepsilon\\) for each individual pair of distributions.",
+    "references": "https://arxiv.org/abs/2508.16878"
+  },
+  {
+    "id": "KOU-21.115",
+    "title": "Uncovered mass of finitely many cosets",
+    "statement": "If \\(C_1,\\ldots,C_n\\) are left or right cosets in a finite group \\(G\\) and \\(U=C_1\\cup\\cdots\\cup C_n\\ne G\\), must \\(|G\\setminus U|\\ge |G|/2^n\\)?",
+    "references": "https://kourovkanotebookorg.wordpress.com/wp-content/uploads/2026/07/21tkt.pdf"
+  },
+  {
+    "id": "TCS-ONLINE_RL-06",
+    "title": "Offline reinforcement learning under minimal coverage",
+    "statement": "Find necessary and sufficient coverage conditions for polynomial-sample offline RL with function approximation.",
+    "references": "https://learningtheory.org/colt2026/openproblems.html"
+  },
+  {
+    "id": "KP-1.1",
+    "title": "Crossing number under connected sum",
+    "statement": "Is crossing number additive under connected sum: \\(c(K_1\\#K_2)=c(K_1)+c(K_2)\\)?",
+    "references": "https://www.unsolvedmath.com/problems/KP-1.1"
+  },
+  {
+    "id": "TOPP-37",
+    "title": "Klarner's polyomino growth constant",
+    "statement": "Determine the asymptotic number \\(t(n)\\) of fixed polyominoes of order \\(n\\), in particular the exact value or substantially sharper bounds for \\(\\lambda=\\lim_{n\\to\\infty}t(n)^{1/n}\\).",
+    "references": "https://topp.openproblem.net/p37"
+  },
+  {
+    "id": "TCS-LEARN-09",
+    "title": "List-decodable regression at the information limit",
+    "statement": "Give polynomial-time algorithms matching the optimal error and sample bounds for list-decodable linear regression under adversarial contamination.",
+    "references": "https://proceedings.mlr.press/"
+  },
+  {
+    "id": "DAG-5.11",
+    "title": "Better subquadratic min-link approximation",
+    "statement": "For a polygonal domain with \\(n\\) vertices, can a better approximation to a minimum-link path than the currently known guarantee be computed in subquadratic time?",
+    "references": "https://drops.dagstuhl.de/storage/04dagstuhl-reports/volume15/issue05/25201/html/DagRep.15.5.64/DagRep.15.5.64.html"
+  },
+  {
+    "id": "EP-153",
+    "title": "Mean-square gaps in a Sidon sumset",
+    "statement": "Let \\(A\\) be a finite Sidon set and\n\\[\nA+A=\\{s_1<\\cdots<s_t\\}.\n\\]\nIs it true that\n\\[\n\\frac{1}{t}\\sum_{1\\leq i<t}(s_{i+1}-s_i)^2\\to\\infty\n\\]\nas \\(\\lvert A\\rvert\\to\\infty\\)?",
+    "references": "https://www.erdosproblems.com/153"
+  },
+  {
+    "id": "TCS-TESTING-04",
+    "title": "Optimal monotonicity testing on hypergrids",
+    "statement": "Close the remaining gaps in adaptive and nonadaptive query complexity for monotonicity of functions on high-dimensional hypergrids.",
+    "references": "https://arxiv.org/abs/2508.16878"
+  },
+  {
+    "id": "KOU-21.89",
+    "title": "Partition numbers dividing factorials",
+    "statement": "For \\(n>39\\), is the partition number \\(p(n)\\) never a divisor of \\(n!\\)?",
+    "references": "https://kourovkanotebookorg.wordpress.com/wp-content/uploads/2026/07/21tkt.pdf"
+  },
+  {
+    "id": "R101-27",
+    "title": "Second localization of the Paley graph",
+    "statement": "For every sufficiently large prime \\(p\\equiv1\\pmod4\\), prove \\(\\vartheta(G_{p,2})\\le\\frac23\\sqrt p\\), where \\(G_{p,2}\\) is the second localization of the Paley graph.",
+    "references": "https://arxiv.org/abs/2603.29571"
+  },
+  {
+    "id": "TCS-LOGIC_ALGEBRA-10",
+    "title": "Formal proof complexity of analytic inequalities",
+    "statement": "Develop general certificate systems with polynomially checkable proofs for broad classes of transcendental and analytic inequalities.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "TCS-STAT-09",
+    "title": "Computationally optimal phase retrieval",
+    "statement": "Give algorithms matching minimax sample and noise robustness for structured phase retrieval while retaining near-linear computational complexity.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "TCS-STREAMING-02",
+    "title": "Optimal bit complexity of \\(L_p\\) sampling",
+    "statement": "Determine the exact bit complexity of \\(L_p\\)-sampling in strict and general turnstile streams.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "TOPP-17",
+    "title": "Recognize visibility graphs of simple polygons",
+    "statement": "Given a graph together with a proposed Hamiltonian cycle, can one decide in polynomial time whether it is the visibility graph of a simple polygon with that boundary cycle?",
+    "references": "https://topp.openproblem.net/p17"
+  },
+  {
+    "id": "TCS-STAT-06",
+    "title": "Robust covariance estimation without condition-number loss",
+    "statement": "Estimate covariance under adversarial contamination with optimal error and running time without avoidable dependence on the condition number.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "DAG-5.6",
+    "title": "Low-dimensional persistence of high-dimensional ball unions",
+    "statement": "Can one compute low-dimensional persistent homology of a union of balls in high ambient dimension without constructing the full high-dimensional Čech, Rips, or Delaunay complex, with output-sensitive guarantees?",
+    "references": "https://drops.dagstuhl.de/storage/04dagstuhl-reports/volume15/issue05/25201/html/DagRep.15.5.64/DagRep.15.5.64.html"
+  },
+  {
+    "id": "TCS-OPT_GAME-07",
+    "title": "Global convergence of policy gradient",
+    "statement": "Give necessary and sufficient structural conditions for global polynomial-time convergence of policy-gradient methods in general MDPs.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "TCS-STREAMING-01",
+    "title": "Optimal turnstile-space bounds for frequency moments",
+    "statement": "Close the remaining logarithmic-factor gaps for approximating \\(F_p\\) moments in turnstile streams across all \\(p\\).",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "TCS-TESTING-05",
+    "title": "Tolerant junta testing",
+    "statement": "Determine the optimal query complexity of tolerant testing for \\(k\\)-juntas and give matching efficient algorithms.",
+    "references": "https://arxiv.org/abs/2508.16878"
+  },
+  {
+    "id": "AINT-29",
+    "title": "Explicit Selberg constants for modular-form L-functions",
+    "statement": "Apply Selberg's method to modular-form \\(L\\)-functions and obtain fully explicit numerical constants.",
+    "references": "https://aimath.org/pastworkshops/aint26problemlist.pdf"
+  },
+  {
+    "id": "TCS-ONLINE_RL-08",
+    "title": "Contextual bandits with instance-optimal regret",
+    "statement": "Develop an efficiently computable instance-dependent lower bound for contextual bandits and an algorithm that matches it.",
+    "references": "https://learningtheory.org/colt2026/openproblems.html"
+  },
+  {
+    "id": "DAG-5.5",
+    "title": "Approximate simplification of flag filtrations",
+    "statement": "How far can a filtered graph representing a flag filtration be simplified, beyond exact persistence-preserving reductions, while retaining rigorous bounds on the resulting persistent-homology error?",
+    "references": "https://drops.dagstuhl.de/storage/04dagstuhl-reports/volume15/issue05/25201/html/DagRep.15.5.64/DagRep.15.5.64.html"
+  },
+  {
+    "id": "EP-149",
+    "title": "Strong chromatic index",
+    "statement": "The strong chromatic index of a graph $G$, denoted by $\\mathrm{sq}(G)$, is the minimum $k$ such that the edges of $G$ can be partitioned into $k$ sets of strongly independent edges, that is, such that the subgraph of $G$ induced by each set is the union of vertex-disjoint edges. Is it true that, for any graph $G$ with maximum degree $\\Delta$, \\[\\mathrm{sq}(G)\\leq\\frac{5}{4}\\Delta^2?\\]",
+    "references": "https://www.erdosproblems.com/149"
+  },
+  {
+    "id": "TCS-STAT-10",
+    "title": "Universality of approximate message passing",
+    "statement": "Prove state-evolution universality for broad dependent, heavy-tailed, or non-Gaussian matrix ensembles used in high-dimensional inference.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "KP-2.13",
+    "title": "Surgery equivalence of embedded graphs",
+    "statement": "Let \\(S\\) be a surface and \\(\\Gamma_1,\\Gamma_2\\) isotopy classes of embedded graphs in \\(S\\). Determine when they are related by a sequence of graph surgeries.",
+    "references": "https://www.unsolvedmath.com/problems/KP-2.13"
+  },
+  {
+    "id": "TCS-LEARN-08",
+    "title": "Optimal active learning beyond disagreement coefficients",
+    "statement": "Find an instance-dependent characterization of label complexity for active binary classification that is both necessary and sufficient.",
+    "references": "https://proceedings.mlr.press/"
+  },
+  {
+    "id": "TCS-STREAMING-06",
+    "title": "Optimal dynamic spectral sparsification",
+    "statement": "Achieve optimal update time, space, and approximation simultaneously for spectral sparsifiers in dynamic streams.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "TOPP-40",
+    "title": "Pointed pseudotriangulations versus triangulations",
+    "statement": "For every planar point set, is the number of pointed pseudotriangulations at least the number of triangulations?",
+    "references": "https://topp.openproblem.net/p40"
+  },
+  {
+    "id": "TCS-OPT_GAME-09",
+    "title": "Dimension-free rates for stochastic convex optimization",
+    "statement": "Close remaining dimension and logarithmic gaps in minimax stochastic convex optimization under heavy tails and weak smoothness.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "TCS-STREAMING-04",
+    "title": "Dynamic graph matching in semi-streaming space",
+    "statement": "Obtain optimal approximation ratios for maximum matching in fully dynamic graph streams using \\(O(n\\operatorname{polylog}n)\\) space.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "R101-28",
+    "title": "Degree-four SoS beats the Paley square-root bound",
+    "statement": "Prove that some \\(\\varepsilon>0\\) exists such that the degree-\\(4\\) sum-of-squares relaxation for the Paley-graph clique number gives \\(O(p^{1/2-\\varepsilon})\\).",
+    "references": "https://arxiv.org/abs/2603.29571"
+  },
+  {
+    "id": "TCS-DISTRIBUTED-10",
+    "title": "Fast exact majority in population protocols",
+    "statement": "Determine the optimal time-state tradeoff for exact majority and related predicates in population protocols.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "TCS-ONLINE_RL-09",
+    "title": "Sharp regret for nonstationary bandits",
+    "statement": "Obtain algorithms simultaneously optimal for variation budget, number of changes, and path length without knowing the nonstationarity measure.",
+    "references": "https://learningtheory.org/colt2026/openproblems.html"
+  },
+  {
+    "id": "EP-151",
+    "title": "Clique transversals",
+    "statement": "For a graph $G$ let $\\tau(G)$ denote the minimal number of vertices that include at least one from each maximal clique of $G$ on at least two vertices (sometimes called the clique transversal number). Let $H(n)$ be maximal such that every triangle-free graph on $n$ vertices contains an independent set on $H(n)$ vertices. If $G$ is a graph on $n$ vertices then is \\[\\tau(G)\\leq n-H(n)?\\]",
+    "references": "https://www.erdosproblems.com/151"
+  },
+  {
+    "id": "KOU-21.93",
+    "title": "Repeated indices in coset partitions",
+    "statement": "Let \\(H_1,\\ldots,H_k\\le G\\), \\(k\\ge2\\), and suppose the cosets \\(g_1H_1,\\ldots,g_kH_k\\) partition \\(G\\). Must two subgroup indices \\([G:H_i]\\) and \\([G:H_j]\\) be equal?",
+    "references": "https://kourovkanotebookorg.wordpress.com/wp-content/uploads/2026/07/21tkt.pdf"
+  },
+  {
+    "id": "TOPP-2",
+    "title": "Voronoi diagrams of moving points",
+    "statement": "Maintain the Voronoi diagram of \\(n\\) points moving along known trajectories with substantially better worst-case event and update bounds than the best current kinetic-data-structure bounds.",
+    "references": "https://topp.openproblem.net/p2"
+  },
+  {
+    "id": "TCS-PARAMETERIZED-08",
+    "title": "Odd cycle transversal below the current base",
+    "statement": "Improve the best single-exponential running time for Odd Cycle Transversal or prove a matching SETH lower bound.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "TCS-STREAMING-08",
+    "title": "Sliding-window distinct elements",
+    "statement": "Determine optimal space and update bounds, including constants and failure dependence, for distinct-elements estimation over sliding windows.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "DAG-5.10",
+    "title": "Parameterized complexity of graph-tile assembly",
+    "statement": "For a bounded number of simple graph-tile types, determine the parameterized complexity of deciding whether the tiles can be arranged into a square with matching interfaces and prescribed global graph properties.",
+    "references": "https://drops.dagstuhl.de/storage/04dagstuhl-reports/volume15/issue05/25201/html/DagRep.15.5.64/DagRep.15.5.64.html"
+  },
+  {
+    "id": "TCS-LOGIC_ALGEBRA-06",
+    "title": "Automated invariant synthesis for nonlinear loops",
+    "statement": "Develop a complete or complexity-optimal method for synthesizing polynomial invariants of nonlinear programs over the reals or integers.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "KOU-21.108",
+    "title": "Four primes per character codegree",
+    "statement": "For a finite group \\(G\\), let \\(\\operatorname{Cod}(G)\\) be its irreducible character codegrees and \\(\\sigma(G)=\\max\\{|\\pi(m)|:m\\in\\operatorname{Cod}(G)\\}\\). Is \\(|\\pi(G)|\\le4\\sigma(G)\\) always true?",
+    "references": "https://kourovkanotebookorg.wordpress.com/wp-content/uploads/2026/07/21tkt.pdf"
+  },
+  {
+    "id": "TOPP-3",
+    "title": "Voronoi diagrams of lines in three dimensions",
+    "statement": "Determine the worst-case combinatorial complexity of the Voronoi diagram of \\(n\\) lines in \\(\\mathbb R^3\\), and give matching output-sensitive construction algorithms.",
+    "references": "https://topp.openproblem.net/p3"
+  },
+  {
+    "id": "TOPP-60",
+    "title": "Centroid moves to a regular polygon",
+    "statement": "Can every convex \\(n\\)-gon be transformed into a regular \\(n\\)-gon by repeatedly replacing one vertex by the centroid of the other vertices, or by the inverse operation when defined?",
+    "references": "https://topp.openproblem.net/p60"
+  },
+  {
+    "id": "TCS-PARAMETERIZED-01",
+    "title": "Single-exponential exact treewidth",
+    "statement": "Determine the optimal base \\(c\\) for algorithms running in \\(c^k n^{O(1)}\\) time for treewidth \\(k\\), or prove matching lower bounds.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "DAG-5.4A",
+    "title": "Evert every straight-line triangulation",
+    "statement": "Does every planar straight-line triangulation admit an eversion through nondegenerate straight-line drawings?",
+    "references": "https://drops.dagstuhl.de/storage/04dagstuhl-reports/volume15/issue05/25201/html/DagRep.15.5.64/DagRep.15.5.64.html"
+  },
+  {
+    "id": "TOPP-4",
+    "title": "Union complexity of fat objects in three dimensions",
+    "statement": "Obtain tight worst-case bounds for the combinatorial complexity of the union of \\(n\\) fat objects in \\(\\mathbb R^3\\), under standard bounded-fatness assumptions.",
+    "references": "https://topp.openproblem.net/p4"
+  },
+  {
+    "id": "TCS-DISTRIBUTED-03",
+    "title": "Exact shortest paths in CONGEST",
+    "statement": "Close the upper-lower gap for exact single-source and all-pairs shortest paths in the CONGEST model.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "TCS-OPT_GAME-08",
+    "title": "Complexity of nonsmooth nonconvex stationarity",
+    "statement": "Determine optimal oracle complexity for finding meaningful stationary points of weakly convex or general Lipschitz nonconvex functions.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "TCS-STAT-01",
+    "title": "Computational threshold for sparse PCA",
+    "statement": "Close the gap between polynomial-time algorithms and information-theoretic recovery for sparse principal components in the planted-spike model.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "TCS-STREAMING-10",
+    "title": "Streaming algorithms under deletion errors",
+    "statement": "Develop optimal sketches that tolerate a bounded fraction of adversarially corrupted updates while retaining turnstile guarantees.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "KOU-21.87",
+    "title": "Coprime-index generating subgroups",
+    "statement": "Assume that a finite group \\(G\\) has a family of \\(d\\)-generator subgroups whose indices have no common divisor. Must \\(G\\) be generated by \\(d+1\\) elements?",
+    "references": "https://kourovkanotebookorg.wordpress.com/wp-content/uploads/2026/07/21tkt.pdf"
+  },
+  {
+    "id": "R101-19",
+    "title": "Generic complex phase-retrieval injectivity",
+    "statement": "Let \\(N=4M-5\\) and draw \\(A\\in\\mathbb C^{N\\times M}\\) generically. If \\(p_M\\) is the probability that \\(x\\bmod\\mathbb T\\mapsto |Ax|^2\\) is injective, prove \\(p_M<1\\) for every \\(M\\) and \\(p_M\\to0\\).",
+    "references": "https://arxiv.org/abs/2603.29571"
+  },
+  {
+    "id": "TOPP-6",
+    "title": "Minimum Euclidean matching in the plane",
+    "statement": "Can a minimum-weight perfect matching of \\(n\\) planar points under Euclidean distance be computed in substantially subquadratic time, ideally near \\(n^{3/2}\\) or better?",
+    "references": "https://topp.openproblem.net/p6"
+  },
+  {
+    "id": "TCS-DISTRIBUTED-07",
+    "title": "Online bipartite matching beyond 1-1/e under structure",
+    "statement": "Characterize the weakest stochastic or geometric assumptions permitting an efficiently achievable competitive ratio strictly above \\(1-1/e\\).",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "TCS-LEARN-05",
+    "title": "Optimal sample compression for VC classes",
+    "statement": "Does every concept class of VC dimension \\(d\\) admit a sample-compression scheme of size \\(O(d)\\)?",
+    "references": "https://proceedings.mlr.press/"
+  },
+  {
+    "id": "TCS-TESTING-06",
+    "title": "Tolerant monotonicity testing",
+    "statement": "Find the optimal query complexity for distinguishing functions close to monotone from functions far from monotone.",
+    "references": "https://arxiv.org/abs/2508.16878"
+  },
+  {
+    "id": "EP-168",
+    "title": "Avoiding triples {n,2n,3n}",
+    "statement": "Let $F(N)$ be the size of the largest subset of $\\{1,\\ldots,N\\}$ which does not contain any set of the form $\\{n,2n,3n\\}$. What is \\[\\lim_{N\\to\\infty}\\frac{F(N)}{N}?\\] Is this limit irrational?",
+    "references": "https://www.erdosproblems.com/168"
+  },
+  {
+    "id": "TOPP-24",
+    "title": "Near-linear polygonal-curve simplification",
+    "statement": "Can an optimal or provably near-optimal simplification of a polygonal curve, under a standard geometric error measure, be computed in near-linear time?",
+    "references": "https://topp.openproblem.net/p24"
+  },
+  {
+    "id": "TCS-STREAMING-05",
+    "title": "Linear sketches for graph connectivity",
+    "statement": "Determine the exact sketch size needed to recover connectivity or a spanning forest from dynamic graph streams.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "DAG-5.8",
+    "title": "Small WSPDs for low-density graphs",
+    "statement": "Close the gap between known upper and lower bounds for the minimum size of a well-separated pair decomposition in the graph metric of low-density geometric graphs, even for grid subgraphs.",
+    "references": "https://drops.dagstuhl.de/storage/04dagstuhl-reports/volume15/issue05/25201/html/DagRep.15.5.64/DagRep.15.5.64.html"
+  },
+  {
+    "id": "TOPP-7",
+    "title": "The planar k-set problem",
+    "statement": "Determine the maximum number of \\(k\\)-sets of an \\(n\\)-point set in the plane, closing the gap between the best upper and lower bounds.",
+    "references": "https://topp.openproblem.net/p7"
+  },
+  {
+    "id": "TCS-COMM-10",
+    "title": "Optimal randomized lifting theorems",
+    "statement": "Obtain a lifting theorem that converts arbitrary randomized query lower bounds into communication lower bounds with near-optimal gadget size.",
+    "references": "https://arxiv.org/abs/1504.06830"
+  },
+  {
+    "id": "TCS-OPT_GAME-10",
+    "title": "Online convex optimization with switching costs",
+    "statement": "Determine optimal competitive and regret guarantees when decisions incur both convex service costs and movement costs in general norms.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "KOU-21.109",
+    "title": "Derived length from character codegrees",
+    "statement": "Is the derived length of every finite solvable group \\(G\\) at most \\(|\\operatorname{Cod}(G)|-1\\)?",
+    "references": "https://kourovkanotebookorg.wordpress.com/wp-content/uploads/2026/07/21tkt.pdf"
+  },
+  {
+    "id": "TOPP-12",
+    "title": "Fully dynamic planar convex hull",
+    "statement": "Obtain optimal worst-case update and query bounds for maintaining the convex hull of a dynamically changing planar point set.",
+    "references": "https://topp.openproblem.net/p12"
+  },
+  {
+    "id": "TCS-DISTRIBUTED-02",
+    "title": "Optimal randomized distributed coloring",
+    "statement": "Determine the exact round complexity of \\((\\Delta+1)\\)-vertex coloring in the randomized LOCAL model.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "TCS-FINE_GRAINED-08",
+    "title": "Near-linear negative-weight shortest paths",
+    "statement": "Give a deterministic near-linear-time algorithm for single-source shortest paths in directed graphs with negative edge weights and no negative cycles.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "KOU-21.88",
+    "title": "Odd-order group with commuting probability 1/17",
+    "statement": "Does there exist a finite nonabelian group \\(G\\) of odd order, with \\(k(G)\\) conjugacy classes, such that \\(k(G)/|G|=1/17\\)?",
+    "references": "https://kourovkanotebookorg.wordpress.com/wp-content/uploads/2026/07/21tkt.pdf"
+  },
+  {
+    "id": "KP-1.47",
+    "title": "Nonorientable four-genus of torus knots",
+    "statement": "Determine the nonorientable \\(4\\)-genus \\(\\gamma_4(T_{p,q})\\) of torus knots, and more generally the realizable pairs of normal Euler number and first Betti number of nonorientable surfaces in \\(B^4\\) bounded by a given knot.",
+    "references": "https://www.unsolvedmath.com/problems/KP-1.47"
+  },
+  {
+    "id": "TCS-PARAMETERIZED-10",
+    "title": "Kernelization of geometric hitting set",
+    "statement": "Determine tight polynomial-kernel bounds for geometric hitting-set problems parameterized by solution size and geometric dimension.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "TCS-STAT-08",
+    "title": "Sharp thresholds for community detection with degree correction",
+    "statement": "Determine exact statistical and computational thresholds for recovery in degree-corrected and overlapping stochastic block models.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "R101-29",
+    "title": "Paley equiangular tight frames beyond square-root RIP",
+    "statement": "Prove that the Paley equiangular tight-frame construction satisfies restricted isometry beyond the square-root bottleneck: for some \\(\\varepsilon>0\\), every submatrix of \\(m\\asymp p^{1/2+\\varepsilon}\\) distinct frame vectors has uniformly bounded condition number.",
+    "references": "https://arxiv.org/abs/2603.29571"
+  },
+  {
+    "id": "TOPP-13",
+    "title": "Point location in three-dimensional subdivisions",
+    "statement": "Can point location in a general three-dimensional subdivision be supported with near-linear space, polylogarithmic query time, and efficient preprocessing?",
+    "references": "https://topp.openproblem.net/p13"
+  },
+  {
+    "id": "TOPP-67",
+    "title": "Fair convex partitions of polygons",
+    "statement": "For every positive integer \\(n\\), can every convex polygon be partitioned into \\(n\\) convex pieces having equal areas and equal perimeters?",
+    "references": "https://topp.openproblem.net/p67"
+  },
+  {
+    "id": "TCS-LEARN-06",
+    "title": "Agnostic compression with dimension-sized summaries",
+    "statement": "Does every VC class admit an agnostic compression scheme of size polynomial, or ideally linear, in its VC dimension?",
+    "references": "https://proceedings.mlr.press/"
+  },
+  {
+    "id": "TCS-PARAMETERIZED-03",
+    "title": "Optimal FPT algorithms for directed feedback vertex set",
+    "statement": "Close the exponential-base and kernelization gaps for Directed Feedback Vertex Set parameterized by solution size.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "DAG-5.7",
+    "title": "Complexity of 3-manifold treewidth",
+    "statement": "What is the computational complexity of determining the minimum treewidth of the dual graph over all generalized triangulations of a given compact \\(3\\)-manifold?",
+    "references": "https://drops.dagstuhl.de/storage/04dagstuhl-reports/volume15/issue05/25201/html/DagRep.15.5.64/DagRep.15.5.64.html"
+  },
+  {
+    "id": "GREEN-067",
+    "title": "Affine translates of {0,1,3}",
+    "statement": "If \\(A\\) is a set of \\(n\\) integers, what is the maximum number of affine translates of \\(\\{0,1,3\\}\\) that can \\(A\\) contain?",
+    "references": "https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf https://www.unsolvedmath.com/problems/GREEN-067"
+  },
+  {
+    "id": "TOPP-14",
+    "title": "Binary space partitions for disjoint objects",
+    "statement": "Determine tight worst-case bounds on the minimum size of a binary space partition for disjoint line segments or polygons in fixed dimension.",
+    "references": "https://topp.openproblem.net/p14"
+  },
+  {
+    "id": "TCS-COMM-03",
+    "title": "Computability of information complexity",
+    "statement": "Is the information complexity of every finite two-party function computable to arbitrary precision by an effective algorithm?",
+    "references": "https://arxiv.org/abs/1504.06830"
+  },
+  {
+    "id": "TCS-OPT_GAME-06",
+    "title": "Polynomial convergence of no-regret dynamics",
+    "statement": "Identify broad game classes in which decentralized no-regret learning converges in polynomial time to an approximate equilibrium.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "TCS-TESTING-07",
+    "title": "One-sided testing of bipartiteness in bounded-degree graphs",
+    "statement": "Determine the optimal dependence on \\(\u000barepsilon\\) for one-sided testers of bipartiteness in the bounded-degree model.",
+    "references": "https://arxiv.org/abs/2508.16878"
+  },
+  {
+    "id": "KP-2.36",
+    "title": "Equations over mapping-class and braid groups",
+    "statement": "Are systems of equations decidable over mapping class groups and braid groups? Determine the complexity in the cases where decidability holds.",
+    "references": "https://www.unsolvedmath.com/problems/KP-2.36"
+  },
+  {
+    "id": "TCS-DISTRIBUTED-04",
+    "title": "Distributed minimum spanning tree with optimal messages",
+    "statement": "Can MST be computed with simultaneously optimal round and message complexity in general networks?",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "TCS-STREAMING-07",
+    "title": "Schatten-norm streaming complexity",
+    "statement": "Close the upper-lower gaps for approximating Schatten \\(p\\)-norms of streamed matrices, especially non-even \\(p\\).",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "KOU-21.99",
+    "title": "Fixed points in transitive permutation groups",
+    "statement": "If \\(G\\) acts transitively on a finite set \\(\\Omega\\), must every two distinct \\(\\alpha,\\beta\\in\\Omega\\) admit some \\(g\\in G\\) with \\(\\alpha^g=\\beta\\) whose number of fixed points is not \\(1\\)?",
+    "references": "https://kourovkanotebookorg.wordpress.com/wp-content/uploads/2026/07/21tkt.pdf"
+  },
+  {
+    "id": "TOPP-15",
+    "title": "Output-sensitive convex hulls in high dimension",
+    "statement": "Give optimal output-sensitive algorithms for constructing convex hulls in \\(\\mathbb R^d\\) when \\(d\\) is fixed but at least four.",
+    "references": "https://topp.openproblem.net/p15"
+  },
+  {
+    "id": "TOPP-38",
+    "title": "Compatible triangulations",
+    "statement": "Given two simple polygons with equally many labeled vertices, when do they admit compatible triangulations, and how many Steiner points are sufficient in the worst case?",
+    "references": "https://topp.openproblem.net/p38"
+  },
+  {
+    "id": "TCS-PARAMETERIZED-07",
+    "title": "FPT approximation for directed cut problems",
+    "statement": "Obtain efficient parameterized approximation schemes for directed multicut and related directed separation problems.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "TCS-TESTING-08",
+    "title": "Testing graph expansion with optimal complexity",
+    "statement": "Give matching upper and lower query bounds for testing conductance or expansion in bounded-degree graphs.",
+    "references": "https://arxiv.org/abs/2508.16878"
+  },
+  {
+    "id": "TOPP-18",
+    "title": "Pushing disks without collisions",
+    "statement": "Determine the algorithmic complexity of deciding whether labeled disks can be moved by pushing operations from a start configuration to a target configuration without overlap.",
+    "references": "https://topp.openproblem.net/p18"
+  },
+  {
+    "id": "TOPP-68",
+    "title": "Rolling a die over a labeled board",
+    "statement": "Determine the algorithmic complexity of deciding whether a die can be rolled across a labeled board from a prescribed start state to a prescribed target state while matching all labels.",
+    "references": "https://topp.openproblem.net/p68"
+  },
+  {
+    "id": "TCS-LOGIC_ALGEBRA-07",
+    "title": "Decidable verification of probabilistic programs",
+    "statement": "Identify the largest natural class of probabilistic programs for which almost-sure termination and quantitative reachability are decidable.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "TCS-ONLINE_RL-10",
+    "title": "Risk-sensitive reinforcement learning with function approximation",
+    "statement": "Establish minimax sample and regret bounds for coherent or entropic risk objectives under general function approximation.",
+    "references": "https://learningtheory.org/colt2026/openproblems.html"
+  },
+  {
+    "id": "DAG-5.2",
+    "title": "Cover points by double disks",
+    "statement": "Given a finite planar point set and disks of two allowed radii, obtain improved approximation algorithms or fixed-parameter algorithms, parameterized by the number of radius-one disks, for finding a minimum-cardinality cover.",
+    "references": "https://drops.dagstuhl.de/storage/04dagstuhl-reports/volume15/issue05/25201/html/DagRep.15.5.64/DagRep.15.5.64.html"
+  },
+  {
+    "id": "KOU-21.90",
+    "title": "A diameter-three Q-polynomial distance-regular graph",
+    "statement": "Does there exist a \\(Q\\)-polynomial distance-regular graph \\(\\Gamma\\) of diameter \\(3\\) such that both distance graphs \\(\\Gamma_2\\) and \\(\\Gamma_3\\) are strongly regular?",
+    "references": "https://kourovkanotebookorg.wordpress.com/wp-content/uploads/2026/07/21tkt.pdf"
+  },
+  {
+    "id": "R101-20",
+    "title": "A universal phase-retrieval stability exponent",
+    "statement": "Prove that universal constants \\(C>0\\) and \\(0<\\beta<1\\) exist such that every \\(A\\in\\mathbb R^{(2M-1)\\times M}\\) whose every \\(M\\) rows span \\(\\mathbb R^M\\) satisfies the Balan–Wang stability bound \\(\\omega(A)\\le C\\max_k\\|A_k\\|^\\beta\\).",
+    "references": "https://arxiv.org/abs/2603.29571"
+  },
+  {
+    "id": "TCS-COMM-08",
+    "title": "Tightness of the partition bound",
+    "statement": "Does the partition bound characterize randomized communication complexity up to polylogarithmic factors?",
+    "references": "https://arxiv.org/abs/1504.06830"
+  },
+  {
+    "id": "TCS-CRYPTO-08",
+    "title": "Transparent post-quantum succinct arguments",
+    "statement": "Construct transparent post-quantum SNARGs with near-linear prover time, polylogarithmic verification, and standard-model security.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "TCS-PARAMETERIZED-04",
+    "title": "Coloring above structural guarantees",
+    "statement": "Classify the parameterized complexity of graph coloring when parameterized above degeneracy, treewidth, or other guaranteed colorability bounds.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "TCS-QUANTUM-08",
+    "title": "Optimal time-space tradeoffs for element distinctness",
+    "statement": "Determine the exact quantum time-space tradeoff for element distinctness and collision problems.",
+    "references": "https://doi.org/10.1103/PRXQuantum.3.010101"
+  },
+  {
+    "id": "TCS-STAT-02",
+    "title": "Tensor PCA below the spectral threshold",
+    "statement": "Determine whether polynomial-time algorithms can recover a planted rank-one tensor below the spectral threshold, or prove a matching average-case lower bound.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "DAG-5.4B",
+    "title": "Geodesic morphs on the sphere",
+    "statement": "Can any two isomorphic spherical geodesic embeddings in the same isotopy class be connected by a continuous morph through geodesic embeddings?",
+    "references": "https://drops.dagstuhl.de/storage/04dagstuhl-reports/volume15/issue05/25201/html/DagRep.15.5.64/DagRep.15.5.64.html"
+  },
+  {
+    "id": "GREEN-048",
+    "title": "A balanced line through two points",
+    "statement": "Let \\(X\\subset\\mathbb R^2\\) be a set of \\(n\\) points. Does there exist a line \\(\\ell\\) through at least two points of \\(X\\) such that the numbers of points on either side of \\(\\ell\\) differ by at most \\(100\\)?",
+    "references": "https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf https://www.unsolvedmath.com/problems/GREEN-048"
+  },
+  {
+    "id": "TOPP-19",
+    "title": "Vertical decompositions in high dimension",
+    "statement": "Determine tight combinatorial and algorithmic bounds for vertical decompositions of arrangements in \\(\\mathbb R^d\\).",
+    "references": "https://topp.openproblem.net/p19"
+  },
+  {
+    "id": "TCS-LOGIC_ALGEBRA-04",
+    "title": "Efficient noncommutative rational identity testing",
+    "statement": "Determine optimal deterministic algorithms and complexity bounds for identity testing of noncommutative rational formulas and circuits.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "TCS-LOWER_BOUNDS-07",
+    "title": "Polynomial-calculus degree for random CSPs",
+    "statement": "Determine sharp degree and size thresholds for polynomial-calculus refutations of broad random constraint-satisfaction models.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "TOPP-23",
+    "title": "Vertex \\(\\pi\\)-floodlights",
+    "statement": "Determine the minimum function \\(f(n)\\) such that every simple polygon with \\(n\\) vertices can be illuminated by \\(f(n)\\) floodlights of aperture \\(\\pi\\) placed at polygon vertices.",
+    "references": "https://topp.openproblem.net/p23"
+  },
+  {
+    "id": "TCS-DISTRIBUTED-06",
+    "title": "Optimal prophet inequalities for matroids",
+    "statement": "Determine the best universal competitive ratio for prophet inequalities under general matroid feasibility.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "TCS-FINE_GRAINED-10",
+    "title": "Exact directed global min-cut near quadratic time",
+    "statement": "Can the global minimum cut of a directed weighted graph be found in near-quadratic or better deterministic time?",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "TCS-QUANTUM-05",
+    "title": "Multiparameter quantum Cramér–Rao saturation",
+    "statement": "Characterize when the optimal multiparameter quantum Cramér–Rao bound is asymptotically attainable with physically allowed collective measurements.",
+    "references": "https://doi.org/10.1103/PRXQuantum.3.010101"
+  },
+  {
+    "id": "TCS-STREAMING-09",
+    "title": "Multi-pass streaming set cover",
+    "statement": "Characterize the optimal approximation-space-pass tradeoff for set cover in the streaming model.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "KP-1.13",
+    "title": "Fiberedness and tautness after zero surgery",
+    "statement": "Let \\(K\\) be null-homotopic in a \\(3\\)-manifold \\(Y\\), and cap a Seifert surface \\(F\\) to \\(\\widetilde F\\subset Y_0(K)\\). If \\(Y_0(K)\\) fibers with fiber class \\([\\widetilde F]\\), must \\(K\\) be fibered with fiber class \\([F]\\)? If \\(F\\) is taut in the knot exterior, must \\(\\widetilde F\\) be taut after zero surgery?",
+    "references": "https://www.unsolvedmath.com/problems/KP-1.13"
+  },
+  {
+    "id": "TOPP-20",
+    "title": "Minimum-stabbing spanning trees",
+    "statement": "Given planar points, find or approximate a spanning tree minimizing the maximum number of tree edges crossed by any line; determine the optimal approximation and complexity bounds.",
+    "references": "https://topp.openproblem.net/p20"
+  },
+  {
+    "id": "TCS-TESTING-01",
+    "title": "Polynomial-query testing of hereditary graph properties",
+    "statement": "Does every hereditary graph property admit a tester whose query complexity is polynomial in \\(1/\u000barepsilon\\)?",
+    "references": "https://arxiv.org/abs/2508.16878"
+  },
+  {
+    "id": "TOPP-21",
+    "title": "Shortest paths among planar obstacles",
+    "statement": "Can exact Euclidean shortest paths among polygonal obstacles be computed with optimal preprocessing, space, and query time simultaneously?",
+    "references": "https://topp.openproblem.net/p21"
+  },
+  {
+    "id": "TOPP-34",
+    "title": "Subdivide segments into pseudosegments",
+    "statement": "What is the smallest worst-case number of pieces needed to subdivide \\(n\\) plane segments so that every pair of resulting pieces intersects at most once?",
+    "references": "https://topp.openproblem.net/p34"
+  },
+  {
+    "id": "TCS-COMM-06",
+    "title": "Rank-one decompositions versus rectangles",
+    "statement": "Quantify the minimum number of combinatorial rectangles needed to represent or approximate matrices with short rank-one decompositions.",
+    "references": "https://arxiv.org/abs/1504.06830"
+  },
+  {
+    "id": "TCS-CRYPTO-09",
+    "title": "Adaptive security for efficient threshold FHE",
+    "statement": "Build fully homomorphic encryption with efficient threshold decryption and strong adaptive security under standard lattice assumptions.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "TCS-PARAMETERIZED-09",
+    "title": "Counting homomorphisms on nowhere-dense classes",
+    "statement": "Find optimal parameterized counting algorithms and dichotomies for graph homomorphisms on nowhere-dense structures.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "KP-2.27",
+    "title": "Braid groups and right-angled Artin groups",
+    "statement": "Does every braid group have a finite-index subgroup that embeds in a right-angled Artin group?",
+    "references": "https://www.unsolvedmath.com/problems/KP-2.27"
+  },
+  {
+    "id": "GREEN-049",
+    "title": "A sparse hitting set for axis-parallel rectangles",
+    "statement": "Let \\(A\\) be a set of \\(n\\) points in the plane. Can one select a set \\(A'\\) of \\(n/2\\) points, with the property that any axis-parallel rectangle containing \\(1000\\) points of \\(A\\) contains at least one point of \\(A'\\)?",
+    "references": "https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf https://www.unsolvedmath.com/problems/GREEN-049"
+  },
+  {
+    "id": "TOPP-22",
+    "title": "Minimum-link paths in polygonal domains",
+    "statement": "Determine the optimal time complexity for finding a minimum-link path between two points in a polygonal domain with holes.",
+    "references": "https://topp.openproblem.net/p22"
+  },
+  {
+    "id": "TOPP-76",
+    "title": "Classify equiprojective polyhedra",
+    "statement": "Classify the convex polyhedra that are \\(k\\)-equiprojective, meaning that every generic orthogonal projection has exactly \\(k\\) vertices.",
+    "references": "https://topp.openproblem.net/p76"
+  },
+  {
+    "id": "TCS-CODING-08",
+    "title": "Explicit codes for adversarial deletion channels",
+    "statement": "Construct explicit binary codes approaching the optimal rate for worst-case deletions with polynomial-time encoding and decoding.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "TCS-PARAMETERIZED-05",
+    "title": "Induced-subgraph isomorphism exponents",
+    "statement": "Determine the optimal dependence on pattern size for induced-subgraph isomorphism in sparse and bounded-degeneracy host graphs.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "TCS-TESTING-03",
+    "title": "Polynomial induced-subgraph removal bounds",
+    "statement": "For which fixed graphs \\(H\\) does induced-\\(H\\)-freeness have polynomial removal and testing bounds?",
+    "references": "https://arxiv.org/abs/2508.16878"
+  },
+  {
+    "id": "KOU-21.91",
+    "title": "Squares of Brauer-character degrees",
+    "statement": "Is the sum of the squares of the degrees of the irreducible \\(p\\)-Brauer characters of a finite group \\(G\\) at least the \\(p'\\)-part of \\(|G|\\)?",
+    "references": "https://kourovkanotebookorg.wordpress.com/wp-content/uploads/2026/07/21tkt.pdf"
+  },
+  {
+    "id": "TOPP-25",
+    "title": "Polyhedral surface approximation",
+    "statement": "Find tight complexity bounds and optimal algorithms for approximating a smooth or sampled surface by a polyhedral surface within prescribed Hausdorff error.",
+    "references": "https://topp.openproblem.net/p25"
+  },
+  {
+    "id": "TCS-DISTRIBUTED-09",
+    "title": "Wait-free renaming with tight space",
+    "statement": "Determine exact shared-memory space and step complexity for adaptive wait-free renaming.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "BG-027",
+    "title": "No uniquely represented element in A+A mod p",
+    "statement": "What is the smallest possible size of a set \\(A\\subset\\mathbb Z/p\\mathbb Z\\), with at least two elements, such that no element of \\(A+A\\) has a unique representation as \\(a+a'\\) with \\(a,a'\\in A\\)?",
+    "references": "https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf"
+  },
+  {
+    "id": "TOPP-26",
+    "title": "Surface reconstruction guarantees",
+    "statement": "Give an algorithm with sharp sampling conditions that reconstructs the correct topology and geometry of an unknown surface from noisy samples.",
+    "references": "https://topp.openproblem.net/p26"
+  },
+  {
+    "id": "TCS-LOGIC_ALGEBRA-02",
+    "title": "Complexity of equations over braid groups",
+    "statement": "Determine the decidability and computational complexity of solving systems of equations and inequations in braid groups.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "DAG-5.3",
+    "title": "Positive-Euler-characteristic normal surfaces",
+    "statement": "Given a triangulated compact \\(3\\)-manifold, is deciding whether it contains a normal surface of positive Euler characteristic fixed-parameter tractable in the dual treewidth, or is it NP-hard under that restriction?",
+    "references": "https://drops.dagstuhl.de/storage/04dagstuhl-reports/volume15/issue05/25201/html/DagRep.15.5.64/DagRep.15.5.64.html"
+  },
+  {
+    "id": "KOU-21.92",
+    "title": "Bounding the number of Brauer characters",
+    "statement": "Is the number of irreducible \\(p\\)-Brauer characters of a finite group \\(G\\) at most the maximum number of conjugacy classes \\(k(H)\\) among the \\(p'\\)-subgroups \\(H\\le G\\)?",
+    "references": "https://kourovkanotebookorg.wordpress.com/wp-content/uploads/2026/07/21tkt.pdf"
+  },
+  {
+    "id": "TCS-CRYPTO-10",
+    "title": "Optimal leakage-resilient pseudorandom functions",
+    "statement": "Determine the maximum leakage rate compatible with efficient PRFs under standard assumptions, with matching constructions and impossibility bounds.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "TCS-FINE_GRAINED-09",
+    "title": "Fully dynamic transitive closure",
+    "statement": "Achieve substantially subquadratic worst-case update and query tradeoffs for exact reachability in fully dynamic directed graphs.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "TCS-LEARN-07",
+    "title": "Efficient proper learning of halfspaces with noise",
+    "statement": "Is there a polynomial-time proper learner for halfspaces under general distributions with classification noise at the information-theoretic rate?",
+    "references": "https://proceedings.mlr.press/"
+  },
+  {
+    "id": "GREEN-052",
+    "title": "Equidistribution of integer dilates",
+    "statement": "Let \\(c>0\\). Let \\(A\\) be a set of \\(n\\) (distinct) integers. Does there exist \\(\\theta\\) such that no interval of length \\(1/n\\) in \\(\\mathbb R/\\mathbb Z\\) contains more than \\(n^c\\) of the numbers \\(\\theta a\\pmod 1\\), \\(a\\in A\\)?",
+    "references": "https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf https://www.unsolvedmath.com/problems/GREEN-052"
+  },
+  {
+    "id": "TOPP-27",
+    "title": "All-hexahedral mesh generation",
+    "statement": "Does every suitable polyhedral domain admit an all-hexahedral mesh, possibly after bounded local refinement, and can one be constructed efficiently?",
+    "references": "https://topp.openproblem.net/p27"
+  },
+  {
+    "id": "TCS-CODING-02",
+    "title": "Explicit binary list-decodable codes at capacity",
+    "statement": "Construct explicit binary linear codes achieving list-decoding capacity with polynomial-time decoding throughout the capacity region.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "TCS-LOWER_BOUNDS-09",
+    "title": "Resolution width-size converses",
+    "statement": "Characterize when small proof size forces small width in resolution beyond the known general inequalities.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "TCS-PARAMETERIZED-06",
+    "title": "Polynomial kernels for packing problems",
+    "statement": "Characterize which fixed-pattern packing problems admit polynomial kernels on general or sparse graph classes.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "TOPP-28",
+    "title": "Connectivity of three-dimensional flip graphs",
+    "statement": "Is the flip graph of tetrahedralizations of every finite point set in \\(\\mathbb R^3\\) connected?",
+    "references": "https://topp.openproblem.net/p28"
+  },
+  {
+    "id": "TOPP-29",
+    "title": "Hamiltonian tetrahedralizations",
+    "statement": "Does every finite point set in convex position in \\(\\mathbb R^3\\) admit a tetrahedralization whose dual graph has a Hamiltonian path or cycle?",
+    "references": "https://topp.openproblem.net/p29"
+  },
+  {
+    "id": "TCS-OPT_GAME-03",
+    "title": "Smoothed complexity of local-search equilibria",
+    "statement": "Determine whether natural local-search algorithms for congestion and potential games have polynomial smoothed complexity.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "KP-1.21",
+    "title": "Finiteness and detection of L-space knots",
+    "statement": "For each genus \\(g\\), are there only finitely many L-space knots of genus \\(g\\)? More generally, for which knots \\(L\\subset S^3\\) are there only finitely many knots \\(K\\) with \\(\\widehat{\\mathrm{HFK}}(S^3,K)\\cong\\widehat{\\mathrm{HFK}}(S^3,L)\\)?",
+    "references": "https://www.unsolvedmath.com/problems/KP-1.21"
+  },
+  {
+    "id": "TCS-DISTRIBUTED-08",
+    "title": "Byzantine agreement with optimal communication",
+    "statement": "Achieve simultaneously optimal resilience, latency, and total communication for Byzantine agreement against adaptive adversaries.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "TOPP-31",
+    "title": "Trapping light rays with mirrors",
+    "statement": "Characterize finite mirror arrangements that trap a light ray indefinitely, and determine the computational complexity of detecting such trapped trajectories.",
+    "references": "https://topp.openproblem.net/p31"
+  },
+  {
+    "id": "TCS-STAT-07",
+    "title": "Efficient estimation of high-dimensional log-concave densities",
+    "statement": "Find polynomial-time estimators with near-minimax sample complexity for general high-dimensional log-concave densities.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "TOPP-33",
+    "title": "The sum-of-square-roots problem",
+    "statement": "Is comparison of sums of square roots of integers decidable in polynomial time in the bit length of the input?",
+    "references": "https://topp.openproblem.net/p33"
+  },
+  {
+    "id": "TOPP-72",
+    "title": "Pentagonal immersed spheres",
+    "statement": "Must every immersed polyhedral sphere all of whose faces are congruent regular pentagons be a union, with possible self-intersections, of dodecahedral pieces?",
+    "references": "https://topp.openproblem.net/p72"
+  },
+  {
+    "id": "TCS-FINE_GRAINED-07",
+    "title": "Truly subquadratic exact diameter in sparse graphs",
+    "statement": "Is there an \\(O(n^{2-\u000barepsilon})\\)-time algorithm for exact diameter in sparse undirected graphs, or a matching conditional lower bound?",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "TCS-LOGIC_ALGEBRA-01",
+    "title": "Decidability of equations over mapping class groups",
+    "statement": "Is the existential theory, or equivalently solvability of finite systems of equations, decidable over mapping class groups?",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "GREEN-045",
+    "title": "No three in line in [N]^2",
+    "statement": "What is the largest subset of the grid \\([N]^2\\) with no three points in a line? In particular, for \\(N\\) sufficiently large, is it impossible to have a set of size \\(2N\\) with this property?",
+    "references": "https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf https://www.unsolvedmath.com/problems/GREEN-045"
+  },
+  {
+    "id": "KOU-21.114",
+    "title": "Derived length of weakly ab-maximal groups",
+    "statement": "A finite group \\(G\\) is weakly ab-maximal if \\(|H/[H,H]|\\le|G/[G,G]|\\) for every \\(H\\le G\\). Do all weakly ab-maximal groups have bounded derived length?",
+    "references": "https://kourovkanotebookorg.wordpress.com/wp-content/uploads/2026/07/21tkt.pdf"
+  },
+  {
+    "id": "AINT-43",
+    "title": "Salem numbers as dynamical degrees",
+    "statement": "Determine which Salem numbers occur as dynamical degrees of automorphisms of algebraic surfaces.",
+    "references": "https://aimath.org/pastworkshops/aint26problemlist.pdf"
+  },
+  {
+    "id": "TOPP-35",
+    "title": "The geometric freeze-tag problem",
+    "statement": "Determine the optimal approximation ratio and exact complexity of waking all sleeping robots in Euclidean space when awakened robots move at unit speed.",
+    "references": "https://topp.openproblem.net/p35"
+  },
+  {
+    "id": "TCS-CODING-05",
+    "title": "List decoding of rank-metric codes",
+    "statement": "Determine the exact list-decoding radius and efficient decoding limits for Gabidulin and related rank-metric codes.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "TCS-PARAMETERIZED-02",
+    "title": "Polynomial kernels for k-Path",
+    "statement": "Does \\(k\\)-Path admit a polynomial kernel under a natural parameterization or randomized compression of near-linear size?",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "R101-22",
+    "title": "No seven mutually unbiased bases in dimension six",
+    "statement": "Prove that \\(\\operatorname{MUB}(6)<7\\); equivalently, seven mutually unbiased orthonormal bases do not exist in \\(\\mathbb C^6\\).",
+    "references": "https://arxiv.org/abs/2603.29571"
+  },
+  {
+    "id": "TOPP-39",
+    "title": "Distinct distances in structured point sets",
+    "statement": "Determine sharp bounds for the number of distinct distances determined by important structured classes of planar point sets.",
+    "references": "https://topp.openproblem.net/p39"
+  },
+  {
+    "id": "KOU-21.110",
+    "title": "Five conjugate automorphisms",
+    "statement": "Let \\(S\\) be an exceptional finite simple group of Lie type and \\(x\\ne1\\) an automorphism. If \\(\\alpha(x)\\) is the least number of conjugates of \\(x\\) generating \\(\\langle x,\\operatorname{Inn}S\\rangle\\), is \\(\\alpha(x)\\le5\\)? Determine the largest possible \\(\\alpha(x)\\) for each \\(S\\).",
+    "references": "https://kourovkanotebookorg.wordpress.com/wp-content/uploads/2026/07/21tkt.pdf"
+  },
+  {
+    "id": "TOPP-41",
+    "title": "Sorting the pairwise sums X+Y",
+    "statement": "Can the multiset \\(X+Y=\\{x+y:x\\in X,y\\in Y\\}\\) be sorted in truly subquadratic comparison or algebraic-decision-tree complexity?",
+    "references": "https://topp.openproblem.net/p41"
+  },
+  {
+    "id": "TCS-CRYPTO-04",
+    "title": "Ring-LWE over broad number fields",
+    "statement": "Characterize the number fields and error distributions for which Ring-LWE has secure worst-case reductions without hidden algebraic weaknesses.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "TCS-TESTING-02",
+    "title": "Polynomial bounds for testing triangle-freeness",
+    "statement": "Determine whether triangle-freeness of dense graphs can be tested with query complexity polynomial in \\(1/\u000barepsilon\\).",
+    "references": "https://arxiv.org/abs/2508.16878"
+  },
+  {
+    "id": "GREEN-075",
+    "title": "Large gaps among dilates",
+    "statement": "Let \\(p\\) be a prime and let \\(A\\subset\\mathbb Z/p\\mathbb Z\\) be a set of size \\(\\sqrt p\\). Is there a dilate of \\(A\\) with a gap of length \\(100\\sqrt p\\)?",
+    "references": "https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf https://www.unsolvedmath.com/problems/GREEN-075"
+  },
+  {
+    "id": "KP-2.33",
+    "title": "Groups that cannot act faithfully on a closed surface",
+    "statement": "For a closed compact surface \\(S\\), does there exist a finitely generated torsion-free group that cannot act faithfully on \\(S\\) by homeomorphisms?",
+    "references": "https://www.unsolvedmath.com/problems/KP-2.33"
+  },
+  {
+    "id": "TCS-COMM-04",
+    "title": "Sharp direct-sum theorem for randomized communication",
+    "statement": "Does solving \\(k\\) independent copies of every two-party function require essentially \\(k\\) times its randomized communication complexity?",
+    "references": "https://arxiv.org/abs/1504.06830"
+  },
+  {
+    "id": "TCS-LEARN-10",
+    "title": "Computational limits of distribution-free regression",
+    "statement": "Characterize which real-valued hypothesis classes are efficiently learnable in the distribution-free agnostic setting.",
+    "references": "https://proceedings.mlr.press/"
+  },
+  {
+    "id": "TCS-QUANTUM-01",
+    "title": "SIC-POVM existence in every dimension",
+    "statement": "Does a symmetric informationally complete POVM exist in every finite Hilbert-space dimension?",
+    "references": "https://doi.org/10.1103/PRXQuantum.3.010101"
+  },
+  {
+    "id": "KOU-21.98",
+    "title": "Cyclicly covered word values",
+    "statement": "Let \\(w\\) be a multilinear commutator word. If the set of \\(w\\)-values in a group \\(G\\) is covered by finitely many cyclic subgroups, must the verbal subgroup \\(w(G)\\) be finite-by-cyclic?",
+    "references": "https://kourovkanotebookorg.wordpress.com/wp-content/uploads/2026/07/21tkt.pdf"
+  },
+  {
+    "id": "TCS-CODING-07",
+    "title": "Approximating minrank for index coding",
+    "statement": "Determine the approximability of graph minrank over finite fields and its relation to optimal index-code length.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "TCS-CRYPTO-03",
+    "title": "Tight worst-case reductions for Module-LWE",
+    "statement": "Establish tight classical worst-case hardness reductions for Module-LWE across the parameter ranges used in practice.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "TCS-FINE_GRAINED-06",
+    "title": "Near-linear deterministic directed maximum flow",
+    "statement": "Can exact maximum flow in directed sparse graphs be computed deterministically in near-linear time?",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "TCS-DISTRIBUTED-01",
+    "title": "Near-optimal deterministic LOCAL complexity of MIS",
+    "statement": "Can maximal independent set be computed deterministically in \\(O(\\log \\Delta+\\operatorname{polylog}\\log n)\\) LOCAL rounds, or can a matching superpolylogarithmic-in-\\(\\log n\\) lower bound be proved?",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "TCS-OPT_GAME-04",
+    "title": "Exact complexity of market equilibria with production",
+    "statement": "Classify the computational complexity of competitive equilibria in exchange economies with production and nonseparable utilities.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "KP-3.2",
+    "title": "Rational relations among hyperbolic volumes",
+    "statement": "Are the volumes of finite-volume hyperbolic \\(3\\)-manifolds not all rationally proportional? More strongly, determine the dimension over \\(\\mathbb Q\\) of the span of these volumes.",
+    "references": "https://www.unsolvedmath.com/problems/KP-3.2"
+  },
+  {
+    "id": "TCS-LOGIC_ALGEBRA-08",
+    "title": "Complexity of tensor-rank decision",
+    "statement": "Determine the exact computational and approximation complexity of tensor rank over the reals and finite fields under bounded order.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "TCS-TESTING-10",
+    "title": "Quantum testing of separability",
+    "statement": "Determine the optimal copy complexity for testing whether an unknown bipartite quantum state is separable or far from separable.",
+    "references": "https://arxiv.org/abs/2508.16878"
+  },
+  {
+    "id": "GREEN-081",
+    "title": "Covering a cyclic group by random translates",
+    "statement": "If \\(A\\subset\\mathbb Z/p\\mathbb Z\\) is random, \\(|A|=\\sqrt p\\), can we almost surely cover \\(\\mathbb Z/p\\mathbb Z\\) with \\(100\\sqrt p\\) translates of \\(A\\)?",
+    "references": "https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf https://www.unsolvedmath.com/problems/GREEN-081"
+  },
+  {
+    "id": "TCS-CODING-03",
+    "title": "Linear-time capacity-achieving codes for all BMS channels",
+    "statement": "Give a single explicit code family with linear-time encoding and decoding that achieves capacity on every binary memoryless symmetric channel.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "TCS-OPT_GAME-02",
+    "title": "Polynomial-time Nash equilibria for rank-two games",
+    "statement": "Can a Nash equilibrium of a bimatrix game of rank two be found in polynomial time?",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "TCS-CODING-10",
+    "title": "Multiple-description coding at finite block length",
+    "statement": "Determine sharp finite-blocklength rate-distortion regions for multiple-description source coding beyond special symmetric models.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "TCS-LOWER_BOUNDS-08",
+    "title": "Sum-of-squares lower bounds for planted clique",
+    "statement": "Push rigorous SoS lower bounds for planted clique to the conjectured computational threshold and growing degree.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "BG-015",
+    "title": "A Lipschitz progression-free graph",
+    "statement": "Does there exist a Lipschitz function \\(f:\\mathbb N\\to\\mathbb Z\\) whose graph \\(\\{(n,f(n)):n\\in\\mathbb N\\}\\subset\\mathbb Z^2\\) contains no nontrivial three-term arithmetic progression?",
+    "references": "https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf"
+  },
+  {
+    "id": "TCS-QUANTUM-06",
+    "title": "Relativized QMA versus QCMA",
+    "statement": "Is there an oracle relative to which QMA is strictly larger than QCMA?",
+    "references": "https://doi.org/10.1103/PRXQuantum.3.010101"
+  },
+  {
+    "id": "KOU-21.100",
+    "title": "Character correspondence under coprime action",
+    "statement": "Suppose a finite group \\(A\\) acts coprimely on a finite group \\(G\\), let \\(C=C_G(A)\\), and let \\(C'\\) be its derived subgroup. Is the number of \\(A\\)-invariant irreducible characters \\(\\chi\\) of \\(G\\) whose restriction \\(\\chi_C\\) is never zero exactly \\(|C/C'|\\)?",
+    "references": "https://kourovkanotebookorg.wordpress.com/wp-content/uploads/2026/07/21tkt.pdf"
+  },
+  {
+    "id": "TCS-COMM-05",
+    "title": "Strong direct-product theorem for all relations",
+    "statement": "Establish a sharp exponential success-probability decay when communication is below \\(k\\) times the one-copy complexity for general relations.",
+    "references": "https://arxiv.org/abs/1504.06830"
+  },
+  {
+    "id": "GREEN-087",
+    "title": "Multiple coverage by prime residue classes",
+    "statement": "Can we pick residue classes \\(a_p\\pmod p\\), one for each prime \\(p\\leq N\\), such that every integer \\(\\leq N\\) lies in at least \\(10\\) of them?",
+    "references": "https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf https://www.unsolvedmath.com/problems/GREEN-087"
+  },
+  {
+    "id": "KP-2.23",
+    "title": "Negatively curved surface bundles over surfaces",
+    "statement": "Does there exist a surface bundle over a surface whose total space admits a complete hyperbolic metric, or more generally a complete metric of variable negative curvature?",
+    "references": "https://www.unsolvedmath.com/problems/KP-2.23"
+  },
+  {
+    "id": "TCS-LOGIC_ALGEBRA-05",
+    "title": "Complexity of the existential theory of the reals",
+    "statement": "Is the existential theory of the reals complete for a natural subclass with sharply bounded degree and incidence, and what are the exact parameterized boundaries?",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "TCS-ONLINE_RL-07",
+    "title": "Sample complexity of general POMDP learning",
+    "statement": "Determine polynomial versus exponential sample-complexity boundaries for learning partially observable Markov decision processes.",
+    "references": "https://learningtheory.org/colt2026/openproblems.html"
+  },
+  {
+    "id": "EP-271",
+    "title": "Growth of a greedy 3-AP-free sequence",
+    "statement": "Let\n\\[\nA(n)=\\{a_0<a_1<\\cdots\\}\n\\]\nbe the sequence defined by \\(a_0=0\\) and \\(a_1=n\\), and for \\(k\\geq 1\\) define \\(a_{k+1}\\) as the least positive integer such that there is no three-term arithmetic progression in\n\\[\n\\{a_0,\\ldots,a_{k+1}\\}.\n\\]\nCan the \\(a_k\\) be explicitly determined? How fast do they grow?",
+    "references": "https://www.erdosproblems.com/271"
+  },
+  {
+    "id": "EP-203",
+    "title": "Forcing all numbers 2^k3^ℓm+1 to be composite",
+    "statement": "Is there an integer $m\\geq 1$ with $(m,6)=1$ such that none of $2^k3^\\ell m+1$ are prime, for any $k,\\ell\\geq 0$?",
+    "references": "https://www.erdosproblems.com/203"
+  },
+  {
+    "id": "TCS-CODING-06",
+    "title": "Nonlinear advantage in network coding",
+    "statement": "Characterize networks for which nonlinear network codes strictly outperform all linear codes, and quantify the maximum gap.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "TCS-QUANTUM-04",
+    "title": "Two-copy distillability of Werner states",
+    "statement": "Determine whether the unresolved range of NPT Werner states is two-copy distillable.",
+    "references": "https://doi.org/10.1103/PRXQuantum.3.010101"
+  },
+  {
+    "id": "TCS-DISTRIBUTED-05",
+    "title": "Matroid secretary constant competitiveness",
+    "statement": "Does every matroid admit a constant-competitive secretary algorithm?",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "BG-033",
+    "title": "Thin additive bases in cyclic groups",
+    "statement": "Are there infinitely many integers \\(q\\) for which there exists \\(A\\subset\\mathbb Z/q\\mathbb Z\\) with \\(|A|=(\\sqrt2+o(1))q^{1/2}\\) and \\(A+A=\\mathbb Z/q\\mathbb Z\\)?",
+    "references": "https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf"
+  },
+  {
+    "id": "EP-295",
+    "title": "Few large denominators summing to one",
+    "statement": "Let $N\\geq 1$ and let $k(N)$ denote the smallest $k$ such that there exist $N\\leq n_1<\\cdots<n_k$ with \\[1=\\frac{1}{n_1}+\\cdots+\\frac{1}{n_k}.\\] Is it true that \\[\\lim_{N\\to\\infty} k(N)-(e-1)N=\\infty?\\]",
+    "references": "https://www.erdosproblems.com/295"
+  },
+  {
+    "id": "EP-301",
+    "title": "Sets avoiding reciprocal decompositions",
+    "statement": "Let $f(N)$ be the size of the largest $A\\subseteq\\{1,\\ldots,N\\}$ such that there are no solutions to \\[\\frac1a=\\frac1{b_1}+\\cdots+\\frac1{b_k}\\] with distinct $a,b_1,\\ldots,b_k\\in A$. Estimate $f(N)$. In particular, is it true that $f(N)=(\\tfrac12+o(1))N$?",
+    "references": "https://www.erdosproblems.com/301"
+  },
+  {
+    "id": "TCS-LOWER_BOUNDS-10",
+    "title": "Proof complexity of total NP search",
+    "statement": "Relate proof-system lower bounds to communication and query complexity for broad classes of TFNP principles with quantitatively tight reductions.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "EP-302",
+    "title": "Sets avoiding 1/a=1/b+1/c",
+    "statement": "Let \\(f(N)\\) be the size of the largest\n\\[\nA\\subseteq\\{1,\\ldots,N\\}\n\\]\nsuch that there are no solutions to\n\\[\n\\frac{1}{a}=\\frac{1}{b}+\\frac{1}{c}\n\\]\nwith distinct \\(a,b,c\\in A\\). Estimate \\(f(N)\\). In particular, is\n\\[\nf(N)=\\left(\\frac12+o(1)\\right)N?\n\\]",
+    "references": "https://www.erdosproblems.com/302"
+  },
+  {
+    "id": "TCS-OPT_GAME-05",
+    "title": "Truthful approximation for combinatorial auctions",
+    "statement": "Improve the best polynomial-time truthful approximation ratios for combinatorial auctions with submodular or XOS bidders.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "EP-311",
+    "title": "A subset reciprocal sum nearest to one",
+    "statement": "Let $\\delta(N)$ be the minimal non-zero value of $\\left|1-\\sum_{n\\in A}\\frac1n\\right|$ as $A$ ranges over all subsets of $\\{1,\\ldots,N\\}$. Is it true that \\[\\delta(N)=e^{-(c+o(1))N}\\] for some constant $c\\in(0,1)$?",
+    "references": "https://www.erdosproblems.com/311"
+  },
+  {
+    "id": "BG-082",
+    "title": "Zeros of a cosine sum",
+    "statement": "For a set \\(A\\subset\\mathbb Z\\) of size \\(n\\), what is the minimum possible number of \\(\\theta\\in\\mathbb R/\\mathbb Z\\) satisfying \\(\\sum_{a\\in A}\\cos(2\\pi a\\theta)=0\\)?",
+    "references": "https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf"
+  },
+  {
+    "id": "EP-319",
+    "title": "Minimal signed reciprocal relations",
+    "statement": "What is the size of the largest $A\\subseteq\\{1,\\ldots,N\\}$ such that there is a function $\\delta:A\\to\\{-1,1\\}$ such that \\[\\sum_{n\\in A}\\frac{\\delta_n}{n}=0\\] and \\[\\sum_{n\\in A'}\\frac{\\delta_n}{n}\\neq 0\\] for all non-empty $A'\\subsetneq A$?",
+    "references": "https://www.erdosproblems.com/319"
+  },
+  {
+    "id": "TCS-CODING-01",
+    "title": "Three-query locally decodable code length",
+    "statement": "Determine the minimum block length of binary or constant-alphabet 3-query locally decodable codes as a function of message length.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "EP-273",
+    "title": "Covering systems with moduli p-1",
+    "statement": "Is there a covering system all of whose moduli are of the form $p-1$ for some primes $p\\geq 5$?",
+    "references": "https://www.erdosproblems.com/273"
+  },
+  {
+    "id": "EP-320",
+    "title": "Number of reciprocal subset sums",
+    "statement": "Let $S(N)$ count the number of distinct sums of the form $\\sum_{n\\in A}\\frac1n$ for $A\\subseteq\\{1,\\ldots,N\\}$. Estimate $S(N)$.",
+    "references": "https://www.erdosproblems.com/320"
+  },
+  {
+    "id": "TCS-QUANTUM-07",
+    "title": "Polynomial relation between quantum query complexity and degree",
+    "statement": "For partial Boolean functions, is bounded-error quantum query complexity polynomially bounded by approximate degree?",
+    "references": "https://doi.org/10.1103/PRXQuantum.3.010101"
+  },
+  {
+    "id": "EP-321",
+    "title": "Distinct reciprocal subset sums",
+    "statement": "What is the size of the largest $A\\subseteq\\{1,\\ldots,N\\}$ such that all sums $\\sum_{n\\in S}\\frac1n$ are distinct for $S\\subseteq A$?",
+    "references": "https://www.erdosproblems.com/321"
+  },
+  {
+    "id": "TCS-CRYPTO-02",
+    "title": "Subexponential algorithms or hardness for LPN",
+    "statement": "Determine the true asymptotic complexity of Learning Parity with Noise in the constant-noise regime.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "EP-327",
+    "title": "Sets with a+b not dividing ab",
+    "statement": "Suppose $A\\subseteq\\{1,\\ldots,N\\}$ is such that if $a,b\\in A$ and $a\\neq b$ then $a+b\\nmid ab$. Can $A$ be substantially more than the odd numbers? What if $a,b\\in A$ with $a\\neq b$ implies $a+b\\nmid 2ab$? Must $|A|=o(N)$?",
+    "references": "https://www.erdosproblems.com/327"
+  },
+  {
+    "id": "BG-002",
+    "title": "A large restricted-sumset-avoiding subset",
+    "statement": "Let \\(A\\subset\\mathbb Z\\) be a set of \\(n\\) integers. Must there exist \\(S\\subset A\\) with \\(|S|=(\\log n)^{100}\\) such that the restricted sumset \\(\\widehat{S+S}=\\{s_1+s_2:s_1,s_2\\in S,\\ s_1\\ne s_2\\}\\) is disjoint from \\(A\\)?",
+    "references": "https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf"
+  },
+  {
+    "id": "EP-340",
+    "title": "Growth of the greedy Sidon sequence",
+    "statement": "Let $A=\\{1,2,4,8,13,21,31,45,66,81,97,\\ldots\\}$ be the greedy Sidon sequence: we begin with $1$ and iteratively include the next smallest integer that preserves the Sidon property (i.e. there are no non-trivial solutions to $a+b=c+d$). What is the order of growth of $A$? Is it true that \\[|A\\cap\\{1,\\ldots,N\\}|\\gg N^{1/2-\\varepsilon}\\] for all $\\varepsilon>0$ and large $N$?",
+    "references": "https://www.erdosproblems.com/340"
+  },
+  {
+    "id": "TCS-COMM-02",
+    "title": "Polynomial interactive compression",
+    "statement": "Can every two-party protocol of information cost \\(I\\) and communication \\(C\\) be compressed to \\(\\operatorname{poly}(I,\\log C)\\) communication with comparable error?",
+    "references": "https://arxiv.org/abs/1504.06830"
+  },
+  {
+    "id": "EP-276",
+    "title": "An all-composite Lucas sequence",
+    "statement": "Is there an infinite Lucas sequence $a_0,a_1,\\ldots$ where $a_{n+2}=a_{n+1}+a_n$ for $n\\geq 0$ such that all $a_k$ are composite, and yet no integer has a common factor with every term of the sequence?",
+    "references": "https://www.erdosproblems.com/276"
+  },
+  {
+    "id": "EP-341",
+    "title": "Eventual periodicity of a greedy sum-avoiding sequence",
+    "statement": "Let $A=\\{a_1<\\cdots<a_k\\}$ be a finite set of positive integers and extend it to an infinite sequence $\\overline A=\\{a_1<a_2<\\cdots\\}$ by defining $a_{n+1}$ for $n\\geq k$ to be the least integer exceeding $a_n$ which is not of the form $a_i+a_j$ with $i,j\\leq n$. Is it true that the sequence of differences $a_{m+1}-a_m$ is eventually periodic?",
+    "references": "https://www.erdosproblems.com/341"
+  },
+  {
+    "id": "EP-342",
+    "title": "The Ulam sequence",
+    "statement": "With $a_1=1$ and $a_2=2$ let $a_{n+1}$ for $n\\geq 2$ be the least integer $>a_n$ which can be expressed uniquely as $a_i+a_j$ for $i<j\\leq n$. What can be said about this sequence? Do infinitely many pairs $a,a+2$ occur? Does this sequence eventually have periodic differences? Is the density $0$?",
+    "references": "https://www.erdosproblems.com/342"
+  },
+  {
+    "id": "EP-349",
+    "title": "Completeness of floor(t alpha^n)",
+    "statement": "For what values of $t,\\alpha\\in(0,\\infty)$ is the sequence $\\lfloor t\\alpha^n\\rfloor$ complete (that is, all sufficiently large integers are the sum of distinct integers of the form $\\lfloor t\\alpha^n\\rfloor$)?",
+    "references": "https://www.erdosproblems.com/349"
+  },
+  {
+    "id": "EP-357",
+    "title": "Distinct consecutive block sums",
+    "statement": "Let $1\\leq a_1<\\cdots<a_k\\leq n$ be integers such that all sums of the shape $\\sum_{u\\leq i\\leq v}a_i$ are distinct. Let $f(n)$ be the maximal such $k$. How does $f(n)$ grow? Is $f(n)=o(n)$?",
+    "references": "https://www.erdosproblems.com/357"
+  },
+  {
+    "id": "TCS-COMM-09",
+    "title": "Multiparty number-on-forehead disjointness",
+    "statement": "Determine the randomized communication complexity of set disjointness in the number-on-forehead model for growing numbers of parties.",
+    "references": "https://arxiv.org/abs/1504.06830"
+  },
+  {
+    "id": "BG-087",
+    "title": "Invariant-set probabilities for random permutations",
+    "statement": "Let \\(p(k)\\) be the limiting probability, as \\(n\\to\\infty\\), that a uniformly random permutation of \\([n]\\) preserves some set of size \\(k\\). Is \\(p(k)\\) decreasing, and is \\(p(k)=(C+o(1))k^{-\\alpha}(\\log k)^{-3/2}\\) for an absolute constant \\(C\\)?",
+    "references": "https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf"
+  },
+  {
+    "id": "EP-282",
+    "title": "Greedy Egyptian fractions with restricted denominators",
+    "statement": "Let $A\\subseteq\\mathbb{N}$ be an infinite set and consider the following greedy algorithm for a rational $x\\in(0,1)$: choose the minimal $n\\in A$ such that $n\\geq 1/x$ and repeat with $x$ replaced by $x-\\frac1n$. If this terminates after finitely many steps then this produces a representation of $x$ as the sum of distinct unit fractions with denominators from $A$. Does this process always terminate if $x$ has odd denominator and $A$ is the set of odd numbers? More generally, for which pairs $x$ and $A$ does this process terminate?",
+    "references": "https://www.erdosproblems.com/282"
+  },
+  {
+    "id": "EP-359",
+    "title": "Greedy avoidance of consecutive sums",
+    "statement": "Let $a_1<a_2<\\cdots$ be an infinite sequence of integers such that $a_1=n$ and $a_{i+1}$ is the least integer which is not a sum of consecutive earlier $a_j$s. What can be said about the density of this sequence? In particular, in the case $n=1$, can one prove that $a_k/k\\to\\infty$ and $a_k/k^{1+c}\\to 0$ for any $c>0$?",
+    "references": "https://www.erdosproblems.com/359"
+  },
+  {
+    "id": "GREEN-031",
+    "title": "Composite numbers in a small sumset",
+    "statement": "Suppose that \\(A,B\\subseteq[N]\\) both have size \\(N^{0.49}\\). Must \\(A+B\\) contain a composite number?",
+    "references": "https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf https://www.unsolvedmath.com/problems/GREEN-031"
+  },
+  {
+    "id": "GREEN-034",
+    "title": "A set whose sumset contains many squares",
+    "statement": "Suppose that \\(A+A\\) contains the first \\(n\\) squares. Must \\(|A|\\geq n^{1-o(1)}\\)?",
+    "references": "https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf https://www.unsolvedmath.com/problems/GREEN-034"
+  },
+  {
+    "id": "GREEN-037",
+    "title": "Parity of the number of prime factors of p-2",
+    "statement": "Are there infinitely many primes \\(p\\) for which \\(p-2\\) has an odd number of prime factors?",
+    "references": "https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf https://www.unsolvedmath.com/problems/GREEN-037"
+  },
+  {
+    "id": "BG-016",
+    "title": "Avoiding x+3y=2z+2w in distinct integers",
+    "statement": "What is the largest size of a subset of \\([N]\\) containing no solution \\(x+3y=2z+2w\\) in four distinct integers \\(x,y,z,w\\)?",
+    "references": "https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf"
+  },
+  {
+    "id": "EP-293",
+    "title": "Denominators omitted by Egyptian-fraction representations",
+    "statement": "Let $k\\geq 1$ and let $v(k)$ be the minimal integer which does not appear as some $n_i$ in a solution to \\[1=\\frac{1}{n_1}+\\cdots+\\frac{1}{n_k}\\] with $1\\leq n_1<\\cdots<n_k$. Estimate the growth of $v(k)$.",
+    "references": "https://www.erdosproblems.com/293"
+  },
+  {
+    "id": "GREEN-038",
+    "title": "Square and shifted-prime differences in dense sets",
+    "statement": "Is there \\(c>0\\) with the following property: whenever \\(A\\subset[N]\\) is a set of size \\(N^{1-c}\\), \\(A-A\\) contains a nonzero square? What about \\(A-A\\) containing a prime minus one?",
+    "references": "https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf https://www.unsolvedmath.com/problems/GREEN-038"
+  },
+  {
+    "id": "TCS-CRYPTO-01",
+    "title": "A classical worst-case reduction for LWE",
+    "statement": "Give a classical polynomial-time reduction from a standard worst-case lattice problem to Learning With Errors with parameters comparable to the quantum reduction.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "GREEN-043",
+    "title": "Collinearity or mutual visibility",
+    "statement": "Fix \\(k,\\ell\\). Given \\(n\\geq n_0(k,\\ell)\\) points in \\(\\mathbb R^2\\), must there either be a line containing \\(k\\) of the points, or \\(\\ell\\) points which are mutually visible? Here two points are mutually visible if the line segment joining them contains no other point from the set.",
+    "references": "https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf https://www.unsolvedmath.com/problems/GREEN-043"
+  },
+  {
+    "id": "GREEN-044",
+    "title": "Many collinear 4-tuples force five collinear points",
+    "statement": "Suppose that \\(A\\subset\\mathbb R^2\\) is a set of size \\(n\\) with \\(cn^2\\) collinear \\(4\\)-tuples. Does it contain \\(5\\) points on a line?",
+    "references": "https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf https://www.unsolvedmath.com/problems/GREEN-044"
+  },
+  {
+    "id": "GREEN-047",
+    "title": "Five points on a 2-plane",
+    "statement": "What is the largest subset of \\([N]^d\\) with no \\(5\\) points on a \\(2\\)-plane?",
+    "references": "https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf https://www.unsolvedmath.com/problems/GREEN-047"
+  },
+  {
+    "id": "GREEN-051",
+    "title": "Large axis-parallel rectangles in planar sets",
+    "statement": "Suppose that \\(A\\) is an open subset of \\([0,1]^2\\) with measure \\(\\alpha\\). Are there four points in \\(A\\) determining an axis-parallel rectangle with area at least \\(c\\alpha^2\\)?",
+    "references": "https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf https://www.unsolvedmath.com/problems/GREEN-051"
+  },
+  {
+    "id": "TCS-QUANTUM-10",
+    "title": "Simultaneously good quantum locally testable codes",
+    "statement": "Construct quantum locally testable codes having constant rate, linear distance, constant soundness, and constant locality simultaneously, or prove an unavoidable tradeoff among these parameters.",
+    "references": "https://epubs.siam.org/doi/10.1137/140975498"
+  },
+  {
+    "id": "GREEN-061",
+    "title": "The n-queens asymptotic",
+    "statement": "In how many ways (asymptotically) \\(Q(n)\\) may \\(n\\) non-attacking queens be placed on an \\(n\\times n\\) chessboard?",
+    "references": "https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf https://www.unsolvedmath.com/problems/GREEN-061"
+  },
+  {
+    "id": "GREEN-083",
+    "title": "Pyjama-set covering number",
+    "statement": "How many rotated (about the origin) copies of the “pyjama set”\n\\[\n\\{(x,y)\\in\\mathbb R^2:\\operatorname{dist}(x,\\mathbb Z)\\leq\\varepsilon\\}\n\\]\nare needed to cover \\(\\mathbb R^2\\)?",
+    "references": "https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf https://www.unsolvedmath.com/problems/GREEN-083"
+  },
+  {
+    "id": "TCS-COMM-07",
+    "title": "Randomized versus quantum communication for total functions",
+    "statement": "Is quantum communication complexity polynomially related to randomized communication complexity for every total Boolean function?",
+    "references": "https://arxiv.org/abs/1504.06830"
+  },
+  {
+    "id": "GREEN-077",
+    "title": "Structure of dense generalized Sidon sets",
+    "statement": "Suppose that \\(A\\subset[N]\\), \\(|A|\\geq c\\sqrt N\\), and \\(1_A*1_A(n)\\leq K\\) for all \\(n\\). What can be said about the structure of \\(A\\)?",
+    "references": "https://people.maths.ox.ac.uk/greenbj/papers/open-problems.pdf https://www.unsolvedmath.com/problems/GREEN-077"
+  },
+  {
+    "id": "EP-11",
+    "title": "Squarefree number plus a power of two",
+    "statement": "Is every sufficiently large odd integer \\(n\\) the sum of a squarefree number and a power of \\(2\\)?",
+    "references": "https://www.erdosproblems.com/11"
+  },
+  {
+    "id": "EP-12",
+    "title": "Divisibility-avoiding infinite sets",
+    "statement": "Let \\(A\\) be an infinite set such that there are no distinct \\(a,b,c\\in A\\) with \\(a\\mid(b+c)\\) and \\(b,c>a\\). Is there such an \\(A\\) with\n\\[\n\\liminf_{N\\to\\infty}\\frac{\\lvert A\\cap\\{1,\\ldots,N\\}\\rvert}{N^{1/2}}>0?\n\\]\nDoes there exist an absolute constant \\(c>0\\) such that there are always infinitely many \\(N\\) with\n\\[\n\\lvert A\\cap\\{1,\\ldots,N\\}\\rvert<N^{1-c}?\n\\]\nIs it true that\n\\[\n\\sum_{n\\in A}\\frac1n<\\infty?\n\\]",
+    "references": "https://www.erdosproblems.com/12"
+  },
+  {
+    "id": "EP-14",
+    "title": "Unique representation as a two-term sum",
+    "statement": "Let \\(A\\subseteq\\mathbb N\\), and let \\(B\\subseteq\\mathbb N\\) be the set of integers representable in exactly one way as the sum of two elements of \\(A\\). Is it true that for every \\(\\varepsilon>0\\) and all large \\(N\\),\n\\[\n\\lvert\\{1,\\ldots,N\\}\\setminus B\\rvert\\gg_\\varepsilon N^{1/2-\\varepsilon}?\n\\]\nIs it possible that\n\\[\n\\lvert\\{1,\\ldots,N\\}\\setminus B\\rvert=o(N^{1/2})?\n\\]",
+    "references": "https://www.erdosproblems.com/14"
+  },
+  {
+    "id": "TCS-CODING-04",
+    "title": "High-rate constant-query locally correctable codes",
+    "statement": "Construct constant-query locally correctable codes with rate bounded away from zero and strong noise tolerance, or prove they cannot exist.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "EP-15",
+    "title": "An alternating series over primes",
+    "statement": "Is it true that\n\\[\n\\sum_{n=1}^{\\infty}(-1)^n\\frac{n}{p_n}\n\\]\nconverges, where \\(p_n\\) is the \\(n\\)-th prime?",
+    "references": "https://www.erdosproblems.com/15"
+  },
+  {
+    "id": "EP-17",
+    "title": "Cluster primes",
+    "statement": "Are there infinitely many primes \\(p\\) such that every even number \\(n\\leq p-3\\) can be written as a difference of primes\n\\[\nn=q_1-q_2\n\\]\nwhere \\(q_1,q_2\\leq p\\)?",
+    "references": "https://www.erdosproblems.com/17"
+  },
+  {
+    "id": "EP-20",
+    "title": "The sunflower conjecture",
+    "statement": "Let \\(f(n,k)\\) be minimal such that every family \\(\\mathcal F\\) of \\(n\\)-uniform sets with \\(\\lvert\\mathcal F\\rvert\\geq f(n,k)\\) contains a \\(k\\)-sunflower. Is it true that\n\\[\nf(n,k)<c_k^n\n\\]\nfor some constant \\(c_k>0\\)?",
+    "references": "https://www.erdosproblems.com/20"
+  },
+  {
+    "id": "EP-25",
+    "title": "Logarithmic density after removing residue classes",
+    "statement": "Let\n\\[\n1\\leq n_1<n_2<\\cdots\n\\]\nbe an arbitrary sequence of integers, each with an associated residue class \\(a_i\\pmod{n_i}\\). Let \\(A\\) be the set of integers \\(n\\) such that, for every \\(i\\), either \\(n<n_i\\) or \\(n\\not\\equiv a_i\\pmod{n_i}\\). Must the logarithmic density of \\(A\\) exist?",
+    "references": "https://www.erdosproblems.com/25"
+  },
+  {
+    "id": "EP-28",
+    "title": "The Erdős–Turán additive-basis conjecture",
+    "statement": "If \\(A\\subseteq\\mathbb N\\) is such that \\(A+A\\) contains all but finitely many integers, must\n\\[\n\\limsup_{n\\to\\infty}(1_A*1_A)(n)=\\infty?\n\\]",
+    "references": "https://www.erdosproblems.com/28"
+  },
+  {
+    "id": "EP-30",
+    "title": "The error term for maximal finite Sidon sets",
+    "statement": "Let \\(h(N)\\) be the maximum size of a Sidon set in \\(\\{1,\\ldots,N\\}\\). Is it true that, for every \\(\\varepsilon>0\\),\n\\[\nh(N)=N^{1/2}+O_\\varepsilon(N^\\varepsilon)?\n\\]",
+    "references": "https://www.erdosproblems.com/30"
+  },
+  {
+    "id": "EP-32",
+    "title": "Thin complements to the primes",
+    "statement": "Is there a set $A\\subset\\mathbb{N}$ such that \\[|A\\cap\\{1,\\ldots,N\\}|=o((\\log N)^2)\\] and such that every large integer can be written as $p+a$ for some prime $p$ and $a\\in A$? Can the bound $O(\\log N)$ be achieved? Must such an $A$ satisfy \\[\\liminf\\frac{|A\\cap\\{1,\\ldots,N\\}|}{\\log N}>1?\\]",
+    "references": "https://www.erdosproblems.com/32"
+  },
+  {
+    "id": "EP-33",
+    "title": "Thin complements to the squares",
+    "statement": "Let $A\\subset\\mathbb{N}$ be such that every large integer can be written as $n^2+a$ for some $a\\in A$ and $n\\geq 0$. What is the smallest possible value of \\[\\limsup\\frac{|A\\cap\\{1,\\ldots,N\\}|}{N^{1/2}}?\\] Is \\[\\liminf\\frac{|A\\cap\\{1,\\ldots,N\\}|}{N^{1/2}}>1?\\]",
+    "references": "https://www.erdosproblems.com/33"
+  },
+  {
+    "id": "TCS-CRYPTO-07",
+    "title": "Collision-resistant hashing from one-way functions",
+    "statement": "Can collision-resistant hash functions be constructed from arbitrary one-way functions, perhaps using non-black-box techniques?",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "EP-36",
+    "title": "The minimum-overlap constant",
+    "statement": "Find the optimal constant \\(c>0\\) such that the following holds. For all sufficiently large \\(N\\), if\n\\[\nA\\sqcup B=\\{1,\\ldots,2N\\}\n\\]\nis a partition into two equal parts, \\(\\lvert A\\rvert=\\lvert B\\rvert=N\\), then there is some \\(x\\) such that the number of solutions to \\(a-b=x\\), with \\(a\\in A\\) and \\(b\\in B\\), is at least \\(cN\\).",
+    "references": "https://www.erdosproblems.com/36"
+  },
+  {
+    "id": "EP-39",
+    "title": "Dense infinite Sidon sets",
+    "statement": "Is there an infinite Sidon set \\(A\\subset\\mathbb N\\) such that, for every \\(\\varepsilon>0\\),\n\\[\n\\lvert A\\cap\\{1,\\ldots,N\\}\\rvert\\gg_\\varepsilon N^{1/2-\\varepsilon}\n\\]\nfor all sufficiently large \\(N\\)?",
+    "references": "https://www.erdosproblems.com/39"
+  },
+  {
+    "id": "TCS-OPT_GAME-01",
+    "title": "Strongly polynomial algorithms for discounted stochastic games",
+    "statement": "Is there a strongly polynomial algorithm for solving two-player discounted stochastic games?",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "TCS-COMM-01",
+    "title": "The log-rank conjecture for restricted matrix classes",
+    "statement": "Prove polylogarithmic deterministic communication bounds in terms of rank for a broad nontrivial class beyond all currently known cases.",
+    "references": "https://arxiv.org/abs/1504.06830"
+  },
+  {
+    "id": "EP-40",
+    "title": "Density thresholds for unbounded representation functions",
+    "statement": "For what functions \\(g(N)\\to\\infty\\) is it true that\n\\[\n\\lvert A\\cap\\{1,\\ldots,N\\}\\rvert\\gg \\frac{N^{1/2}}{g(N)}\n\\]\nimplies\n\\[\n\\limsup_{n\\to\\infty}(1_A*1_A)(n)=\\infty?\n\\]",
+    "references": "https://www.erdosproblems.com/40"
+  },
+  {
+    "id": "EP-41",
+    "title": "Triple-sum Sidon sets",
+    "statement": "Let \\(A\\subset\\mathbb N\\) be an infinite set such that the triple sums \\(a+b+c\\) are all distinct for \\(a,b,c\\in A\\), aside from trivial coincidences. Is it true that\n\\[\n\\liminf_{N\\to\\infty}\n\\frac{\\lvert A\\cap\\{1,\\ldots,N\\}\\rvert}{N^{1/3}}=0?\n\\]",
+    "references": "https://www.erdosproblems.com/41"
+  },
+  {
+    "id": "EP-44",
+    "title": "Completing a finite Sidon set",
+    "statement": "Let $N\\geq 1$ and $A\\subset\\{1,\\ldots,N\\}$ be a Sidon set. Is it true that, for any $\\varepsilon>0$, there exist $M$ and $B\\subset\\{N+1,\\ldots,M\\}$ (which may depend on $N,A,\\varepsilon$) such that $A\\cup B\\subset\\{1,\\ldots,M\\}$ is a Sidon set of size at least $(1-\\varepsilon)M^{1/2}$?",
+    "references": "https://www.erdosproblems.com/44"
+  },
+  {
+    "id": "TCS-LOWER_BOUNDS-03",
+    "title": "Circuit lower bounds for restricted MCSP",
+    "statement": "Establish superpolynomial circuit lower bounds for a natural restricted version of the Minimum Circuit Size Problem.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "EP-50",
+    "title": "Differentiability of the totient distribution function",
+    "statement": "Schoenberg proved that for every $c\\in[0,1]$ the density of \\[\\{n\\in\\mathbb N:\\phi(n)<cn\\}\\] exists. Let this density be denoted by $f(c)$. Is it true that there are no $x$ such that $f'(x)$ exists and is positive?",
+    "references": "https://www.erdosproblems.com/50"
+  },
+  {
+    "id": "EP-51",
+    "title": "Large least preimages of Euler's totient",
+    "statement": "Is there an infinite set $A\\subset\\mathbb N$ such that for every $a\\in A$ there is an integer $n$ such that $\\phi(n)=a$, and yet if $n_a$ is the smallest such integer then $n_a/a\\to\\infty$ as $a\\to\\infty$?",
+    "references": "https://www.erdosproblems.com/51"
+  },
+  {
+    "id": "TCS-FINE_GRAINED-01",
+    "title": "Truly subcubic combinatorial Boolean matrix multiplication",
+    "statement": "Is there a combinatorial algorithm for Boolean matrix multiplication running in \\(O(n^{3-\u000barepsilon})\\) time for some fixed \\(\u000barepsilon>0\\)?",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "TCS-QUANTUM-02",
+    "title": "Existence of an AME(4,6) state",
+    "statement": "Does an absolutely maximally entangled pure state of four parties with local dimension six exist outside the stabilizer and graph-state classes?",
+    "references": "https://arxiv.org/abs/2603.13442"
+  },
+  {
+    "id": "EP-52",
+    "title": "The sum-product conjecture",
+    "statement": "Let \\(A\\) be a finite set of integers. Is it true that for every \\(\\varepsilon>0\\),\n\\[\n\\max\\bigl(\\lvert A+A\\rvert,\\lvert AA\\rvert\\bigr)\\gg_\\varepsilon \\lvert A\\rvert^{2-\\varepsilon}?\n\\]",
+    "references": "https://www.erdosproblems.com/52"
+  },
+  {
+    "id": "EP-60",
+    "title": "Supersaturation for C4",
+    "statement": "Does every graph on \\(n\\) vertices with more than \\(\\operatorname{ex}(n;C_4)\\) edges contain\n\\[\n\\gg n^{1/2}\n\\]\ncopies of \\(C_4\\)?",
+    "references": "https://www.erdosproblems.com/60"
+  },
+  {
+    "id": "TCS-QUANTUM-03",
+    "title": "NPT bound entanglement",
+    "statement": "Does there exist a bipartite quantum state with nonpositive partial transpose that is nevertheless undistillable?",
+    "references": "https://doi.org/10.1103/PRXQuantum.3.010101"
+  },
+  {
+    "id": "EP-61",
+    "title": "The Erdős–Hajnal conjecture",
+    "statement": "For every graph \\(H\\), is there a constant \\(c=c(H)>0\\) such that every graph \\(G\\) on \\(n\\) vertices that does not contain \\(H\\) as an induced subgraph contains either a complete graph or an independent set on at least \\(n^c\\) vertices?",
+    "references": "https://www.erdosproblems.com/61"
+  },
+  {
+    "id": "EP-62",
+    "title": "Common subgraphs of uncountably chromatic graphs",
+    "statement": "If \\(G_1,G_2\\) are two graphs with chromatic number \\(\\aleph_1\\), must there exist a graph \\(G\\) whose chromatic number is \\(4\\), or even \\(\\aleph_0\\), which is a subgraph of both \\(G_1\\) and \\(G_2\\)?",
+    "references": "https://www.erdosproblems.com/62"
+  },
+  {
+    "id": "TCS-LOWER_BOUNDS-05",
+    "title": "Bounded-depth Frege lower bounds",
+    "statement": "Prove superpolynomial proof-size lower bounds for stronger bounded-depth Frege systems than currently understood.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "EP-65",
+    "title": "Reciprocals of cycle lengths",
+    "statement": "Let \\(G\\) be a graph with \\(n\\) vertices and \\(kn\\) edges, and let\n\\[\na_1<a_2<\\cdots\n\\]\nbe the lengths of cycles in \\(G\\). Is it true that\n\\[\n\\sum_i\\frac1{a_i}\\gg\\log k?\n\\]\nIs the sum \\(\\sum_i1/a_i\\) minimized when \\(G\\) is a complete bipartite graph?",
+    "references": "https://www.erdosproblems.com/65"
+  },
+  {
+    "id": "EP-70",
+    "title": "A partition relation on the continuum",
+    "statement": "Let \\(\\mathfrak c\\) be the cardinality of the real numbers, let \\(\\beta\\) be any countable ordinal, and let \\(2\\leq n<\\omega\\). Is it true that\n\\[\n\\mathfrak c\\to(\\beta,n)^3_2?\n\\]",
+    "references": "https://www.erdosproblems.com/70"
+  },
+  {
+    "id": "TCS-FINE_GRAINED-04",
+    "title": "Deterministic NC perfect matching",
+    "statement": "Is there a deterministic polylogarithmic-time parallel algorithm using polynomially many processors for perfect matching in general graphs?",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "EP-87",
+    "title": "Ramsey numbers versus chromatic number",
+    "statement": "Let \\(\\varepsilon>0\\). Is it true that, if \\(k\\) is sufficiently large, then\n\\[\nR(G)>(1-\\varepsilon)^kR(k)\n\\]\nfor every graph \\(G\\) with chromatic number \\(\\chi(G)=k\\)? Even stronger, is there some \\(c>0\\) such that, for all large \\(k\\),\n\\[\nR(G)>cR(k)\n\\]\nfor every graph \\(G\\) with \\(\\chi(G)=k\\)?",
+    "references": "https://www.erdosproblems.com/87"
+  },
+  {
+    "id": "EP-98",
+    "title": "Distinct distances in general position",
+    "statement": "Let \\(h(n)\\) be such that any \\(n\\) points in \\(\\mathbb R^2\\), with no three on a line and no four on a circle, determine at least \\(h(n)\\) distinct distances. Does\n\\[\n\\frac{h(n)}{n}\\to\\infty?\n\\]",
+    "references": "https://www.erdosproblems.com/98"
+  },
+  {
+    "id": "GRACEFUL-TREE",
+    "title": "Graceful tree conjecture",
+    "statement": "Does every finite tree with \\(m\\) edges admit an injective labelling of its vertices by\n\\[\n\\{0,1,\\ldots,m\\}\n\\]\nsuch that the absolute differences across its edges are exactly\n\\[\n\\{1,2,\\ldots,m\\}?\n\\]",
+    "references": "https://en.wikipedia.org/wiki/Graceful_labeling https://www.unsolvedmath.com/problems"
+  },
+  {
+    "id": "UNION-CLOSED",
+    "title": "Union-closed sets conjecture",
+    "statement": "Let \\(\\mathcal F\\) be a finite nonempty family of finite sets that is closed under unions. Must there exist an element that belongs to at least half of the sets in \\(\\mathcal F\\)?",
+    "references": "https://en.wikipedia.org/wiki/Union-closed_sets_conjecture https://www.unsolvedmath.com/problems"
+  },
+  {
+    "id": "TCS-LOWER_BOUNDS-04",
+    "title": "Non-natural lower bounds from weak pseudorandomness",
+    "statement": "Construct explicit circuit lower bounds that evade the natural-proofs barrier under substantially weaker cryptographic assumptions.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "RECONSTRUCTION",
+    "title": "Graph reconstruction conjecture",
+    "statement": "Is every finite simple graph on at least three vertices determined up to isomorphism by the multiset of its vertex-deleted subgraphs?",
+    "references": "https://en.wikipedia.org/wiki/Reconstruction_conjecture https://www.unsolvedmath.com/problems"
+  },
+  {
+    "id": "CACCETTA-HAGGKVIST",
+    "title": "Caccetta–Häggkvist conjecture",
+    "statement": "Does every finite directed graph on \\(n\\) vertices with minimum outdegree at least \\(r\\) contain a directed cycle of length at most\n\\[\n\\left\\lceil\\frac nr\\right\\rceil?\n\\]",
+    "references": "https://en.wikipedia.org/wiki/Caccetta%E2%80%93H%C3%A4ggkvist_conjecture https://www.unsolvedmath.com/problems"
+  },
+  {
+    "id": "TCS-STAT-03",
+    "title": "Planted clique below the square-root barrier",
+    "statement": "Give a polynomial-time algorithm detecting planted cliques of size \\(o(\\sqrt n)\\), or establish a compelling unconditional barrier for a natural algorithmic class.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "TUZA",
+    "title": "Tuza's conjecture",
+    "statement": "For every finite graph \\(G\\), let \\(\\nu_\\triangle(G)\\) be the maximum number of edge-disjoint triangles and let \\(\\tau_\\triangle(G)\\) be the minimum number of edges meeting every triangle. Is\n\\[\n\\tau_\\triangle(G)\\leq2\\nu_\\triangle(G)?\n\\]",
+    "references": "https://en.wikipedia.org/wiki/Tuza%27s_conjecture https://www.unsolvedmath.com/problems"
+  },
+  {
+    "id": "RYSER",
+    "title": "Ryser's conjecture for hypergraphs",
+    "statement": "If \\(H\\) is an \\(r\\)-partite \\(r\\)-uniform hypergraph, is its vertex-cover number bounded by\n\\[\n\\tau(H)\\leq(r-1)\\nu(H),\n\\]\nwhere \\(\\nu(H)\\) is its matching number?",
+    "references": "https://en.wikipedia.org/wiki/Ryser%27s_conjecture https://www.unsolvedmath.com/problems"
+  },
+  {
+    "id": "ROTA-BASIS",
+    "title": "Rota's basis conjecture",
+    "statement": "Let \\(B_1,\\ldots,B_n\\) be \\(n\\) bases of an \\(n\\)-dimensional vector space. Can the elements of the \\(B_i\\) be arranged as the rows of an \\(n\\times n\\) array so that every column is also a basis?",
+    "references": "https://en.wikipedia.org/wiki/Rota%27s_basis_conjecture https://www.unsolvedmath.com/problems"
+  },
+  {
+    "id": "TCS-LOGIC_ALGEBRA-09",
+    "title": "Isomorphism testing for finitely presented groups",
+    "statement": "Find meaningful broad classes of finite presentations for which group isomorphism is decidable with effective complexity bounds.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "LONELY-RUNNER",
+    "title": "Lonely runner conjecture",
+    "statement": "Let \\(n\\) runners move at distinct constant speeds around a unit circle, all starting at the same point. Is there a time at which every runner is at circular distance at least\n\\[\n\\frac1{n+1}\n\\]\nfrom the starting point?",
+    "references": "https://en.wikipedia.org/wiki/Lonely_runner_conjecture https://www.unsolvedmath.com/problems"
+  },
+  {
+    "id": "TCS-LOWER_BOUNDS-01",
+    "title": "Supercubic formula lower bounds for explicit functions",
+    "statement": "Prove an explicit Boolean function requires formula size \\(n^{3+\u000barepsilon}\\) for some fixed \\(\u000barepsilon>0\\).",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "GILBREATH",
+    "title": "Gilbreath's conjecture",
+    "statement": "Begin with the sequence of primes\n\\[\n2,3,5,7,11,\\ldots\n\\]\nand repeatedly replace a row by the absolute differences of consecutive terms. Is the first term in every row after the first equal to \\(1\\)?",
+    "references": "https://en.wikipedia.org/wiki/Gilbreath%27s_conjecture https://www.unsolvedmath.com/problems"
+  },
+  {
+    "id": "COLLATZ",
+    "title": "Collatz conjecture",
+    "statement": "For a positive integer \\(n\\), define\n\\[\nT(n)=\n\\begin{cases}\nn/2,&n\\text{ even},\\\\\n3n+1,&n\\text{ odd}.\n\\end{cases}\n\\]\nDoes every positive integer eventually reach \\(1\\) under repeated iteration of \\(T\\)?",
+    "references": "https://en.wikipedia.org/wiki/Collatz_conjecture https://www.unsolvedmath.com/problems"
+  },
+  {
+    "id": "ERDOS-STRAUS",
+    "title": "Erdős–Straus conjecture",
+    "statement": "For every integer \\(n\\geq2\\), do there exist positive integers \\(x,y,z\\) such that\n\\[\n\\frac4n=\\frac1x+\\frac1y+\\frac1z?\n\\]",
+    "references": "https://en.wikipedia.org/wiki/Erd%C5%91s%E2%80%93Straus_conjecture https://www.unsolvedmath.com/problems"
+  },
+  {
+    "id": "HADWIGER-NELSON",
+    "title": "Hadwiger–Nelson problem",
+    "statement": "What is the least number of colours needed to colour every point of the Euclidean plane so that no two points at distance \\(1\\) receive the same colour?",
+    "references": "https://en.wikipedia.org/wiki/Hadwiger%E2%80%93Nelson_problem https://www.unsolvedmath.com/problems"
+  },
+  {
+    "id": "TCS-CODING-09",
+    "title": "Zero-error capacity of graph products",
+    "statement": "Develop computable bounds or exact formulas for Shannon capacity on broad graph families beyond the currently tractable cases.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "HADWIGER",
+    "title": "Hadwiger's conjecture",
+    "statement": "For every integer \\(t\\geq1\\), does every graph with chromatic number at least \\(t\\) contain \\(K_t\\) as a minor?",
+    "references": "https://en.wikipedia.org/wiki/Hadwiger%27s_conjecture https://www.unsolvedmath.com/problems"
+  },
+  {
+    "id": "LEGENDRE",
+    "title": "Legendre's conjecture",
+    "statement": "For every positive integer \\(n\\), is there a prime \\(p\\) satisfying\n\\[\nn^2<p<(n+1)^2?\n\\]",
+    "references": "https://en.wikipedia.org/wiki/Legendre%27s_conjecture https://www.unsolvedmath.com/problems"
+  },
+  {
+    "id": "BROCARD",
+    "title": "Brocard's conjecture",
+    "statement": "For every \\(n\\geq2\\), are there at least four primes strictly between\n\\[\np_n^2\\quad\\text{and}\\quad p_{n+1}^2,\n\\]\nwhere \\(p_n\\) is the \\(n\\)-th prime?",
+    "references": "https://en.wikipedia.org/wiki/Brocard%27s_conjecture https://www.unsolvedmath.com/problems"
+  },
+  {
+    "id": "OPPERMANN",
+    "title": "Oppermann's conjecture",
+    "statement": "For every integer \\(n>1\\), is there at least one prime in each of the intervals\n\\[\n(n^2,n(n+1))\n\\quad\\text{and}\\quad\n(n(n+1),(n+1)^2)?\n\\]",
+    "references": "https://en.wikipedia.org/wiki/Oppermann%27s_conjecture https://www.unsolvedmath.com/problems"
+  },
+  {
+    "id": "PERFECT-CUBOID",
+    "title": "Perfect cuboid problem",
+    "statement": "Do there exist positive integers \\(a,b,c\\) such that all four numbers\n\\[\n\\sqrt{a^2+b^2},\\quad\n\\sqrt{a^2+c^2},\\quad\n\\sqrt{b^2+c^2},\\quad\n\\sqrt{a^2+b^2+c^2}\n\\]\nare integers?",
+    "references": "https://en.wikipedia.org/wiki/Euler_brick#Perfect_cuboid https://www.unsolvedmath.com/problems"
+  },
+  {
+    "id": "TCS-FINE_GRAINED-03",
+    "title": "Polynomial-time graph isomorphism",
+    "statement": "Is graph isomorphism solvable in deterministic polynomial time?",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "ODD-PERFECT",
+    "title": "Odd perfect number problem",
+    "statement": "Does there exist an odd positive integer \\(n\\) such that\n\\[\n\\sigma(n)=2n,\n\\]\nwhere \\(\\sigma(n)\\) is the sum of the positive divisors of \\(n\\)?",
+    "references": "https://en.wikipedia.org/wiki/Perfect_number#Odd_perfect_numbers https://www.unsolvedmath.com/problems"
+  },
+  {
+    "id": "TCS-LOGIC_ALGEBRA-03",
+    "title": "Polynomial identity testing without randomness",
+    "statement": "Give a deterministic polynomial-time black-box algorithm for polynomial identity testing for general arithmetic circuits.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "LEHMER-TOTIENT",
+    "title": "Lehmer's totient problem",
+    "statement": "Is every composite integer \\(n\\) such that\n\\[\n\\varphi(n)\\mid n-1\n\\]\nimpossible? Equivalently, does \\(\\varphi(n)\\mid n-1\\) imply that \\(n\\) is prime?",
+    "references": "https://en.wikipedia.org/wiki/Lehmer%27s_totient_problem https://www.unsolvedmath.com/problems"
+  },
+  {
+    "id": "GOORMAGHTIGH",
+    "title": "Goormaghtigh conjecture",
+    "statement": "Are the only solutions in integers \\(x>1\\), \\(y>1\\), \\(m>2\\), \\(n>2\\), with \\(x\\neq y\\), to\n\\[\n\\frac{x^m-1}{x-1}=\\frac{y^n-1}{y-1}\n\\]\nthe values \\(31\\) and \\(8191\\), arising from\n\\[\n(2,5,5,3)\\quad\\text{and}\\quad(2,90,13,3)\n\\]\nup to interchanging the two sides?",
+    "references": "https://en.wikipedia.org/wiki/Goormaghtigh_conjecture https://www.unsolvedmath.com/problems"
+  },
+  {
+    "id": "ERDOS-MOSER",
+    "title": "Erdős–Moser equation",
+    "statement": "Are there no integer solutions with \\(m>1\\) and \\(k>1\\) to\n\\[\n1^k+2^k+\\cdots+(m-1)^k=m^k?\n\\]",
+    "references": "https://en.wikipedia.org/wiki/Erd%C5%91s%E2%80%93Moser_equation https://www.unsolvedmath.com/problems"
+  },
+  {
+    "id": "TCS-LOWER_BOUNDS-02",
+    "title": "Lower bounds for sparse ACC circuits",
+    "statement": "Prove strong lower bounds for explicit functions against ACC circuits under a meaningful sparsity or depth restriction beyond known regimes.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "ERDOS-ULAM",
+    "title": "Erdős–Ulam problem",
+    "statement": "Does there exist a dense subset \\(S\\subseteq\\mathbb R^2\\) such that the Euclidean distance between every two points of \\(S\\) is rational?",
+    "references": "https://en.wikipedia.org/wiki/Erd%C5%91s%E2%80%93Ulam_problem https://www.unsolvedmath.com/problems"
+  },
+  {
+    "id": "BEAL",
+    "title": "Beal conjecture",
+    "statement": "If positive integers \\(A,B,C,x,y,z\\) satisfy\n\\[\nA^x+B^y=C^z\n\\]\nwith \\(x,y,z>2\\), must \\(A,B,C\\) have a common prime factor?",
+    "references": "https://en.wikipedia.org/wiki/Beal_conjecture https://www.unsolvedmath.com/problems"
+  },
+  {
+    "id": "HALL",
+    "title": "Hall's conjecture",
+    "statement": "Is it true that, for every \\(\\varepsilon>0\\), there is a constant \\(c_\\varepsilon>0\\) such that all integers \\(x,y\\) with \\(x^3\\neq y^2\\) satisfy\n\\[\n\\lvert x^3-y^2\\rvert\\geq c_\\varepsilon\\lvert x\\rvert^{1/2-\\varepsilon}?\n\\]",
+    "references": "https://en.wikipedia.org/wiki/Hall%27s_conjecture https://www.unsolvedmath.com/problems"
+  },
+  {
+    "id": "LITTLEWOOD",
+    "title": "Littlewood conjecture",
+    "statement": "For all real numbers \\(\\alpha,\\beta\\), is\n\\[\n\\liminf_{n\\to\\infty}\nn\\,\\lVert n\\alpha\\rVert\\,\\lVert n\\beta\\rVert=0,\n\\]\nwhere \\(\\lVert x\\rVert\\) denotes the distance from \\(x\\) to the nearest integer?",
+    "references": "https://en.wikipedia.org/wiki/Littlewood_conjecture https://www.unsolvedmath.com/problems"
+  },
+  {
+    "id": "TCS-CRYPTO-06",
+    "title": "Cryptographic multilinear maps without known attacks",
+    "statement": "Construct secure, efficiently computable multilinear maps satisfying the properties needed by cryptographic applications.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "TCS-FINE_GRAINED-05",
+    "title": "Strongly polynomial algorithms for general linear programming",
+    "statement": "Does linear programming admit a strongly polynomial algorithm in the real-arithmetic model?",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "TCS-CRYPTO-05",
+    "title": "Indistinguishability obfuscation from standard assumptions",
+    "statement": "Construct indistinguishability obfuscation from widely accepted, falsifiable assumptions with practical parameter growth.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "TCS-QUANTUM-09",
+    "title": "The quantum PCP conjecture",
+    "statement": "Does approximating the ground-state energy of a local Hamiltonian remain QMA-hard at constant relative error?",
+    "references": "https://doi.org/10.1103/PRXQuantum.3.010101"
+  },
+  {
+    "id": "TCS-LOWER_BOUNDS-06",
+    "title": "Lower bounds for full Frege proofs",
+    "statement": "Prove any superpolynomial lower bound for an explicit family of tautologies in the Frege proof system.",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  },
+  {
+    "id": "TCS-FINE_GRAINED-02",
+    "title": "The exact exponent of matrix multiplication",
+    "statement": "Is the matrix-multiplication exponent \\(\\omega\\) equal to \\(2\\), and what explicit algorithmic constructions approach the optimal exponent?",
+    "references": "https://huggingface.co/datasets/Tommysha/open-problem-atlas"
+  }
+]
