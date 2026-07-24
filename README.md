@@ -256,6 +256,9 @@ pipeline polls a tiny `control.json` (on the repo's `control` branch) every ~20s
 - **Start** → resumes normal work.
 - **Restart** → relaunches the browser once and resumes. It does **not** reset any
   problem's progress.
+- **Update** → the machine runs `git pull` and restarts the pipeline so new code
+  takes effect. Handled by `run_all.py`, so you must be running via `run_all.py`
+  (not bare `side_pipeline.py`) for Update to work.
 
 A ready-made control page lives in `control_site/`. Deploy it once (separately
 from the pipeline) to get a URL with Start / Stop / Restart buttons:

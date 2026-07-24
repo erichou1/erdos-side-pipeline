@@ -25,11 +25,15 @@ e.g.  python run_all.py --workers 12 -- --max-rounds 30
 from __future__ import annotations
 
 import argparse
+import json
+import os
 import signal
 import subprocess
 import sys
 import time
+import urllib.request
 from pathlib import Path
+from typing import Optional
 
 _DIR = Path(__file__).resolve().parent
 PY = sys.executable
@@ -37,9 +41,45 @@ MIN_ALIVE_SECS = 30      # a child dying faster than this is "flapping" → back
 BACKOFF_START = 5
 BACKOFF_MAX = 300
 
+# Remote 'update' command (from the website's Update button): the control file
+# carries an integer 'update' nonce; a new value triggers one git pull + restart.
+CONTROL_URL = os.environ.get(
+    "SIDE_PIPELINE_CONTROL_URL",
+    "https://raw.githubusercontent.com/erichou1/erdos-side-pipeline/control/control.json")
+CONTROL_POLL_SECONDS = 20.0
+_UPDATE_STATE = _DIR / "erdos_problems" / "side_pipeline_runs" / "_run_all_state.json"
+
 
 def _spawn(args: list[str]) -> subprocess.Popen:
     return subprocess.Popen([PY, "-u", *args], cwd=str(_DIR))
+
+
+def _poll_update_nonce() -> Optional[int]:
+    """Return the control file's 'update' nonce, or None on any error."""
+    try:
+        sep = "&" if "?" in CONTROL_URL else "?"
+        req = urllib.request.Request(f"{CONTROL_URL}{sep}cb={int(time.time())}",
+                                     headers={"Cache-Control": "no-cache"})
+        with urllib.request.urlopen(req, timeout=4.0) as resp:
+            data = json.loads(resp.read().decode("utf-8"))
+        return int(data.get("update") or 0)
+    except Exception:
+        return None
+
+
+def _load_handled_update() -> int:
+    try:
+        return int(json.loads(_UPDATE_STATE.read_text(encoding="utf-8")).get("update", 0))
+    except Exception:
+        return 0
+
+
+def _save_handled_update(nonce: int) -> None:
+    try:
+        _UPDATE_STATE.parent.mkdir(parents=True, exist_ok=True)
+        _UPDATE_STATE.write_text(json.dumps({"update": int(nonce)}), encoding="utf-8")
+    except Exception:
+        pass
 
 
 def main() -> int:
@@ -82,8 +122,32 @@ def main() -> int:
     signal.signal(signal.SIGINT, _stop)
     signal.signal(signal.SIGTERM, _stop)
 
+    handled_update = _load_handled_update()
+    control_at = 0.0
     try:
         while not stopping:
+            # Remote 'update': git pull + restart children when the nonce changes.
+            now = time.time()
+            if now - control_at >= CONTROL_POLL_SECONDS:
+                control_at = now
+                nonce = _poll_update_nonce()
+                if nonce and nonce != handled_update:
+                    handled_update = nonce
+                    _save_handled_update(nonce)
+                    _log("update requested via control — running git pull")
+                    r = subprocess.run(["git", "-C", str(_DIR), "pull", "--ff-only"],
+                                       text=True, stdout=subprocess.PIPE,
+                                       stderr=subprocess.STDOUT)
+                    _log(f"git pull ({r.returncode}): {(r.stdout or '').strip()[-300:]}")
+                    if r.returncode == 0:
+                        _log("restarting children to apply the update")
+                        for nm in list(procs):
+                            try:
+                                procs[nm].terminate()
+                            except Exception:
+                                pass
+                    else:
+                        _log("update skipped — git pull failed; fix the repo on this machine")
             for name, a in specs.items():
                 if stopping:
                     break

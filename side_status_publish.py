@@ -77,6 +77,23 @@ def _side_pipeline_active_ids(directory: Path) -> set[str]:
     return {str(a.get("id")) for a in (manifest.get("active") or []) if a.get("id")}
 
 
+def _runtime(directory: Path) -> dict[str, Any]:
+    """Expose the live pipeline heartbeat/pid/state (from the _active.json manifest)
+    so the dashboard can show whether the pipeline process is online right now."""
+    try:
+        manifest = json.loads((directory / "_active.json").read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return {}
+    state = str(manifest.get("state") or "run")
+    return {
+        "heartbeat": manifest.get("heartbeat"),
+        "pid": manifest.get("pid"),
+        "state": state,
+        "paused": bool(manifest.get("paused", state == "pause")),
+        "workers_active": len(manifest.get("active") or []),
+    }
+
+
 def _side_pipeline(directory: Path) -> dict[str, Any]:
     """Build the side-pipeline section from the local run-state files."""
     problems: list[dict[str, Any]] = []
@@ -149,6 +166,7 @@ def _side_pipeline(directory: Path) -> dict[str, Any]:
             "exhausted": status_counts.get("exhausted", 0),
             "failed": status_counts.get("failed", 0),
         },
+        "runtime": _runtime(directory),
     }
 
 

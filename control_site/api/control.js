@@ -76,7 +76,8 @@ export default async function handler(req, res) {
       if (action === "start") content.state = "run";
       else if (action === "stop") content.state = "pause";
       else if (action === "restart") content.restart = Date.now();
-      else return res.status(400).json({ error: "action must be start | stop | restart" });
+      else if (action === "update") content.update = Date.now();
+      else return res.status(400).json({ error: "action must be start | stop | restart | update" });
       const saved = await putFile(token, sha, content, `control: ${action}`);
       return res.status(200).json(saved);
     }
