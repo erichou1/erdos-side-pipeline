@@ -51,7 +51,7 @@ DEFAULT_WORKTREE = Path("/tmp/erdos-side-status-live")
 # The side pipeline writes its per-problem state here (matches side_pipeline.py's
 # DEFAULT_STATE_DIR = <repo>/erdos_problems/side_pipeline_runs).
 DEFAULT_RUNS_DIR = _SCRIPT_DIR / "erdos_problems" / "side_pipeline_runs"
-DEFAULT_INTERVAL = 60          # seconds between cycles
+DEFAULT_INTERVAL = 20          # seconds between cycles (how quickly page updates appear)
 HEARTBEAT_SECONDS = 120.0      # push at least this often so the site never shows stale
 BOT_NAME = "Side Pipeline Status Bot"
 BOT_EMAIL = "status-bot@local.invalid"
@@ -268,8 +268,8 @@ def main(argv: list[str] | None = None) -> int:
                         help="seconds between refresh cycles (min 30)")
     parser.add_argument("--once", action="store_true", help="run one cycle and exit")
     args = parser.parse_args(argv)
-    if args.interval < 30:
-        parser.error("--interval must be at least 30 seconds")
+    if args.interval < 10:
+        parser.error("--interval must be at least 10 seconds")
 
     runs_dir = args.runs_dir.resolve()
     worktree = args.worktree.resolve()

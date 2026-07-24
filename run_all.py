@@ -45,8 +45,8 @@ BACKOFF_MAX = 300
 # carries an integer 'update' nonce; a new value triggers one git pull + restart.
 CONTROL_URL = os.environ.get(
     "SIDE_PIPELINE_CONTROL_URL",
-    "https://raw.githubusercontent.com/erichou1/erdos-side-pipeline/control/control.json")
-CONTROL_POLL_SECONDS = 20.0
+    "https://egmra-status.vercel.app/api/control")
+CONTROL_POLL_SECONDS = 10.0
 _UPDATE_STATE = _DIR / "erdos_problems" / "side_pipeline_runs" / "_run_all_state.json"
 
 

@@ -99,10 +99,13 @@ TARGET_MODEL_TOKENS = tuple(
 # ── Remote control: the website writes a tiny control.json the pipeline polls ──
 # state ∈ {"run","pause"}; "restart" is an integer nonce (a NEW value triggers one
 # browser relaunch that resumes from saved state — it never resets any problem).
+# Read the control command from the Vercel API endpoint (dynamic, always fresh)
+# rather than raw.githubusercontent.com, which is CDN-cached for ~5 min and ignores
+# cache-busting queries — that made stop/start/restart take minutes to reach here.
 CONTROL_URL = os.environ.get(
     "SIDE_PIPELINE_CONTROL_URL",
-    "https://raw.githubusercontent.com/erichou1/erdos-side-pipeline/control/control.json")
-CONTROL_POLL_SECONDS = 20.0     # how often to check the remote control command
+    "https://egmra-status.vercel.app/api/control")
+CONTROL_POLL_SECONDS = 8.0      # how often to check the remote control command
 
 # Transient per-problem errors are re-queued (resumed) up to this many times before
 # the problem is marked failed, so one flaky problem never stops the multi-day run.
