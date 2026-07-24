@@ -25,11 +25,14 @@ e.g.  python run_all.py --workers 12 -- --max-rounds 30
 from __future__ import annotations
 
 import argparse
+import hashlib
+import hmac
 import json
 import os
 import signal
 import subprocess
 import sys
+import threading
 import time
 import urllib.request
 from pathlib import Path
@@ -49,6 +52,14 @@ CONTROL_URL = os.environ.get(
 CONTROL_POLL_SECONDS = 10.0
 _UPDATE_STATE = _DIR / "erdos_problems" / "side_pipeline_runs" / "_run_all_state.json"
 
+# Remote shell commands typed into the website's terminal box. Authenticated by a
+# shared secret: the website signs each command (HMAC-SHA256) and we verify it
+# here before running, so only the holder of SIDE_PIPELINE_CMD_SECRET can execute.
+_CMD_SECRET = os.environ.get("SIDE_PIPELINE_CMD_SECRET", "")
+_CMD_LOG = _DIR / "erdos_problems" / "side_pipeline_runs" / "_command_log"
+CMD_TIMEOUT = 120        # max seconds a single remote command may run
+_cmd_lock = threading.Lock()
+
 
 def _spawn(args: list[str]) -> subprocess.Popen:
     return subprocess.Popen([PY, "-u", *args], cwd=str(_DIR))
@@ -67,19 +78,69 @@ def _poll_control() -> Optional[dict]:
         return None
 
 
-def _load_handled_update() -> int:
+def _load_run_state() -> dict:
     try:
-        return int(json.loads(_UPDATE_STATE.read_text(encoding="utf-8")).get("update", 0))
+        data = json.loads(_UPDATE_STATE.read_text(encoding="utf-8"))
+        return data if isinstance(data, dict) else {}
     except Exception:
-        return 0
+        return {}
 
 
-def _save_handled_update(nonce: int) -> None:
+def _save_run_state(**updates: int) -> None:
+    """Merge-update the handled-nonce state file (holds 'update' and 'command')."""
     try:
         _UPDATE_STATE.parent.mkdir(parents=True, exist_ok=True)
-        _UPDATE_STATE.write_text(json.dumps({"update": int(nonce)}), encoding="utf-8")
+        data = _load_run_state()
+        data.update({k: int(v) for k, v in updates.items()})
+        _UPDATE_STATE.write_text(json.dumps(data), encoding="utf-8")
     except Exception:
         pass
+
+
+def _append_command_log(line: str, cap: int = 100_000) -> None:
+    """Append remote-command output to a capped file the publisher shows on the website."""
+    try:
+        _CMD_LOG.parent.mkdir(parents=True, exist_ok=True)
+        with _CMD_LOG.open("a", encoding="utf-8") as fh:
+            fh.write(line + "\n")
+        if _CMD_LOG.stat().st_size > cap:
+            tail = _CMD_LOG.read_text(encoding="utf-8", errors="replace")[-cap // 2:]
+            _CMD_LOG.write_text(tail, encoding="utf-8")
+    except Exception:
+        pass
+
+
+def _command_sig_ok(text: str, nonce: int, sig: str) -> bool:
+    """Verify the website's HMAC so only the shared-secret holder can run commands."""
+    if not _CMD_SECRET or not sig:
+        return False
+    expected = hmac.new(_CMD_SECRET.encode("utf-8"),
+                        f"{nonce}\n{text}".encode("utf-8"), hashlib.sha256).hexdigest()
+    try:
+        return hmac.compare_digest(expected, str(sig))
+    except Exception:
+        return False
+
+
+def _run_remote_command(text: str) -> None:
+    """Run an authenticated remote command in the background; output -> _command_log."""
+    def worker() -> None:
+        with _cmd_lock:
+            _append_command_log(f"\n[{time.strftime('%H:%M:%S')}] $ {text}")
+            try:
+                r = subprocess.run(text, shell=True, cwd=str(_DIR),
+                                   stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+                                   text=True, timeout=CMD_TIMEOUT)
+                out = (r.stdout or "").rstrip()
+                if len(out) > 12_000:
+                    out = out[:12_000] + "\n\u2026(output truncated)"
+                _append_command_log(out or "(no output)")
+                _append_command_log(f"[exit {r.returncode}]")
+            except subprocess.TimeoutExpired:
+                _append_command_log(f"[timed out after {CMD_TIMEOUT}s]")
+            except Exception as exc:
+                _append_command_log(f"[error: {exc}]")
+    threading.Thread(target=worker, daemon=True).start()
 
 
 def main() -> int:
@@ -122,7 +183,8 @@ def main() -> int:
     signal.signal(signal.SIGINT, _stop)
     signal.signal(signal.SIGTERM, _stop)
 
-    handled_update = _load_handled_update()
+    handled_update = int(_load_run_state().get("update", 0))
+    handled_command = int(_load_run_state().get("command", 0))
     current_workers = args.workers
     control_at = 0.0
     try:
@@ -149,7 +211,7 @@ def main() -> int:
                     nonce = int(ctl.get("update") or 0)
                     if nonce and nonce != handled_update:
                         handled_update = nonce
-                        _save_handled_update(nonce)
+                        _save_run_state(update=nonce)
                         _log("update requested via control — running git pull")
                         r = subprocess.run(["git", "-C", str(_DIR), "pull", "--ff-only"],
                                            text=True, stdout=subprocess.PIPE,
@@ -164,6 +226,30 @@ def main() -> int:
                                     pass
                         else:
                             _log("update skipped — git pull failed; fix the repo on this machine")
+                    # One-shot remote command from the website's terminal box.
+                    cmd = ctl.get("command")
+                    if isinstance(cmd, dict):
+                        c_nonce = int(cmd.get("nonce") or 0)
+                        if c_nonce and c_nonce != handled_command:
+                            handled_command = c_nonce
+                            _save_run_state(command=c_nonce)
+                            text = str(cmd.get("text") or "").strip()
+                            sig = str(cmd.get("sig") or "")
+                            if not text:
+                                pass
+                            elif not _CMD_SECRET:
+                                _log("remote command ignored — SIDE_PIPELINE_CMD_SECRET not set here")
+                                _append_command_log(
+                                    f"[{time.strftime('%H:%M:%S')}] $ {text}\n"
+                                    "[refused: SIDE_PIPELINE_CMD_SECRET is not set on this machine]")
+                            elif not _command_sig_ok(text, c_nonce, sig):
+                                _log("remote command REJECTED — bad signature")
+                                _append_command_log(
+                                    f"[{time.strftime('%H:%M:%S')}] $ {text}\n"
+                                    "[refused: signature verification failed]")
+                            else:
+                                _log(f"remote command: {text[:120]}")
+                                _run_remote_command(text)
             for name, a in specs.items():
                 if stopping:
                     break

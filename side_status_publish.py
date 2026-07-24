@@ -103,6 +103,15 @@ def _terminal_log(directory: Path, max_lines: int = 200) -> str:
     return "\n".join(text.splitlines()[-max_lines:])
 
 
+def _command_log(directory: Path, max_lines: int = 120) -> str:
+    """Last N lines of remote-command output, for the website's command box."""
+    try:
+        text = (directory / "_command_log").read_text(encoding="utf-8", errors="replace")
+    except OSError:
+        return ""
+    return "\n".join(text.splitlines()[-max_lines:])
+
+
 def _side_pipeline(directory: Path) -> dict[str, Any]:
     """Build the side-pipeline section from the local run-state files."""
     problems: list[dict[str, Any]] = []
@@ -177,6 +186,7 @@ def _side_pipeline(directory: Path) -> dict[str, Any]:
         },
         "runtime": _runtime(directory),
         "log": _terminal_log(directory),
+        "commands": _command_log(directory),
     }
 
 
