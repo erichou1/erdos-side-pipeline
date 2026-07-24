@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="color-scheme" content="dark light" />
+<title>Side Pipeline Control</title>
+<style>
+  :root { color-scheme: dark light; }
+  body { margin: 0; font: 16px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+         background: #0b0d12; color: #e8ecf3; display: grid; place-items: center; min-height: 100vh; }
+  .card { width: min(92vw, 460px); background: #151923; border: 1px solid #232a38; border-radius: 16px;
+          padding: 28px; box-shadow: 0 10px 40px rgba(0,0,0,.4); }
+  h1 { font-size: 20px; margin: 0 0 4px; }
+  p.sub { margin: 0 0 20px; color: #9aa6b8; font-size: 13px; }
+  .state { display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-radius: 10px;
+           background: #0f131b; border: 1px solid #232a38; margin-bottom: 20px; font-size: 14px; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; background: #6b7688; flex: none; }
+  .dot.run { background: #37d67a; box-shadow: 0 0 10px #37d67a88; }
+  .dot.pause { background: #f5a623; box-shadow: 0 0 10px #f5a62388; }
+  .btns { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+  button { appearance: none; border: 1px solid #2c3446; border-radius: 10px; padding: 14px 10px;
+           font-size: 15px; font-weight: 600; color: #e8ecf3; background: #1b2130; cursor: pointer; }
+  button:hover { background: #222a3b; }
+  button:active { transform: translateY(1px); }
+  button:disabled { opacity: .5; cursor: default; }
+  button.start { border-color: #1e5c3a; } button.start:hover { background: #17351f; }
+  button.stop  { border-color: #6a4a12; } button.stop:hover  { background: #35260c; }
+  button.restart { border-color: #35406a; } button.restart:hover { background: #1b2340; }
+  .msg { margin-top: 16px; min-height: 18px; font-size: 13px; color: #9aa6b8; }
+  .msg.err { color: #ff8080; }
+  a { color: #6ea8fe; }
+</style>
+</head>
+<body>
+  <div class="card">
+    <h1>Side Pipeline Control</h1>
+    <p class="sub">Stop / start / restart the research pipeline from anywhere. Restart does <b>not</b> reset any problem — it just relaunches the browser and resumes.</p>
+    <div class="state"><span id="dot" class="dot"></span><span id="stateText">checking…</span></div>
+    <div class="btns">
+      <button class="start" data-action="start">Start</button>
+      <button class="stop" data-action="stop">Stop</button>
+      <button class="restart" data-action="restart">Restart</button>
+    </div>
+    <div id="msg" class="msg"></div>
+  </div>
+<script>
+const $ = (id) => document.getElementById(id);
+function render(state) {
+  const s = (state && state.state) || "unknown";
+  $("dot").className = "dot " + (s === "run" ? "run" : s === "pause" ? "pause" : "");
+  $("stateText").textContent = s === "run" ? "Running" : s === "pause" ? "Stopped (paused)" : "Unknown";
+}
+async function refresh() {
+  try {
+    const r = await fetch("/api/control", { cache: "no-store" });
+    render(await r.json());
+  } catch (e) { $("msg").textContent = "Could not read state: " + e; $("msg").className = "msg err"; }
+}
+async function send(action) {
+  const btns = document.querySelectorAll("button");
+  btns.forEach(b => b.disabled = true);
+  $("msg").className = "msg"; $("msg").textContent = "Sending " + action + "…";
+  try {
+    const r = await fetch("/api/control", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action }),
+    });
+    const j = await r.json();
+    if (!r.ok) throw new Error(j.error || r.status);
+    render(j);
+    $("msg").textContent = action === "restart"
+      ? "Restart requested — the pipeline will relaunch within ~20s."
+      : (action === "stop" ? "Paused — the pipeline will idle within ~20s." : "Running.");
+  } catch (e) {
+    $("msg").className = "msg err"; $("msg").textContent = "Failed: " + e;
+  } finally {
+    btns.forEach(b => b.disabled = false);
+  }
+}
+document.querySelectorAll("button[data-action]").forEach(b =>
+  b.addEventListener("click", () => send(b.dataset.action)));
+refresh();
+setInterval(refresh, 5000);
+</script>
+</body>
+</html>

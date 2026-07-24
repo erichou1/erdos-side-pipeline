@@ -43,6 +43,7 @@ import os
 import re
 import sys
 import time
+import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Optional
@@ -88,6 +89,24 @@ RELAUNCH_PAUSE = 6.0            # seconds to wait before relaunching a dead brow
 RAPID_DEATH_SECS = 45.0         # a launch dying faster than this counts as "can't start"
 RAPID_DEATH_LIMIT = 3           # give up after this many consecutive rapid deaths
 
+# ── Model guard: every NEW chat must use this model (best-effort; never blocks) ─
+# A new chat's model name (as shown in ChatGPT's switcher) must contain ALL of
+# these tokens, case-insensitively. Override with SIDE_PIPELINE_MODEL (space-sep).
+TARGET_MODEL_TOKENS = tuple(
+    t for t in os.environ.get("SIDE_PIPELINE_MODEL", "5.6 pro").lower().split() if t)
+
+# ── Remote control: the website writes a tiny control.json the pipeline polls ──
+# state ∈ {"run","pause"}; "restart" is an integer nonce (a NEW value triggers one
+# browser relaunch that resumes from saved state — it never resets any problem).
+CONTROL_URL = os.environ.get(
+    "SIDE_PIPELINE_CONTROL_URL",
+    "https://raw.githubusercontent.com/erichou1/erdos-side-pipeline/control/control.json")
+CONTROL_POLL_SECONDS = 20.0     # how often to check the remote control command
+
+# Transient per-problem errors are re-queued (resumed) up to this many times before
+# the problem is marked failed, so one flaky problem never stops the multi-day run.
+PROBLEM_RETRY_MAX = 3
+
 # Placeholder ec.extract_response returns when no assistant message is on the page
 # (a fresh, blank, or dead tab). It is NEVER a valid reply, so the poller must not
 # settle on it and resume must never reuse it as an adapted prompt.
@@ -96,6 +115,10 @@ _EXTRACT_FAILURE = "[Could not extract response]"
 
 class _BrowserDied(Exception):
     """The Chromium context/tabs died mid-run; relaunch and resume from state."""
+
+
+class _RestartRequested(Exception):
+    """A remote 'restart' command: relaunch Chromium and resume from saved state."""
 
 
 def _is_browser_dead(exc: BaseException) -> bool:
@@ -479,7 +502,8 @@ def _atomic_write_json(path: Path, obj: Any) -> None:
     tmp.replace(path)
 
 
-def _write_active_manifest(state_dir: Path, slots: list[Any]) -> None:
+def _write_active_manifest(state_dir: Path, slots: list[Any],
+                           control: Optional[dict[str, Any]] = None) -> None:
     """Publish which problems are on a worker RIGHT NOW plus a heartbeat, so the
     website shows only genuinely-active workers and never a stale 'running' file
     from a prior/crashed run or a queued-but-not-started problem. Written into the
@@ -499,6 +523,8 @@ def _write_active_manifest(state_dir: Path, slots: list[Any]) -> None:
         _atomic_write_json(state_dir / "_active.json", {
             "heartbeat": _now_iso(),
             "pid": os.getpid(),
+            "state": (control or {}).get("state", "run"),
+            "paused": (control or {}).get("state") == "pause",
             "active": active,
         })
     except Exception:
@@ -617,6 +643,123 @@ def _trip_rate_limit(sched: dict[str, float], log) -> None:
         sched["rate_limit_until"] = until
     log(f"[rate-limit] throttled — pausing all workers ~{backoff:.0f}s (streak {int(streak)})")
 
+
+# ── Remote control polling ────────────────────────────────────────────────────
+def _poll_control(url: str, timeout: float = 4.0) -> Optional[dict[str, Any]]:
+    """Fetch the remote control document. Returns the parsed dict, or None on any
+    error (the caller then keeps the last known command). A cache-busting query is
+    appended so GitHub's raw CDN never serves a stale command."""
+    try:
+        sep = "&" if "?" in url else "?"
+        req = urllib.request.Request(
+            f"{url}{sep}cb={int(time.time())}",
+            headers={"Cache-Control": "no-cache", "Pragma": "no-cache"})
+        with urllib.request.urlopen(req, timeout=timeout) as resp:
+            data = json.loads(resp.read().decode("utf-8"))
+        return data if isinstance(data, dict) else None
+    except Exception:
+        return None
+
+
+# ── Model guard: best-effort enforcement of the chat model (never blocks) ─────
+def _current_model_name(page: Any) -> str:
+    """Best-effort read of the model shown in ChatGPT's model switcher."""
+    for sel in ('[data-testid="model-switcher-dropdown-button"]',
+                'button[data-testid="model-switcher-dropdown-button"]',
+                'button[aria-label*="odel"]',
+                'div[data-testid="model-switcher"] button'):
+        try:
+            el = page.query_selector(sel)
+            if el:
+                txt = " ".join((el.inner_text() or "").split())
+                if txt:
+                    return txt
+        except Exception:
+            pass
+    return ""
+
+
+def _model_ok(name: str, tokens: tuple[str, ...]) -> bool:
+    low = (name or "").lower()
+    return bool(name) and all(tok in low for tok in tokens)
+
+
+def _ensure_chat_model(page: Any, tokens: tuple[str, ...], log=None) -> tuple[bool, str]:
+    """Make the current (new) chat use the target model. Returns (ok, model_name).
+
+    NEVER blocks the run: if the switcher can't be driven (e.g. the UI changed),
+    it logs a warning and returns (False, <name>) so the pipeline keeps going on
+    whatever model is selected rather than freezing for days.
+    """
+    tokens = tuple(t.lower() for t in tokens if t)
+    if not tokens:
+        return True, _current_model_name(page)
+    name = _current_model_name(page)
+    if _model_ok(name, tokens):
+        return True, name
+    try:
+        btn = None
+        for sel in ('[data-testid="model-switcher-dropdown-button"]',
+                    'button[data-testid="model-switcher-dropdown-button"]',
+                    'button[aria-label*="odel"]'):
+            btn = page.query_selector(sel)
+            if btn:
+                break
+        if btn is None:
+            if log:
+                log(f"[model] WARN could not find the model switcher (chat shows {name!r})")
+            return False, name
+        page.evaluate("el => el.click()", btn)
+        time.sleep(0.5)
+
+        def _click_match() -> bool:
+            for it in page.query_selector_all('[role="menuitem"], [role="option"]'):
+                try:
+                    label = " ".join((it.inner_text() or "").split()).lower()
+                except Exception:
+                    continue
+                if label and all(tok in label for tok in tokens):
+                    try:
+                        page.evaluate("el => el.click()", it)
+                        return True
+                    except Exception:
+                        pass
+            return False
+
+        clicked = _click_match()
+        if not clicked:
+            # The target may live in a submenu ("More models" / "Legacy models").
+            for it in page.query_selector_all('[role="menuitem"]'):
+                try:
+                    label = (it.inner_text() or "").lower()
+                except Exception:
+                    continue
+                if any(k in label for k in ("more model", "legacy", "other model", "all model")):
+                    try:
+                        page.evaluate("el => el.click()", it)
+                        time.sleep(0.4)
+                        if _click_match():
+                            clicked = True
+                            break
+                    except Exception:
+                        pass
+        time.sleep(0.6)
+        name = _current_model_name(page)
+        ok = _model_ok(name, tokens)
+        if not ok:
+            try:
+                page.keyboard.press("Escape")   # close a stray menu over the composer
+            except Exception:
+                pass
+            if log:
+                log(f"[model] WARN wanted {'+'.join(tokens)} but chat shows {name!r} — proceeding")
+        return ok, name
+    except Exception as exc:
+        if log:
+            log(f"[model] WARN model-switch error: {exc!r} — proceeding")
+        return False, name
+
+
 # ── Drivers: a thin interface over one ChatGPT tab ────────────────────────────
 class BrowserDriver:
     """Backed by a real Playwright page (one ChatGPT tab)."""
@@ -627,6 +770,9 @@ class BrowserDriver:
 
     def open_new_chat(self) -> None:
         ec.start_new_chat(self.page)
+
+    def ensure_model(self, tokens: tuple[str, ...], log=None) -> tuple[bool, str]:
+        return _ensure_chat_model(self.page, tokens, log)
 
     def alive(self) -> bool:
         try:
@@ -805,13 +951,21 @@ class SimDriver:
         self._committed = ""
         self._pending = ""
 
+    def ensure_model(self, tokens: tuple[str, ...], log=None) -> tuple[bool, str]:
+        return True, "sim-model"
+
     def goto_conversation(self, url: str) -> bool:
         self.await_kind = "research"
         return True
 
     def submit(self, prompt: str) -> None:
+        p = (prompt or "").lower()
         if self.chat_index <= 1 and self.await_kind is None:
             self.await_kind = "adapt"
+        elif "self-assess honestly" in p:
+            self.await_kind = "selfassess"
+        elif "verdict" in p:
+            self.await_kind = "verify"
         else:
             self.await_kind = "research"
             self.research_round += 1
@@ -822,12 +976,19 @@ class SimDriver:
         if self.await_kind == "adapt":
             return ("ADAPTED PROMPT (simulated)\n\nResolve completely the dependence of the "
                     "quantity on the parameter. " + "Simulated adaptation body. " * 6)
-        if self.solve_at_round and self.research_round >= self.solve_at_round:
-            return ("We assemble the components. Combining the localization argument with the "
-                    "hard family yields matching upper and lower bounds obtained up to "
-                    "polylogarithmic factors, and an explicit complete unconditional "
-                    "counterexample. This completes the proof. \u220e")
-        return ("Substantial partial progress was made and the structure is much clearer, but a "
+        solved = bool(self.solve_at_round and self.research_round >= self.solve_at_round)
+        if self.await_kind == "verify":
+            return ("VERDICT: CORRECT — the proof is complete and rigorous." if solved
+                    else "VERDICT: INCORRECT — a key lemma is left unproven.")
+        if self.await_kind == "selfassess":
+            return ("SOLVED — a full unconditional proof was given." if solved
+                    else "NOT SOLVED — a key lemma is still missing.")
+        # research / continuation reply (distinct per round so it never looks stale)
+        if solved:
+            return (f"(round {self.research_round}) We assemble the components: matching upper "
+                    "and lower bounds and an explicit unconditional counterexample. This "
+                    "completes the proof of the problem, which is now fully solved. \u220e")
+        return (f"(round {self.research_round}) Substantial partial progress was made, but a "
                 "theorem-strength gap remains and the problem remains open at this stage. "
                 "Further work is required to close the gap.")
 
@@ -1131,6 +1292,7 @@ class Slot:
             self.driver.dismiss_rate_limit()
             _trip_rate_limit(self.sched, self.log)
             return
+        _, self.record["model"] = self.driver.ensure_model(TARGET_MODEL_TOKENS, self.log)
         self.driver.submit(self.adapt_msg)
         self._add_stage("adapt", "prompt", self.adapt_msg, None)
         self.url_deadline = time.time() + URL_CAPTURE_TIMEOUT
@@ -1188,6 +1350,7 @@ class Slot:
             self.driver.dismiss_rate_limit()
             _trip_rate_limit(self.sched, self.log)
             return
+        _, self.record["model"] = self.driver.ensure_model(TARGET_MODEL_TOKENS, self.log)
         self.driver.submit(self.adapted_text)
         self._add_stage("research", "prompt", self.adapted_text, None, round_no=1)
         self.url_deadline = time.time() + URL_CAPTURE_TIMEOUT
@@ -1239,9 +1402,10 @@ class Slot:
             return
         self._backfill_conversation_url("research_conversation_url", known_cids)
         stage = "research" if self.await_round <= 1 else "continue"
+        signal = assess_response(text)
         self._add_stage(stage, "response", text,
                         self.record.get("research_conversation_url"),
-                        round_no=self.await_round, assessment=assess_response(text))
+                        round_no=self.await_round, assessment=signal)
         self._research_text = text
         self._research_elapsed = time.time() - self.submitted_at
         # The research chat has settled after the first response; label it now.
@@ -1249,31 +1413,30 @@ class Slot:
             self._rename_chat(self.record["research_conversation_url"],
                               self._status_title("running"))
             self._renamed_running = True
-        self.log(f"[{self.record['id']}] round {self.await_round} reply "
-                 f"({len(text)} chars, {self._research_elapsed / 60:.1f}min) — asking if solved")
-        # Ask the model DIRECTLY whether it is done. A free-form proof is unreliable
-        # to classify by regex (clear solves were being missed), so its explicit
-        # one-line verdict is what gates the independent verification.
-        self.driver.submit(SELF_ASSESS_PROMPT)
-        self._arm_response_wait("selfassess", self.await_round)
-        self.phase = "await_selfassess"
+        # Only spend a (slow, usage-limited) self-assessment turn when the reply
+        # SHOWS SIGNS of a completed solution, or on the final round. Most rounds
+        # are plainly still in progress, so asking "are you done?" every round just
+        # wastes a turn — skip straight to the next continuation instead.
+        looks_solved = signal == "solved"
+        final_round = self.await_round >= self.max_rounds
+        mins = self._research_elapsed / 60
+        if looks_solved or final_round:
+            why = "looks solved" if looks_solved else "final round"
+            self.log(f"[{self.record['id']}] round {self.await_round} reply "
+                     f"({len(text)} chars, {mins:.1f}min) — {why}; asking to confirm")
+            # Ask the model DIRECTLY whether it is done. A free-form proof is hard
+            # to classify by regex, so its explicit one-line verdict is what gates
+            # the independent verification.
+            self.driver.submit(SELF_ASSESS_PROMPT)
+            self._arm_response_wait("selfassess", self.await_round)
+            self.phase = "await_selfassess"
+        else:
+            self.log(f"[{self.record['id']}] round {self.await_round} reply "
+                     f"({len(text)} chars, {mins:.1f}min) — continuing")
+            self._continue_or_exhaust()
 
-    def _step_await_selfassess(self, known_cids: set[str]) -> None:
-        text, done = self._poll_response()
-        if not done:
-            return
-        claims_solved = _self_assessed_solved(text)
-        self._add_stage("selfassess", "response", text,
-                        self.record.get("research_conversation_url"),
-                        round_no=self.await_round,
-                        assessment="claims_solved" if claims_solved else "not_solved")
-        self.log(f"[{self.record['id']}] round {self.await_round} self-assessment → "
-                 f"{'SOLVED' if claims_solved else 'not solved'}")
-        if claims_solved:
-            # The model says it is done — independently verify the proof in a fresh chat.
-            self._solved_candidate = self._research_text
-            self.phase = "start_verify"
-            return
+    def _continue_or_exhaust(self) -> None:
+        """Send the next continuation nudge, or mark exhausted at the round cap."""
         if self.await_round >= self.max_rounds:
             self.record["status"] = "exhausted"
             self._finish("exhausted")
@@ -1296,6 +1459,25 @@ class Slot:
                  f"{', +think-longer' if too_fast else ''}) submitted "
                  f"[prev reply {self._research_elapsed / 60:.1f}min]")
 
+    def _step_await_selfassess(self, known_cids: set[str]) -> None:
+        text, done = self._poll_response()
+        if not done:
+            return
+        claims_solved = _self_assessed_solved(text)
+        self._add_stage("selfassess", "response", text,
+                        self.record.get("research_conversation_url"),
+                        round_no=self.await_round,
+                        assessment="claims_solved" if claims_solved else "not_solved")
+        self.log(f"[{self.record['id']}] round {self.await_round} self-assessment → "
+                 f"{'SOLVED' if claims_solved else 'not solved'}")
+        if claims_solved:
+            # The model says it is done — independently verify the proof in a fresh chat.
+            self._solved_candidate = self._research_text
+            self.phase = "start_verify"
+            return
+        # It confirmed NOT solved — keep pushing (or exhaust at the round cap).
+        self._continue_or_exhaust()
+
     # -- independent verification of a claimed solution -------------------------
     def _step_start_verify(self, known_cids: set[str]) -> None:
         if not self._may_open_chat():
@@ -1305,6 +1487,7 @@ class Slot:
             self.driver.dismiss_rate_limit()
             _trip_rate_limit(self.sched, self.log)
             return
+        _, self.record["model"] = self.driver.ensure_model(TARGET_MODEL_TOKENS, self.log)
         msg = VERIFY_PROMPT_TEMPLATE.format(
             problem=self.record.get("problem_statement", ""),
             proof=self._solved_candidate)
@@ -1418,6 +1601,21 @@ class Slot:
 
 
 # ── Scheduler ─────────────────────────────────────────────────────────────────
+def _load_control_nonce(state_dir: Path) -> int:
+    try:
+        data = json.loads((state_dir / "_control_state.json").read_text(encoding="utf-8"))
+        return int(data.get("restart", 0))
+    except Exception:
+        return 0
+
+
+def _save_control_nonce(state_dir: Path, nonce: int) -> None:
+    try:
+        _atomic_write_json(state_dir / "_control_state.json", {"restart": int(nonce)})
+    except Exception:
+        pass
+
+
 def _run_loop(drivers: list[Any], problems: list[dict[str, str]], *,
               meta_prompt: str, state_dir: Path, max_rounds: int,
               response_timeout: float, tick: float, new_chat_spacing: float, log) -> None:
@@ -1447,36 +1645,83 @@ def _run_loop(drivers: list[Any], problems: list[dict[str, str]], *,
     log(f"[resume] {skipped} already done (skipped), {resumed} to resume, "
         f"{len(pending) - resumed} fresh")
     queue = collections.deque(pending)
+    retry_counts: dict[str, int] = {}
+    control: dict[str, Any] = {"state": "run", "restart": _load_control_nonce(state_dir)}
+    handled_restart = control["restart"]
     heartbeat = 0.0
+    control_at = 0.0
     while queue or any(not s.idle for s in slots):
+        now = time.time()
+        # -- remote control: stop/start via 'state', one-shot relaunch via 'restart' --
+        if now - control_at >= CONTROL_POLL_SECONDS:
+            control_at = now
+            fetched = _poll_control(CONTROL_URL)
+            if fetched is not None:
+                state = str(fetched.get("state") or "run").lower()
+                if state not in ("run", "pause"):
+                    state = "run"
+                if state != control.get("state"):
+                    log(f"[control] state → {state}")
+                control["state"] = state
+                try:
+                    nonce = int(fetched.get("restart") or 0)
+                except (TypeError, ValueError):
+                    nonce = 0
+                control["restart"] = nonce
+                if nonce and nonce != handled_restart:
+                    _save_control_nonce(state_dir, nonce)   # persist BEFORE relaunching
+                    log("[control] restart requested — relaunching (state preserved)")
+                    raise _RestartRequested()
+        paused = control.get("state") == "pause"
+
         if slots and not any(s.driver.alive() for s in slots):
             raise _BrowserDied("all tabs closed")
-        for slot in slots:
-            if slot.idle and queue:
-                problem = queue.popleft()
-                prior = prior_state.get(problem["id"])
-                if prior and classify_resume(prior) in ("research", "adapted"):
-                    slot.resume(problem, prior)
-                else:
-                    slot.assign(problem)
-            if not slot.idle:
-                try:
-                    slot.step(known_cids)
-                except _BrowserDied:
-                    raise
-                except Exception as exc:
-                    if _is_browser_dead(exc):
-                        raise _BrowserDied(repr(exc))
-                    slot.fail(repr(exc))  # a per-problem error keeps other tabs alive
+        if not paused:
+            for slot in slots:
+                if slot.idle and queue:
+                    problem = queue.popleft()
+                    prior = prior_state.get(problem["id"])
+                    if prior and classify_resume(prior) in ("research", "adapted"):
+                        slot.resume(problem, prior)
+                    else:
+                        slot.assign(problem)
+                if not slot.idle:
+                    try:
+                        slot.step(known_cids)
+                    except _BrowserDied:
+                        raise
+                    except _RestartRequested:
+                        raise
+                    except Exception as exc:
+                        if _is_browser_dead(exc):
+                            raise _BrowserDied(repr(exc))
+                        # A per-problem error keeps other tabs alive. Re-queue the
+                        # problem (it resumes from its saved state) a few times
+                        # before giving up, so one flaky problem can't stop the run.
+                        pid = slot.record.get("id")
+                        problem_obj = slot.problem
+                        tries = (retry_counts.get(pid, 0) + 1) if pid else PROBLEM_RETRY_MAX + 1
+                        if pid:
+                            retry_counts[pid] = tries
+                        if pid and problem_obj and tries <= PROBLEM_RETRY_MAX:
+                            slot._save()
+                            prior_state[pid] = dict(slot.record)
+                            slot._release()
+                            queue.append(problem_obj)
+                            log(f"[slot {slot.index}] error on {pid} "
+                                f"({tries}/{PROBLEM_RETRY_MAX}): {exc!r} — re-queued (will resume)")
+                        else:
+                            slot.fail(repr(exc))
         now = time.time()
         if now - heartbeat >= 30.0:
             heartbeat = now
             busy = sum(not s.idle for s in slots)
-            log(f"[scheduler] {busy} active, {len(queue)} queued")
-            _write_active_manifest(state_dir, slots)
+            log(f"[scheduler] {busy} active, {len(queue)} queued"
+                f"{' [PAUSED]' if paused else ''}")
+            _write_active_manifest(state_dir, slots, control)
         time.sleep(tick)
     log("[scheduler] all problems processed")
-    _write_active_manifest(state_dir, slots)
+    _write_active_manifest(state_dir, slots, control)
 
 
 def run_pipeline(problems: list[dict[str, str]], *, workers: int, profile_dir: Path,
@@ -1534,21 +1779,33 @@ def run_pipeline(problems: list[dict[str, str]], *, workers: int, profile_dir: P
             return
         except SystemExit:
             raise
+        except KeyboardInterrupt:
+            raise
+        except _RestartRequested:
+            # A remote 'restart' — relaunch the browser and resume. Not a crash, so
+            # it does not count toward the rapid-death circuit breaker.
+            rapid_deaths = 0
+            log(f"[pipeline] restart requested — relaunching in {RELAUNCH_PAUSE:.0f}s "
+                "(resuming from saved state)")
+            time.sleep(RELAUNCH_PAUSE)
         except Exception as exc:
-            if not (isinstance(exc, _BrowserDied) or _is_browser_dead(exc)):
-                raise
+            # Self-heal from ANY failure (browser death or an unexpected error) so
+            # the run survives days unattended. A tight crash-loop is still capped by
+            # the rapid-death circuit breaker below.
             alive_secs = time.time() - launched_at
             if alive_secs < RAPID_DEATH_SECS:
                 rapid_deaths += 1
                 if rapid_deaths >= RAPID_DEATH_LIMIT:
-                    log(f"[pipeline] Chromium keeps dying within {RAPID_DEATH_SECS:.0f}s of "
+                    log(f"[pipeline] the run keeps dying within {RAPID_DEATH_SECS:.0f}s of "
                         f"launch ({rapid_deaths}x in a row). Stopping — make sure the "
                         f"{profile_dir} profile is free (no other Chromium on it) and logged "
-                        f"in, then rerun to resume from saved state.")
+                        f"in, then rerun to resume from saved state. Last error: {exc!r}")
                     return
             else:
                 rapid_deaths = 0
-            log(f"[pipeline] Chromium died after {alive_secs:.0f}s ({exc}); "
+            kind = ("Chromium died" if (isinstance(exc, _BrowserDied) or _is_browser_dead(exc))
+                    else "unexpected error")
+            log(f"[pipeline] {kind} after {alive_secs:.0f}s ({exc!r}); "
                 f"relaunching in {RELAUNCH_PAUSE:.0f}s to resume from saved state")
             time.sleep(RELAUNCH_PAUSE)
 

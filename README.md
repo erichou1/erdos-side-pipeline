@@ -68,12 +68,15 @@ python login.py
 #    - Press Enter in the terminal to save the session and close.
 #    (Or skip this and copy your existing .chatgpt_profile over — see below.)
 
-# 5. Run it — same project, same everything
-python side_pipeline.py --workers 20
+# 5. Run it — pipeline + website publisher, supervised (resumes on any crash)
+python run_all.py --workers 20
+#    (or just the pipeline, no website publishing: python side_pipeline.py --workers 20)
 ```
 
-That's it. It already targets the **same `erdos3` Project** by default, so no
-project flag is needed. Progress is printed to the terminal and written under
+That's it. `run_all.py` launches the pipeline and the website publisher together
+and restarts either if it exits, so it runs for days unattended. It already
+targets the **same `erdos3` Project** by default, so no project flag is needed.
+Progress is printed to the terminal and written under
 `erdos_problems/side_pipeline_runs/`.
 
 > The login session is stored in `./.chatgpt_profile/` (git-ignored). You only
@@ -83,10 +86,19 @@ project flag is needed. Progress is printed to the terminal and written under
 
 ## Choosing the model
 
-The pipeline **does not** switch models in code — it uses whatever model is
-currently selected in the ChatGPT UI for that profile. Set it in `login.py`
-(step 5) by picking the model from ChatGPT's model dropdown. New chats inherit
-the last-selected model.
+Two layers keep runs on **GPT-5.6 Pro**:
+
+1. **You pick it once** in `login.py` (step 4) from ChatGPT's model dropdown; new
+   chats inherit the last-selected model.
+2. **A guard re-checks it before every new chat.** Right after opening each
+   adapt / research / verify chat — before the prompt is sent — the pipeline reads
+   the model in the switcher and, if it isn't GPT-5.6 Pro, tries to select it (and
+   records the model used on each run). The guard is best-effort and **never
+   blocks**: if ChatGPT changes its UI so the switcher can't be driven, it logs a
+   warning and proceeds on the selected model rather than freezing the run.
+
+Change the target with the `SIDE_PIPELINE_MODEL` env var (space-separated tokens
+that must all appear in the model name, case-insensitive). Default: `5.6 pro`.
 
 ---
 
@@ -213,6 +225,58 @@ just git push access to the status repo.
 
 ---
 
+## Running for days unattended
+
+The run is built to keep going on its own:
+
+- **Self-healing supervisor.** If Chromium (or the whole run) dies, it relaunches
+  and resumes from saved state; a tight crash-loop is capped by a circuit breaker.
+- **Per-problem fail-safe.** An error on one problem never stops the others — the
+  problem is re-queued (resuming from its saved state) a few times, then marked
+  `failed` and the run moves on to the next problem.
+- **Crash-safe state.** Every stage of every problem is written to
+  `erdos_problems/side_pipeline_runs/`, so a restart resumes exactly where it left
+  off — no problem is ever restarted from scratch.
+- **Rate-limit backoff.** Account-wide throttling pauses all workers with an
+  escalating backoff.
+- **Fewer wasted turns.** It only spends an "are you done?" confirmation turn when
+  a reply shows signs of a complete solution, or on the final round — not every
+  round — so slow, usage-limited model time goes into real work.
+
+`run_all.py` adds an outer process supervisor that also restarts the publisher.
+
+---
+
+## Remote control (stop / start / restart from anywhere)
+
+Control the run from a web page — handy when it's on a headless Mac Mini. The
+pipeline polls a tiny `control.json` (on the repo's `control` branch) every ~20s:
+
+- **Stop** → pauses: workers idle, the process stays alive and keeps polling.
+- **Start** → resumes normal work.
+- **Restart** → relaunches the browser once and resumes. It does **not** reset any
+  problem's progress.
+
+A ready-made control page lives in `control_site/`. Deploy it once (separately
+from the pipeline) to get a URL with Start / Stop / Restart buttons:
+
+```bash
+# 1. Create a fine-grained GitHub token for erichou1 with
+#    "Contents: Read and write" on the erdos-side-pipeline repo.
+# 2. Deploy the control page:
+cd control_site
+npx --yes vercel deploy --prod           # follow prompts to create the project
+npx --yes vercel env add GITHUB_TOKEN    # paste the token (Production scope)
+npx --yes vercel deploy --prod           # redeploy so the token takes effect
+```
+
+Open the resulting URL from any device. The buttons call a small serverless
+function that updates `control.json`; the token stays server-side (never in the
+browser). No control page is required to run — the pipeline just defaults to
+"run" if `control.json` is absent or unreachable.
+
+---
+
 ## Keeping it running
 
 Runs can take a long time (especially on slow "thinking" models). Prevent sleep
@@ -255,6 +319,7 @@ Also set **System Settings → Displays / Battery → "Prevent automatic sleepin
 | File | Purpose |
 |------|---------|
 | `side_pipeline.py` | The pipeline (state machine + scheduler + CLI). |
+| `run_all.py` | Supervisor that runs the pipeline + publisher together, restarting either on exit. |
 | `erdos_common.py` | Shared ChatGPT page helpers (compose, extract, rename, rate-limit). |
 | `login.py` | One-time login / model-selection helper. |
 | `side_pipeline_meta_prompt.txt` | The meta-prompt the adapt stage specializes. |
@@ -262,6 +327,7 @@ Also set **System Settings → Displays / Battery → "Prevent automatic sleepin
 | `side_pipeline_problems.example.json` | Minimal sample problem list. |
 | `build_side_pipeline_problems.py` | Helper that generated the shipped list. |
 | `side_status_publish.py` | Lightweight, DB-free publisher that keeps the website's side-pipeline section live from this machine. |
+| `control_site/` | Deployable web page (Start/Stop/Restart buttons) + serverless writer for remote control. |
 
 Not committed (git-ignored): `.chatgpt_profile/` (your session), `.env`,
 `erdos_problems/side_pipeline_runs/` (run output), logs.
