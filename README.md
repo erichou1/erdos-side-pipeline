@@ -179,6 +179,40 @@ To start completely fresh, delete `erdos_problems/side_pipeline_runs/` first.
 
 ---
 
+## Keeping the website updated (from the Mac Mini)
+
+`side_pipeline.py` only writes local files — it does **not** touch the status
+website. The site's `data.json` is normally rebuilt by a separate publisher on
+the main machine that needs a private database. So to keep the site's
+side-pipeline section updating **even while the main Mac is closed**, run the
+bundled lightweight publisher on the Mac Mini alongside the pipeline:
+
+```bash
+# one-time: let git push to the private status repo from the Mini
+gh auth login          # authenticate as the same GitHub account (erichou1)
+
+# smoke-test one cycle
+python side_status_publish.py --once
+
+# run it continuously (updates the site every ~60s)
+caffeinate -dimsu python side_status_publish.py
+```
+
+Every ~60s it fetches the current `data.json`, replaces **only** the
+`side_pipeline` section with a fresh build from your local
+`erdos_problems/side_pipeline_runs/`, refreshes the liveness timestamp, and
+force-updates the `status-live` branch. It needs **no** database or secrets —
+just git push access to the status repo.
+
+> **Only one publisher may write `status-live` at a time.** When the Mac Mini is
+> the authoritative runner, **stop the main machine's**
+> `status_site/live_refresh.py` — otherwise the two overwrite each other's
+> side-pipeline section every cycle. While the Mini publishes, the site's other
+> (EGMRA) sections stay frozen at their last snapshot; the side-pipeline section
+> updates live.
+
+---
+
 ## Keeping it running
 
 Runs can take a long time (especially on slow "thinking" models). Prevent sleep
@@ -227,6 +261,7 @@ Also set **System Settings → Displays / Battery → "Prevent automatic sleepin
 | `side_pipeline_problems.json` | The problem list to run. |
 | `side_pipeline_problems.example.json` | Minimal sample problem list. |
 | `build_side_pipeline_problems.py` | Helper that generated the shipped list. |
+| `side_status_publish.py` | Lightweight, DB-free publisher that keeps the website's side-pipeline section live from this machine. |
 
 Not committed (git-ignored): `.chatgpt_profile/` (your session), `.env`,
 `erdos_problems/side_pipeline_runs/` (run output), logs.
