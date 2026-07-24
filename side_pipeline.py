@@ -1341,9 +1341,14 @@ class Slot:
             return
         adapted = _clean_adapted(text)
         if not _is_usable_adapted(adapted):
-            # Transient failure (tab/browser crash, extraction glitch, or a timeout
-            # with no real reply). Retry the adapt in a fresh chat rather than
+            # Record the unusable reply (e.g. a limit/error message or a garbled
+            # extraction) so the chat still gets LINKED on the dashboard and we can
+            # see WHY the adapt failed, then retry in a fresh chat rather than
             # failing the problem outright — this is what caused the mass failures.
+            self._backfill_conversation_url("adapt_conversation_url", known_cids)
+            self._add_stage("adapt", "response", text or adapted,
+                            self.record.get("adapt_conversation_url"),
+                            assessment="unusable")
             self._adapt_tries += 1
             if self._adapt_tries < ADAPT_MAX_TRIES:
                 self.log(f"[{self.record['id']}] adapt response unusable "
