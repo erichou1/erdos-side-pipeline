@@ -892,7 +892,14 @@ def conversation_matches(user_prompt: str, statement: str,
 
 
 def detect_rate_limit(page) -> bool:
-    """Return True if the page is showing a rate-limit / throttle message."""
+    """True only when a THROTTLE modal/toast is actually showing.
+
+    We deliberately do NOT scan the whole page body: a limit phrase can *persist*
+    in the composer area (e.g. an exhausted model shows "you've reached our limit
+    of messages" permanently), and matching that on every poll made the pipeline
+    pause 60s over and over. So we only look at the blocking rate-limit modal and
+    at transient alert/toast/dialog elements.
+    """
     # ChatGPT shows a full-screen modal when you create conversations too fast;
     # it intercepts pointer events, so detect it explicitly.
     try:
@@ -902,11 +909,17 @@ def detect_rate_limit(page) -> bool:
             return True
     except Exception:
         pass
-    try:
-        body_text = (page.inner_text("body") or "").lower()
-    except Exception:
-        return False
-    return any(p in body_text for p in RATE_LIMIT_PHRASES)
+    # A throttle phrase inside a transient alert/toast/dialog — NOT persistent body text.
+    for sel in ('[role="alert"]', '[role="status"]', '[role="dialog"]',
+                '[data-testid*="toast" i]', '[class*="toast" i]'):
+        try:
+            for el in page.query_selector_all(sel):
+                text = (el.inner_text() or "").lower()
+                if text and any(p in text for p in RATE_LIMIT_PHRASES):
+                    return True
+        except Exception:
+            pass
+    return False
 
 
 def dismiss_modal(page) -> bool:
