@@ -580,6 +580,9 @@ RATE_LIMIT_PHRASES = [
     "you've hit the free plan limit",
     "you're sending messages too quickly",
     "too many requests",
+    "creating conversations too fast",
+    "created too many conversations",
+    "you've reached the current usage cap",
 ]
 
 

@@ -79,9 +79,15 @@ URL_CAPTURE_TIMEOUT = 150.0
 GEN_START_GRACE = 90.0          # wait this long for generation to *start*
 STABLE_TICKS = 2                # identical response text across N ticks == settled
 MIN_RESPONSE_CHARS = 40
-RATE_LIMIT_COOLDOWN = 60.0      # base throttle backoff; grows exponentially per streak
-RATE_LIMIT_MAX_COOLDOWN = 300.0 # cap the escalating backoff at 5 minutes
-RATE_LIMIT_RESET = 300.0        # reset the backoff streak after this quiet period
+# A message-send throttle ("too many requests") is usually a brief slow-down, not
+# a hard stop, so the global pause is SHORT and only mildly escalates.
+RATE_LIMIT_COOLDOWN = 30.0      # base send-throttle backoff; grows per streak
+RATE_LIMIT_MAX_COOLDOWN = 90.0  # cap the escalating backoff at 90s
+RATE_LIMIT_RESET = 180.0        # reset the backoff streak after this quiet period
+# A "creating conversations too fast" modal only means slow NEW-chat opening — it
+# does NOT stop existing chats, so pause new-chat creation this long instead of
+# freezing the whole pipeline.
+NEW_CHAT_THROTTLE_PAUSE = 60.0
 RENAME_TRIES = 4                # attempts to (re)name a chat before giving up
 NEW_CHAT_SPACING = 20.0         # min seconds between opening new chats (any tab); higher = fewer 'creating conversations too fast' throttles
 CONTINUE_GEN_MAX = 12           # max "Continue generating" clicks per response
@@ -648,6 +654,17 @@ def _trip_rate_limit(sched: dict[str, float], log) -> None:
     log(f"[rate-limit] throttled — pausing all workers ~{backoff:.0f}s (streak {int(streak)})")
 
 
+def _delay_new_chats(sched: dict[str, float], secs: float, log) -> None:
+    """A 'creating conversations too fast' throttle means: slow NEW-chat opening,
+    NOT stop. Push out the shared new-chat gate so fresh chats pause, while every
+    existing chat keeps generating/continuing normally (no global freeze)."""
+    until = time.time() + secs
+    if until > sched.get("next_new_chat_at", 0.0):
+        sched["next_new_chat_at"] = until
+    log(f"[throttle] creating conversations too fast — pausing NEW chats ~{secs:.0f}s "
+        "(existing chats keep working)")
+
+
 # ── Remote control polling ────────────────────────────────────────────────────
 def _poll_control(url: str, timeout: float = 4.0) -> Optional[dict[str, Any]]:
     """Fetch the remote control document. Returns the parsed dict, or None on any
@@ -688,15 +705,6 @@ def _model_ok(name: str, tokens: tuple[str, ...]) -> bool:
     return bool(name) and all(tok in low for tok in tokens)
 
 
-# After this many consecutive failed switch attempts, stop trying to change the
-# model and just record what's selected — so a target that isn't a selectable
-# switcher entry (e.g. a reasoning-effort setting) never thrashes the menu on
-# every new chat, and a since-removed model (e.g. Pro when you run out) is never
-# forced back on. Reset to 0 on any success.
-_MODEL_SWITCH_GIVEUP = 3
-_model_switch_fails = 0
-
-
 def _ensure_chat_model(page: Any, tokens: tuple[str, ...], log=None) -> tuple[bool, str]:
     """Make the current (new) chat use the target model. Returns (ok, model_name).
 
@@ -704,13 +712,11 @@ def _ensure_chat_model(page: Any, tokens: tuple[str, ...], log=None) -> tuple[bo
     it logs a warning and returns (False, <name>) so the pipeline keeps going on
     whatever model is selected rather than freezing for days.
     """
-    global _model_switch_fails
     tokens = tuple(t.lower() for t in tokens if t)
-    if not tokens or _model_switch_fails >= _MODEL_SWITCH_GIVEUP:
-        return True, _current_model_name(page)   # enforcement off / gave up → record only
+    if not tokens:
+        return True, _current_model_name(page)
     name = _current_model_name(page)
     if _model_ok(name, tokens):
-        _model_switch_fails = 0
         return True, name
     try:
         btn = None
@@ -761,18 +767,14 @@ def _ensure_chat_model(page: Any, tokens: tuple[str, ...], log=None) -> tuple[bo
         time.sleep(0.6)
         name = _current_model_name(page)
         ok = _model_ok(name, tokens)
-        if ok:
-            _model_switch_fails = 0
-        else:
-            _model_switch_fails += 1
+        if not ok:
             try:
                 page.keyboard.press("Escape")   # close a stray menu over the composer
             except Exception:
                 pass
             if log:
-                log(f"[model] WARN wanted {'+'.join(tokens)} but chat shows {name!r} — "
-                    f"proceeding" + (f"; giving up auto-switch after {_model_switch_fails}x"
-                                     if _model_switch_fails >= _MODEL_SWITCH_GIVEUP else ""))
+                log(f"[model] wanted {'+'.join(tokens)} but the switcher shows {name!r} — "
+                    "kept the selected model; will re-try on the next chat")
         return ok, name
     except Exception as exc:
         if log:
@@ -1310,7 +1312,7 @@ class Slot:
         self.driver.open_new_chat()
         if self.driver.detect_rate_limit():
             self.driver.dismiss_rate_limit()
-            _trip_rate_limit(self.sched, self.log)
+            _delay_new_chats(self.sched, NEW_CHAT_THROTTLE_PAUSE, self.log)
             return
         _, self.record["model"] = self.driver.ensure_model(TARGET_MODEL_TOKENS, self.log)
         self.driver.submit(self.adapt_msg)
@@ -1368,7 +1370,7 @@ class Slot:
         self.driver.open_new_chat()
         if self.driver.detect_rate_limit():
             self.driver.dismiss_rate_limit()
-            _trip_rate_limit(self.sched, self.log)
+            _delay_new_chats(self.sched, NEW_CHAT_THROTTLE_PAUSE, self.log)
             return
         _, self.record["model"] = self.driver.ensure_model(TARGET_MODEL_TOKENS, self.log)
         self.driver.submit(self.adapted_text)
@@ -1505,7 +1507,7 @@ class Slot:
         self.driver.open_new_chat()
         if self.driver.detect_rate_limit():
             self.driver.dismiss_rate_limit()
-            _trip_rate_limit(self.sched, self.log)
+            _delay_new_chats(self.sched, NEW_CHAT_THROTTLE_PAUSE, self.log)
             return
         _, self.record["model"] = self.driver.ensure_model(TARGET_MODEL_TOKENS, self.log)
         msg = VERIFY_PROMPT_TEMPLATE.format(
