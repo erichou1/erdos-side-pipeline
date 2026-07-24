@@ -1640,7 +1640,8 @@ def _save_control_nonce(state_dir: Path, nonce: int) -> None:
 
 def _run_loop(drivers: list[Any], problems: list[dict[str, str]], *,
               meta_prompt: str, state_dir: Path, max_rounds: int,
-              response_timeout: float, tick: float, new_chat_spacing: float, log) -> None:
+              response_timeout: float, tick: float, new_chat_spacing: float,
+              log, poll_control: bool = True) -> None:
     known_cids: set[str] = set()
     sched = {"next_new_chat_at": 0.0}
     slots = [Slot(i, d, meta_prompt=meta_prompt, state_dir=state_dir,
@@ -1675,7 +1676,7 @@ def _run_loop(drivers: list[Any], problems: list[dict[str, str]], *,
     while queue or any(not s.idle for s in slots):
         now = time.time()
         # -- remote control: stop/start via 'state', one-shot relaunch via 'restart' --
-        if now - control_at >= CONTROL_POLL_SECONDS:
+        if poll_control and now - control_at >= CONTROL_POLL_SECONDS:
             control_at = now
             fetched = _poll_control(CONTROL_URL)
             if fetched is not None:
@@ -1756,7 +1757,8 @@ def run_pipeline(problems: list[dict[str, str]], *, workers: int, profile_dir: P
         drivers = [SimDriver(solve_at_round=sim_solve_at, busy_secs=0.6) for _ in range(n)]
         _run_loop(drivers, problems, meta_prompt=meta_prompt, state_dir=state_dir,
                   max_rounds=max_rounds, response_timeout=response_timeout,
-                  tick=min(tick, 0.25), new_chat_spacing=0.05, log=log)
+                  tick=min(tick, 0.25), new_chat_spacing=0.05, log=log,
+                  poll_control=False)
         return
 
     from playwright.sync_api import sync_playwright
