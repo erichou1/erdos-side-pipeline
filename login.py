@@ -5,8 +5,9 @@ Opens the SAME Chromium profile the pipeline uses, headed, on chatgpt.com, and
 keeps it open until you press Enter in this terminal. Use it to:
 
   1. Log in to your ChatGPT account (once — the session is saved in the profile).
-  2. Select the model you want the runs to use (e.g. GPT Pro) in the ChatGPT UI.
-     New chats the pipeline opens inherit whatever model is selected here.
+  2. Select the model + reasoning effort the runs should use (e.g. GPT-5.6
+     Thinking on **Extra High**) in the ChatGPT UI. New chats the pipeline opens
+     inherit whatever is selected here.
   3. Optionally open your Project so it becomes the active one.
 
 When you're done, come back to this terminal and press Enter to save + close.
@@ -38,7 +39,8 @@ def main() -> None:
         page.goto(ec.CHATGPT_URL, wait_until="domcontentloaded")
         print(
             "\n1. Log in to ChatGPT (if prompted).\n"
-            "2. Pick the model you want the runs to use (e.g. GPT Pro).\n"
+            "2. Pick the model + reasoning effort the runs should use "
+            "(e.g. GPT-5.6 Thinking, Extra High).\n"
             "3. Optionally open your Project.\n\n"
             "Then return here and press Enter to save the session and close."
         )

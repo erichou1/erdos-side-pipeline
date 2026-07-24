@@ -94,7 +94,7 @@ RAPID_DEATH_LIMIT = 3           # give up after this many consecutive rapid deat
 # A new chat's model name (as shown in ChatGPT's switcher) must contain ALL of
 # these tokens, case-insensitively. Override with SIDE_PIPELINE_MODEL (space-sep).
 TARGET_MODEL_TOKENS = tuple(
-    t for t in os.environ.get("SIDE_PIPELINE_MODEL", "5.6 pro").lower().split() if t)
+    t for t in os.environ.get("SIDE_PIPELINE_MODEL", "extra high").lower().split() if t)
 
 # ── Remote control: the website writes a tiny control.json the pipeline polls ──
 # state ∈ {"run","pause"}; "restart" is an integer nonce (a NEW value triggers one
@@ -688,6 +688,15 @@ def _model_ok(name: str, tokens: tuple[str, ...]) -> bool:
     return bool(name) and all(tok in low for tok in tokens)
 
 
+# After this many consecutive failed switch attempts, stop trying to change the
+# model and just record what's selected — so a target that isn't a selectable
+# switcher entry (e.g. a reasoning-effort setting) never thrashes the menu on
+# every new chat, and a since-removed model (e.g. Pro when you run out) is never
+# forced back on. Reset to 0 on any success.
+_MODEL_SWITCH_GIVEUP = 3
+_model_switch_fails = 0
+
+
 def _ensure_chat_model(page: Any, tokens: tuple[str, ...], log=None) -> tuple[bool, str]:
     """Make the current (new) chat use the target model. Returns (ok, model_name).
 
@@ -695,11 +704,13 @@ def _ensure_chat_model(page: Any, tokens: tuple[str, ...], log=None) -> tuple[bo
     it logs a warning and returns (False, <name>) so the pipeline keeps going on
     whatever model is selected rather than freezing for days.
     """
+    global _model_switch_fails
     tokens = tuple(t.lower() for t in tokens if t)
-    if not tokens:
-        return True, _current_model_name(page)
+    if not tokens or _model_switch_fails >= _MODEL_SWITCH_GIVEUP:
+        return True, _current_model_name(page)   # enforcement off / gave up → record only
     name = _current_model_name(page)
     if _model_ok(name, tokens):
+        _model_switch_fails = 0
         return True, name
     try:
         btn = None
@@ -750,13 +761,18 @@ def _ensure_chat_model(page: Any, tokens: tuple[str, ...], log=None) -> tuple[bo
         time.sleep(0.6)
         name = _current_model_name(page)
         ok = _model_ok(name, tokens)
-        if not ok:
+        if ok:
+            _model_switch_fails = 0
+        else:
+            _model_switch_fails += 1
             try:
                 page.keyboard.press("Escape")   # close a stray menu over the composer
             except Exception:
                 pass
             if log:
-                log(f"[model] WARN wanted {'+'.join(tokens)} but chat shows {name!r} — proceeding")
+                log(f"[model] WARN wanted {'+'.join(tokens)} but chat shows {name!r} — "
+                    f"proceeding" + (f"; giving up auto-switch after {_model_switch_fails}x"
+                                     if _model_switch_fails >= _MODEL_SWITCH_GIVEUP else ""))
         return ok, name
     except Exception as exc:
         if log:
