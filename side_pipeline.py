@@ -68,7 +68,7 @@ DEFAULT_PROJECT_URL = os.environ.get(
     "https://chatgpt.com/g/g-p-6a618ab7e89c81919024b0fa9d76a247-erdos3/project")
 
 # ── Tuning constants ──────────────────────────────────────────────────────────
-DEFAULT_WORKERS = 20
+DEFAULT_WORKERS = 10
 DEFAULT_MAX_ROUNDS = 10         # real solving attempts per problem (round 1 + continuations);
                                # the gated "is it solved?" self-assessment turns are NOT counted
 DEFAULT_RESPONSE_TIMEOUT = 3600.0   # per response, seconds
@@ -83,7 +83,7 @@ RATE_LIMIT_COOLDOWN = 90.0      # base throttle backoff; grows exponentially per
 RATE_LIMIT_MAX_COOLDOWN = 900.0 # cap the escalating backoff at 15 minutes
 RATE_LIMIT_RESET = 300.0        # reset the backoff streak after this quiet period
 RENAME_TRIES = 4                # attempts to (re)name a chat before giving up
-NEW_CHAT_SPACING = 20.0         # min seconds between opening new chats (any tab); staggers worker startup + gentle on the throttle
+NEW_CHAT_SPACING = 10.0         # min seconds between opening new chats (any tab); staggers worker startup + gentle on the throttle
 CONTINUE_GEN_MAX = 12           # max "Continue generating" clicks per response
 RELAUNCH_MAX = 60               # max Chromium relaunches to ride out crashes
 RELAUNCH_PAUSE = 6.0            # seconds to wait before relaunching a dead browser

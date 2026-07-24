@@ -85,7 +85,7 @@ def _save_handled_update(nonce: int) -> None:
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--workers", type=int, default=20)
+    ap.add_argument("--workers", type=int, default=10)
     ap.add_argument("--no-publish", action="store_true", help="run only the pipeline")
     ap.add_argument("--no-pipeline", action="store_true", help="run only the publisher")
     args, extra = ap.parse_known_args()
