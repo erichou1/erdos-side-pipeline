@@ -79,11 +79,11 @@ URL_CAPTURE_TIMEOUT = 150.0
 GEN_START_GRACE = 90.0          # wait this long for generation to *start*
 STABLE_TICKS = 2                # identical response text across N ticks == settled
 MIN_RESPONSE_CHARS = 40
-RATE_LIMIT_COOLDOWN = 90.0      # base throttle backoff; grows exponentially per streak
-RATE_LIMIT_MAX_COOLDOWN = 900.0 # cap the escalating backoff at 15 minutes
+RATE_LIMIT_COOLDOWN = 60.0      # base throttle backoff; grows exponentially per streak
+RATE_LIMIT_MAX_COOLDOWN = 300.0 # cap the escalating backoff at 5 minutes
 RATE_LIMIT_RESET = 300.0        # reset the backoff streak after this quiet period
 RENAME_TRIES = 4                # attempts to (re)name a chat before giving up
-NEW_CHAT_SPACING = 10.0         # min seconds between opening new chats (any tab); staggers worker startup + gentle on the throttle
+NEW_CHAT_SPACING = 20.0         # min seconds between opening new chats (any tab); higher = fewer 'creating conversations too fast' throttles
 CONTINUE_GEN_MAX = 12           # max "Continue generating" clicks per response
 RELAUNCH_MAX = 60               # max Chromium relaunches to ride out crashes
 RELAUNCH_PAUSE = 6.0            # seconds to wait before relaunching a dead browser
