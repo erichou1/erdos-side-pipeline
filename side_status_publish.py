@@ -34,6 +34,7 @@ import collections
 import json
 import os
 import re
+import shutil
 import subprocess
 import sys
 import time
@@ -213,10 +214,28 @@ def _ensure_worktree(worktree: Path) -> None:
 def _fetch_branch(worktree: Path) -> bool:
     """Fetch the latest status-live tip (depth 1) into the working tree.
 
-    Returns False if the branch does not exist on the remote yet.
+    Returns False (and logs the specific reason) if the tip can't be fetched. A
+    plain ``git fetch`` non-zero can mean several different things (branch truly
+    missing, network/auth failure, or a corrupt local scratch worktree); we
+    disambiguate so the log is actionable, and self-heal a corrupt worktree
+    instead of skipping forever.
     """
+    ls = _run("git", "ls-remote", "--heads", "origin", BRANCH, cwd=worktree, check=False)
+    if ls.returncode != 0:
+        _log(f"cannot reach {STATUS_REPO} — git ls-remote failed: "
+             f"{ls.stdout.strip()[-300:]}")
+        return False
+    if not ls.stdout.strip():
+        _log(f"branch '{BRANCH}' does not exist on origin yet — waiting for the "
+             "main publisher to create it.")
+        return False
     fetched = _run("git", "fetch", "--depth", "1", "origin", BRANCH, cwd=worktree, check=False)
     if fetched.returncode != 0:
+        # Branch exists but the local fetch failed — most likely a corrupt scratch
+        # worktree; drop it so the next cycle recreates it clean.
+        _log(f"git fetch of '{BRANCH}' failed (recreating worktree): "
+             f"{fetched.stdout.strip()[-300:]}")
+        shutil.rmtree(worktree, ignore_errors=True)
         return False
     _run("git", "checkout", "-q", "--detach", "FETCH_HEAD", cwd=worktree)
     _run("git", "reset", "-q", "--hard", "FETCH_HEAD", cwd=worktree)
@@ -248,8 +267,6 @@ def cycle(worktree: Path, runs_dir: Path, last_push: float) -> float:
     """One refresh. Returns the (possibly updated) last-push timestamp."""
     _ensure_worktree(worktree)
     if not _fetch_branch(worktree):
-        _log(f"branch '{BRANCH}' not found on origin yet — has the main publisher "
-             "created it? skipping.")
         return last_push
     data_path = worktree / DATA_PATH_IN_REPO
     try:
