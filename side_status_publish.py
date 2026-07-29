@@ -203,12 +203,27 @@ def _run(*args: str, cwd: Path, check: bool = True) -> subprocess.CompletedProce
 
 
 def _ensure_worktree(worktree: Path) -> None:
-    """A minimal local git repo tracking only the status-live branch (no history)."""
+    """A minimal local git repo tracking only the status-live branch (no history).
+
+    Idempotent and self-repairing: recreates a missing or corrupt repo and always
+    (re)points ``origin`` at STATUS_REPO. Without this, a worktree left with a
+    ``.git`` but no remote (e.g. a crash/reboot between ``git init`` and
+    ``git remote add``) fails every fetch with
+    "fatal: 'origin' does not appear to be a git repository" forever.
+    """
+    valid = False
     if (worktree / ".git").exists():
-        return
-    worktree.mkdir(parents=True, exist_ok=True)
-    _run("git", "init", "-q", cwd=worktree)
-    _run("git", "remote", "add", "origin", STATUS_REPO, cwd=worktree)
+        valid = _run("git", "rev-parse", "--git-dir",
+                     cwd=worktree, check=False).returncode == 0
+    if not valid:
+        shutil.rmtree(worktree, ignore_errors=True)
+        worktree.mkdir(parents=True, exist_ok=True)
+        _run("git", "init", "-q", cwd=worktree)
+    remotes = _run("git", "remote", cwd=worktree, check=False).stdout.split()
+    if "origin" in remotes:
+        _run("git", "remote", "set-url", "origin", STATUS_REPO, cwd=worktree, check=False)
+    else:
+        _run("git", "remote", "add", "origin", STATUS_REPO, cwd=worktree, check=False)
 
 
 def _fetch_branch(worktree: Path) -> bool:
