@@ -956,6 +956,74 @@ def start_new_chat(page):
         time.sleep(2)
 
 
+ATTACHMENT_LEADIN = (
+    "Follow the instructions in the attached text exactly, and write your full "
+    "response directly here in the chat. Do not use the canvas or document editor."
+)
+
+
+def _paste_into_composer(page, box, text: str, clear: bool = True) -> None:
+    """Populate the ProseMirror composer via a synthetic paste — the only method
+    ProseMirror reliably accepts for bulk text (keyboard.insert_text is a no-op)."""
+    page.evaluate("el => el.focus()", box)
+    time.sleep(0.15)
+    if clear:
+        page.keyboard.press("Meta+A")
+        page.keyboard.press("Delete")
+        time.sleep(0.1)
+    page.evaluate(
+        """(args) => {
+            const [el, text] = args;
+            el.focus();
+            const dt = new DataTransfer();
+            dt.setData('text/plain', text);
+            el.dispatchEvent(new ClipboardEvent('paste',
+                {clipboardData: dt, bubbles: true, cancelable: true}));
+        }""",
+        [box, text],
+    )
+
+
+def _has_pasted_attachment(page) -> bool:
+    """True when ChatGPT has converted a large paste into a 'pasted text' file
+    chip in the composer (which blocks a normal send)."""
+    try:
+        return bool(page.evaluate(
+            """() => {
+                const form = document.querySelector('form');
+                if (!form) return false;
+                return (form.innerText || '').toLowerCase().includes('pastedtext');
+            }"""
+        ))
+    except Exception:
+        return False
+
+
+def _dismiss_edit_popup(page) -> None:
+    """Close ChatGPT's 'What should the edit accomplish?' edit-intent popup that
+    appears for a pasted document — WITHOUT choosing any of its edit actions."""
+    try:
+        found = bool(page.evaluate(
+            """() => {
+                for (const el of document.querySelectorAll(
+                        'div,section,dialog,[role=\"dialog\"],[role=\"menu\"]')) {
+                    if ((el.textContent || '').toLowerCase().includes('edit accomplish'))
+                        return true;
+                }
+                return false;
+            }"""
+        ))
+    except Exception:
+        found = False
+    if found:
+        for _ in range(2):
+            try:
+                page.keyboard.press("Escape")
+            except Exception:
+                pass
+            time.sleep(0.2)
+
+
 def send_prompt(page, prompt_text: str):
     """Type and submit a prompt. Fully JS-based to avoid pointer interception."""
     box = None
@@ -983,47 +1051,34 @@ def send_prompt(page, prompt_text: str):
             [box, prompt_text],
         )
     else:
-        # ChatGPT's #prompt-textarea is a ProseMirror contenteditable. A bulk
-        # keyboard.insert_text() no longer registers with ProseMirror (the send
-        # then fires on an empty editor), so populate it with a synthetic paste
-        # event instead — ProseMirror handles 'paste' and it is instant even for
-        # very large prompts.
-        page.evaluate("el => el.focus()", box)
-        time.sleep(0.2)
-        page.keyboard.press("Meta+A")
-        page.keyboard.press("Delete")
-        time.sleep(0.1)
-        page.evaluate(
-            """(args) => {
-                const [el, text] = args;
-                el.focus();
-                const dt = new DataTransfer();
-                dt.setData('text/plain', text);
-                el.dispatchEvent(new ClipboardEvent('paste',
-                    {clipboardData: dt, bubbles: true, cancelable: true}));
-            }""",
-            [box, prompt_text],
-        )
+        _paste_into_composer(page, box, prompt_text)
 
-    # Wait until the editor actually contains text (send button enables).
+    def _composer_len():
+        try:
+            return box.evaluate(
+                "el => (el.value !== undefined ? el.value : el.innerText).trim().length")
+        except Exception:
+            return 0
+
+    # Wait until the editor has text OR ChatGPT swallowed a large paste into a
+    # "pasted text" file attachment (composer stays empty; an edit-intent popup
+    # appears instead of sending).
     deadline = time.time() + 5
     while time.time() < deadline:
-        has_text = box.evaluate(
-            "el => (el.value !== undefined ? el.value : el.innerText).trim().length > 0"
-        )
-        if has_text:
+        if _composer_len() > 0 or _has_pasted_attachment(page):
             break
         time.sleep(0.2)
 
-    start_url = page.url
+    # A large paste becomes a file attachment with an EMPTY composer, and ChatGPT
+    # then shows "What should the edit accomplish?" and refuses to send. Dismiss
+    # that popup and drop a short inline instruction so the message sends normally
+    # and carries the attachment (a short paste stays inline, never re-attaches).
+    if tag != "textarea" and _composer_len() == 0 and _has_pasted_attachment(page):
+        _dismiss_edit_popup(page)
+        _paste_into_composer(page, box, ATTACHMENT_LEADIN, clear=False)
+        time.sleep(0.3)
 
-    def _box_has_text():
-        try:
-            return box.evaluate(
-                "el => (el.value !== undefined ? el.value : el.innerText).trim().length > 0"
-            )
-        except Exception:
-            return False
+    start_url = page.url
 
     def _click_send():
         btn = page.query_selector('[data-testid="send-button"], button[aria-label*="send" i]')
@@ -1035,19 +1090,21 @@ def send_prompt(page, prompt_text: str):
                 pass
         page.keyboard.press("Enter")
 
-    # Try to submit, and verify it actually went through (URL changes to /c/ or
-    # the composer clears). Retry a couple of times if it didn't register.
+    # Submit and verify it ACTUALLY went through: the model starts generating
+    # (stop-button appears) or the URL becomes a /c/ conversation. An empty
+    # composer is NOT a reliable success signal — a pasted-text attachment leaves
+    # it empty even when nothing was sent (the old check reported false success).
     for attempt in range(3):
-        time.sleep(0.4)
+        _dismiss_edit_popup(page)
+        time.sleep(0.3)
         _click_send()
-        # Give the submission a moment to register
-        for _ in range(10):
+        for _ in range(12):
             time.sleep(0.5)
+            if is_generating(page):
+                return
             if "/c/" in page.url and page.url != start_url:
                 return
-            if not _box_has_text():
-                return
-        # Still not submitted — re-focus and retry
+        _dismiss_edit_popup(page)
         try:
             page.evaluate("el => el.focus()", box)
         except Exception:
