@@ -1,10 +1,17 @@
 #!/usr/bin/env python3
-"""Convert the 100-problem markdown dossier into side_pipeline_problems.json.
+"""Build side_pipeline_problems.json from the ranked EGMRA-screened dossier.
 
-Reads the source-verified problem list and emits a JSON array of
-``{id, title, statement, references}`` records consumed by ``side_pipeline.py``.
-Each ``references`` field carries the primary source URL(s) so the adaptation
-step (and the public dashboard) can link straight to each problem.
+Reads the ranked markdown list and emits a JSON array of
+``{id, title, statement, references}`` records consumed by ``side_pipeline.py``,
+in rank order (list order = processing order).
+
+Proof-suitable domains only: all Mathematics and Theoretical/Mathematical CS
+entries, plus mathematical/theoretical physics (IDs ``MPH-*`` / ``OPA-*``).
+Purely experimental physics (neutrino-ordering measurements, tokamak transitions,
+etc.) is excluded because the pipeline proves/derives rather than measures.
+
+Problem IDs are stable across list revisions, so problems the pipeline has
+already finished are skipped automatically on resume (by id) — nothing is redone.
 """
 from __future__ import annotations
 
@@ -13,55 +20,75 @@ import re
 import sys
 from pathlib import Path
 
-SRC = Path("/Users/eric/Downloads/100_verified_open_math_problems.md")
+SRC = Path("/Users/eric/Downloads/500_ranked_open_publication_worthy_egmra_screened.md")
 OUT = Path(__file__).resolve().parent / "side_pipeline_problems.json"
 
-HEADER = re.compile(r"^##\s+\d+\.\s+(.+)$")
-SOURCE_LINE = re.compile(r"^\*\*(?:Primary|Current)\b")
+HEADER = re.compile(r"^##\s+\d+\.\s+(\S+)\s+\u2014\s+(.+)$")
+DOMAIN = re.compile(r"^\*\*Domain:\*\*\s+(.+?)\s*$")
+SOURCE = re.compile(r"^\*\*(?:Source|Current catalog-status source):\*\*")
 URL = re.compile(r"\((https?://[^)]+)\)")
-STOP = ("**Primary", "**Current", "---", "<a id")
+
+
+def _physics_ok(pid: str) -> bool:
+    """Keep only mathematical/theoretical physics; drop experimental targets."""
+    return pid.startswith("MPH-") or pid.startswith("OPA-")
 
 
 def parse(md: str) -> list[dict[str, str]]:
     lines = md.splitlines()
     headers = [i for i, ln in enumerate(lines) if HEADER.match(ln)]
-    problems: list[dict[str, str]] = []
+    out: list[dict[str, str]] = []
+    seen: set[str] = set()
     for idx, start in enumerate(headers):
         end = headers[idx + 1] if idx + 1 < len(headers) else len(lines)
-        head = HEADER.match(lines[start]).group(1).strip()
-        # "EP-324 — Polynomial image forming a Sidon set" → id, title
-        parts = re.split(r"\s+\u2014\s+", head, maxsplit=1)
-        pid = parts[0].strip()
-        title = parts[1].strip() if len(parts) > 1 else pid
-
+        m = HEADER.match(lines[start])
+        pid, title = m.group(1).strip(), m.group(2).strip()
+        if pid in seen:
+            continue
         body = lines[start + 1:end]
-        try:
-            stmt_start = next(i for i, ln in enumerate(body)
-                              if ln.strip() == "### Exact problem statement") + 1
-        except StopIteration:
-            raise SystemExit(f"{pid}: no '### Exact problem statement' section")
 
-        stmt_lines: list[str] = []
-        refs: list[str] = []
-        for ln in body[stmt_start:]:
-            if any(ln.startswith(tok) for tok in STOP):
-                if SOURCE_LINE.match(ln):
-                    refs += [u for u in URL.findall(ln) if u not in refs]
-                if ln.startswith("---") or ln.startswith("<a id"):
-                    break
+        domain = ""
+        for ln in body:
+            dm = DOMAIN.match(ln)
+            if dm:
+                domain = dm.group(1)
+                break
+        is_math = domain.startswith("Mathematics")
+        is_tcs = domain.startswith("Theoretical")
+        is_phys = domain.startswith("Physics")
+        if not (is_math or is_tcs or (is_phys and _physics_ok(pid))):
+            continue
+
+        # Statement: lines between "### Problem" and the next "###".
+        stmt: list[str] = []
+        in_stmt = False
+        for ln in body:
+            st = ln.strip()
+            if st == "### Problem":
+                in_stmt = True
                 continue
-            stmt_lines.append(ln)
-
-        statement = "\n".join(stmt_lines).strip()
+            if in_stmt and st.startswith("### "):
+                break
+            if in_stmt:
+                stmt.append(ln)
+        statement = "\n".join(stmt).strip()
         if not statement:
-            raise SystemExit(f"{pid}: empty statement")
-        problems.append({
+            continue
+
+        # References: URLs from any Source line anywhere in the entry.
+        refs: list[str] = []
+        for ln in body:
+            if SOURCE.match(ln):
+                refs += [u for u in URL.findall(ln) if u not in refs]
+
+        seen.add(pid)
+        out.append({
             "id": pid,
             "title": title,
             "statement": statement,
-            "references": "\n".join(refs),
+            "references": " ".join(refs),
         })
-    return problems
+    return out
 
 
 def main() -> int:
@@ -70,11 +97,12 @@ def main() -> int:
     problems = parse(SRC.read_text(encoding="utf-8"))
     OUT.write_text(json.dumps(problems, ensure_ascii=False, indent=2) + "\n",
                    encoding="utf-8")
-    missing_refs = [p["id"] for p in problems if not p["references"]]
+    by_prefix: dict[str, int] = {}
+    for p in problems:
+        pre = re.split(r"[-.]", p["id"])[0]
+        by_prefix[pre] = by_prefix.get(pre, 0) + 1
     print(f"wrote {len(problems)} problems → {OUT}")
-    if missing_refs:
-        print(f"WARNING: {len(missing_refs)} without references: {missing_refs}",
-              file=sys.stderr)
+    print("by id-prefix:", dict(sorted(by_prefix.items())), file=sys.stderr)
     return 0
 
 
